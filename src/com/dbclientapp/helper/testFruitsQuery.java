@@ -1,12 +1,10 @@
-package helper;
-
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
+package com.dbclientapp.helper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class FruitsQuery {
+public abstract class testFruitsQuery {
 
     public static int insert(String fruitName, int colorId) throws SQLException {
         String sql = "INSERT INTO fruits (Fruit_Name, Color_ID) VALUES(?, ?)";
