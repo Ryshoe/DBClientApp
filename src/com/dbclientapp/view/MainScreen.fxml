@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dbclientapp.controller.MainScreen">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -27,6 +26,7 @@
                                   <TableColumn prefWidth="75.0" text="Name" />
                                     <TableColumn prefWidth="75.0" text="Address" />
                                     <TableColumn prefWidth="75.0" text="Postal Code" />
+                                    <TableColumn prefWidth="75.0" text="Phone" />
                                     <TableColumn prefWidth="75.0" text="Division" />
                                     <TableColumn prefWidth="75.0" text="Country" />
                                 </columns>
