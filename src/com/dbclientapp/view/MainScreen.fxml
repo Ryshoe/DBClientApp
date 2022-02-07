@@ -33,9 +33,9 @@
                               </TableView>
                               <HBox spacing="3.0">
                                  <children>
-                                    <Button fx:id="customerAddButton" mnemonicParsing="false" prefWidth="51.0" text="Add" />
-                                    <Button fx:id="customerEditButton" mnemonicParsing="false" prefWidth="51.0" text="Edit" />
-                                    <Button fx:id="customerDeleteButton" mnemonicParsing="false" text="Delete" />
+                                    <Button fx:id="customerAddButton" mnemonicParsing="false" prefWidth="52.0" text="Add" />
+                                    <Button fx:id="customerEditButton" mnemonicParsing="false" prefWidth="52.0" text="Edit" />
+                                    <Button fx:id="customerDeleteButton" mnemonicParsing="false" prefWidth="52.0" text="Delete" />
                                  </children>
                                  <padding>
                                     <Insets left="3.0" />
