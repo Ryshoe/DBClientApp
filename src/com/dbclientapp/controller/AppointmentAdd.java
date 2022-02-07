@@ -3,35 +3,51 @@ package com.dbclientapp.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class AppointmentAdd {
 
     @FXML
-    private TextField addressField;
-
-    @FXML
     private Button cancelButton;
 
     @FXML
-    private ComboBox<?> countryBox;
+    private ComboBox<?> contactBox;
 
     @FXML
-    private ComboBox<?> divisionBox;
+    private TextField customerIdField;
+
+    @FXML
+    private TextField descriptionField;
+
+    @FXML
+    private DatePicker endDate;
+
+    @FXML
+    private ComboBox<?> endTime;
 
     @FXML
     private TextField idField;
 
     @FXML
-    private TextField nameField;
+    private TextField locationField;
 
     @FXML
     private Button okButton;
 
     @FXML
-    private TextField phoneField;
+    private DatePicker startDate;
 
     @FXML
-    private TextField postalField;
+    private ComboBox<?> startTime;
+
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private TextField typeField;
+
+    @FXML
+    private TextField userIdField;
 
 }

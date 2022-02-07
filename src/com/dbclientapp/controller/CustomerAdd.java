@@ -3,51 +3,35 @@ package com.dbclientapp.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class CustomerAdd {
 
     @FXML
+    private TextField addressField;
+
+    @FXML
     private Button cancelButton;
 
     @FXML
-    private ComboBox<?> contactBox;
+    private ComboBox<?> countryBox;
 
     @FXML
-    private TextField customerIdField;
-
-    @FXML
-    private TextField descriptionField;
-
-    @FXML
-    private DatePicker endDate;
-
-    @FXML
-    private ComboBox<?> endTime;
+    private ComboBox<?> divisionBox;
 
     @FXML
     private TextField idField;
 
     @FXML
-    private TextField locationField;
+    private TextField nameField;
 
     @FXML
     private Button okButton;
 
     @FXML
-    private DatePicker startDate;
+    private TextField phoneField;
 
     @FXML
-    private ComboBox<?> startTime;
-
-    @FXML
-    private TextField titleField;
-
-    @FXML
-    private TextField typeField;
-
-    @FXML
-    private TextField userIdField;
+    private TextField postalField;
 
 }
