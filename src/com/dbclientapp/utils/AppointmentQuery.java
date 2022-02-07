@@ -1,4 +1,4 @@
-package com.dbclientapp.helper;
+package com.dbclientapp.utils;
 
 public class AppointmentQuery {
 }

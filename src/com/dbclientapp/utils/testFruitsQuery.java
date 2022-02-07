@@ -1,4 +1,4 @@
-package com.dbclientapp.helper;
+package com.dbclientapp.utils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

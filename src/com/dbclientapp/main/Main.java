@@ -1,6 +1,6 @@
 package com.dbclientapp.main;
 
-import com.dbclientapp.helper.JDBC;
+import com.dbclientapp.utils.JDBC;
 
 import java.sql.SQLException;
 
