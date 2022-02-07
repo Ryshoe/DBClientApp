@@ -2,6 +2,7 @@ package com.dbclientapp.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 
 public class MainScreen {
@@ -29,5 +30,11 @@ public class MainScreen {
 
     @FXML
     private TableView<?> customerTable;
+
+    @FXML
+    private RadioButton monthRadio;
+
+    @FXML
+    private RadioButton weekRadio;
 
 }
