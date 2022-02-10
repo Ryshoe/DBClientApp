@@ -2,12 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -22,15 +25,15 @@
                      <children>
                         <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView fx:id="customerTable">
+                              <TableView fx:id="custTable">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Customer ID" />
-                                  <TableColumn prefWidth="75.0" text="Name" />
-                                    <TableColumn prefWidth="75.0" text="Address" />
-                                    <TableColumn prefWidth="75.0" text="Postal Code" />
-                                    <TableColumn prefWidth="75.0" text="Phone" />
-                                    <TableColumn prefWidth="75.0" text="Division" />
-                                    <TableColumn prefWidth="75.0" text="Country" />
+                                  <TableColumn fx:id="custIdCol" prefWidth="75.0" text="Customer ID" />
+                                  <TableColumn fx:id="custNameCol" prefWidth="75.0" text="Name" />
+                                    <TableColumn fx:id="custAddressCol" prefWidth="75.0" text="Address" />
+                                    <TableColumn fx:id="custPostalCol" prefWidth="75.0" text="Postal Code" />
+                                    <TableColumn fx:id="custPhoneCol" prefWidth="75.0" text="Phone" />
+                                    <TableColumn fx:id="custDivisionCol" prefWidth="75.0" text="Division" />
+                                    <TableColumn fx:id="custCountryCol" prefWidth="75.0" text="Country" />
                                 </columns>
                               </TableView>
                               <HBox spacing="3.0">
@@ -57,24 +60,24 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Appointments">
+          <Tab fx:id="apptTable" text="Appointments">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
                         <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TableView fx:id="appointmentTable">
+                              <TableView fx:id="apptTable">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="Appointment ID" />
-                                    <TableColumn prefWidth="75.0" text="Title" />
-                                    <TableColumn prefWidth="75.0" text="Description" />
-                                    <TableColumn prefWidth="75.0" text="Location" />
-                                    <TableColumn prefWidth="75.0" text="Contact" />
-                                    <TableColumn prefWidth="75.0" text="Type" />
-                                    <TableColumn prefWidth="75.0" text="Start" />
-                                    <TableColumn prefWidth="75.0" text="End" />
-                                    <TableColumn prefWidth="75.0" text="Customer ID" />
-                                    <TableColumn prefWidth="75.0" text="User ID" />
+                                    <TableColumn fx:id="apptIdCol" prefWidth="75.0" text="Appointment ID" />
+                                    <TableColumn fx:id="apptTitleCol" prefWidth="75.0" text="Title" />
+                                    <TableColumn fx:id="apptDescrCol" prefWidth="75.0" text="Description" />
+                                    <TableColumn fx:id="apptLocationCol" prefWidth="75.0" text="Location" />
+                                    <TableColumn fx:id="apptContactCol" prefWidth="75.0" text="Contact" />
+                                    <TableColumn fx:id="apptTypeCol" prefWidth="75.0" text="Type" />
+                                    <TableColumn fx:id="apptStartCol" prefWidth="75.0" text="Start" />
+                                    <TableColumn fx:id="apptEndCol" prefWidth="75.0" text="End" />
+                                    <TableColumn fx:id="apptCustIdCol" prefWidth="75.0" text="Customer ID" />
+                                    <TableColumn fx:id="apptUserIdCol" prefWidth="75.0" text="User ID" />
                                  </columns>
                               </TableView>
                               <HBox spacing="3.0">
@@ -86,17 +89,20 @@
                                           <Insets left="250.0" right="2.0" top="4.0" />
                                        </padding>
                                     </Label>
-                                    <RadioButton fx:id="noneRadio" mnemonicParsing="false" text="None">
+                                    <RadioButton fx:id="noneRadio" mnemonicParsing="false" selected="true" text="None">
+                                       <padding>
+                                          <Insets left="3.0" top="4.0" />
+                                       </padding>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="toggleGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="monthRadio" mnemonicParsing="false" text="Month" toggleGroup="$toggleGroup">
                                        <padding>
                                           <Insets left="3.0" top="4.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton fx:id="monthRadio" mnemonicParsing="false" text="Month">
-                                       <padding>
-                                          <Insets left="3.0" top="4.0" />
-                                       </padding>
-                                    </RadioButton>
-                                    <RadioButton fx:id="weekRadio" mnemonicParsing="false" text="Week">
+                                    <RadioButton fx:id="weekRadio" mnemonicParsing="false" text="Week" toggleGroup="$toggleGroup">
                                        <padding>
                                           <Insets left="3.0" top="4.0" />
                                        </padding>
@@ -115,6 +121,72 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Reports">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0">
+                     <children>
+                        <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <padding>
+                              <Insets bottom="3.0" />
+                           </padding>
+                           <children>
+                              <ToolBar prefHeight="40.0" prefWidth="200.0">
+                                <items>
+                                    <ComboBox fx:id="reportBox" prefWidth="150.0" />
+                                  <Button fx:id="reportRunButton" mnemonicParsing="false" prefWidth="50.0" text="Run" />
+                                </items>
+                              </ToolBar>
+                              <AnchorPane prefHeight="357.0" prefWidth="600.0">
+                                 <children>
+                                    <TableView fx:id="report1Table" prefHeight="330.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn fx:id="report1MonthColumn" prefWidth="100.0" text="Month" />
+                                        <TableColumn fx:id="report1TypeColumn1" prefWidth="125.0" text="De-Briefing" />
+                                          <TableColumn fx:id="report1TypeColumn2" prefWidth="125.0" text="Planning Session" />
+                                          <TableColumn fx:id="report1TypeColumn3" prefWidth="125.0" text="Team-Building" />
+                                          <TableColumn fx:id="report1TypeColumn4" prefWidth="125.0" text="Feedback" />
+                                      </columns>
+                                    </TableView>
+                                    <VBox prefHeight="330.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <ToolBar visible="false">
+                                            <items>
+                                                <ComboBox fx:id="report2Box" prefWidth="150.0" />
+                                              <Button fx:id="report2OkButton" mnemonicParsing="false" prefWidth="50.0" text="OK" />
+                                            </items>
+                                          </ToolBar>
+                                          <AnchorPane prefHeight="390.0" prefWidth="600.0">
+                                             <children>
+                                                <TableView fx:id="report2Table" prefHeight="295.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="report2ApptIdCol" prefWidth="75.0" text="Appointment ID" />
+                                                    <TableColumn fx:id="report2TitleCol" prefWidth="75.0" text="Title" />
+                                                      <TableColumn fx:id="report2TypeCol" prefWidth="75.0" text="Type" />
+                                                      <TableColumn fx:id="report2DescrCol" prefWidth="75.0" text="Description" />
+                                                      <TableColumn fx:id="report2StartCol" prefWidth="75.0" text="Start" />
+                                                      <TableColumn fx:id="report2EndCol" prefWidth="75.0" text="End" />
+                                                      <TableColumn fx:id="report2CustIdCol" prefWidth="75.0" text="Customer ID" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                    <TableView fx:id="report3Table" prefHeight="330.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn fx:id="report3CustIdCol" prefWidth="75.0" text="Customer ID" />
+                                        <TableColumn fx:id="report3CustNameCol" prefWidth="75.0" text="Name" />
+                                          <TableColumn fx:id="report3LastUpdtByCol" prefWidth="75.0" text="Last Updated By" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
