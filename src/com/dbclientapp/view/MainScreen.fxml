@@ -38,6 +38,11 @@
                                     <Button fx:id="customerAddButton" mnemonicParsing="false" prefWidth="52.0" text="Add" />
                                     <Button fx:id="customerEditButton" mnemonicParsing="false" prefWidth="52.0" text="Edit" />
                                     <Button fx:id="customerDeleteButton" mnemonicParsing="false" prefWidth="52.0" text="Delete" />
+                                    <Button fx:id="appointmentAddButton" mnemonicParsing="false" text="Create Appointment">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Button>
                                  </children>
                                  <padding>
                                     <Insets left="3.0" />
@@ -74,22 +79,26 @@
                               </TableView>
                               <HBox spacing="3.0">
                                  <children>
-                                    <Button fx:id="appointmentAddButton" mnemonicParsing="false" prefWidth="52.0" text="Add" />
                                     <Button fx:id="appointmentEditButton" mnemonicParsing="false" prefWidth="52.0" text="Edit" />
                                     <Button fx:id="appointmentDeleteButton" mnemonicParsing="false" prefWidth="52.0" text="Delete" />
                                     <Label text="Filter by:">
                                        <padding>
-                                          <Insets left="260.0" right="2.0" top="4.0" />
+                                          <Insets left="250.0" right="2.0" top="4.0" />
                                        </padding>
                                     </Label>
+                                    <RadioButton fx:id="noneRadio" mnemonicParsing="false" text="None">
+                                       <padding>
+                                          <Insets left="3.0" top="4.0" />
+                                       </padding>
+                                    </RadioButton>
                                     <RadioButton fx:id="monthRadio" mnemonicParsing="false" text="Month">
                                        <padding>
-                                          <Insets top="4.0" />
+                                          <Insets left="3.0" top="4.0" />
                                        </padding>
                                     </RadioButton>
                                     <RadioButton fx:id="weekRadio" mnemonicParsing="false" text="Week">
                                        <padding>
-                                          <Insets top="4.0" />
+                                          <Insets left="3.0" top="4.0" />
                                        </padding>
                                     </RadioButton>
                                  </children>

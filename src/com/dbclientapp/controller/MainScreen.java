@@ -35,6 +35,9 @@ public class MainScreen {
     private RadioButton monthRadio;
 
     @FXML
+    private RadioButton noneRadio;
+
+    @FXML
     private RadioButton weekRadio;
 
 }

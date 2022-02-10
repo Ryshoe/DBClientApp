@@ -28,7 +28,7 @@
                   </VBox>
                   <VBox prefWidth="150.0" spacing="2.0">
                      <children>
-                        <TextField fx:id="idField" disable="true" />
+                        <TextField fx:id="customerIdField" disable="true" />
                         <TextField fx:id="nameField" />
                         <TextField fx:id="addressField" />
                         <TextField fx:id="postalField" />

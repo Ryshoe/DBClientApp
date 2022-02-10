@@ -17,10 +17,10 @@ public class CustomerAdd {
     private ComboBox<?> countryBox;
 
     @FXML
-    private ComboBox<?> divisionBox;
+    private TextField customerIdField;
 
     @FXML
-    private TextField idField;
+    private ComboBox<?> divisionBox;
 
     @FXML
     private TextField nameField;

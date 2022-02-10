@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 public class AppointmentEdit {
 
     @FXML
+    private TextField appointmentIdField;
+
+    @FXML
     private Button cancelButton;
 
     @FXML
@@ -27,9 +30,6 @@ public class AppointmentEdit {
     private ComboBox<?> endTime;
 
     @FXML
-    private TextField idField;
-
-    @FXML
     private TextField locationField;
 
     @FXML
@@ -45,7 +45,7 @@ public class AppointmentEdit {
     private TextField titleField;
 
     @FXML
-    private TextField typeField;
+    private ComboBox<?> typeBox;
 
     @FXML
     private TextField userIdField;

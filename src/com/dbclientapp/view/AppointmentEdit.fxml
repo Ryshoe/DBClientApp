@@ -32,16 +32,16 @@
                   </VBox>
                   <VBox prefWidth="150.0" spacing="2.0">
                      <children>
-                        <TextField fx:id="idField" disable="true" />
+                        <TextField fx:id="appointmentIdField" disable="true" />
                         <TextField fx:id="titleField" />
                         <TextField fx:id="descriptionField" />
                         <TextField fx:id="locationField" />
                         <ComboBox fx:id="contactBox" prefWidth="150.0" />
-                        <TextField fx:id="typeField" />
+                        <ComboBox fx:id="typeBox" prefWidth="150.0" />
                         <DatePicker fx:id="startDate" promptText="1/1/2022" />
                         <DatePicker fx:id="endDate" promptText="1/1/2022" />
-                        <TextField fx:id="customerIdField" />
-                        <TextField fx:id="userIdField" />
+                        <TextField fx:id="customerIdField" disable="true" />
+                        <TextField fx:id="userIdField" disable="true" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="2.0">
