@@ -60,7 +60,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="apptTable" text="Appointments">
+          <Tab text="Appointments">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
