@@ -1,12 +1,12 @@
 package com.dbclientapp.main;
 
-import com.dbclientapp.utils.JDBC;
+import com.dbclientapp.utility.JDBC;
 
 import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         JDBC.openConnection();
         JDBC.closeConnection();
     }

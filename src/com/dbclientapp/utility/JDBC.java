@@ -1,4 +1,4 @@
-package com.dbclientapp.utils;
+package com.dbclientapp.utility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
