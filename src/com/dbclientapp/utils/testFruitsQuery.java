@@ -12,8 +12,7 @@ public abstract class testFruitsQuery {
         ps.setString(1, fruitName);
         ps.setInt(2, colorId);
 
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     public static int update(int fruitId, String fruitName) throws SQLException {
@@ -22,8 +21,7 @@ public abstract class testFruitsQuery {
         ps.setInt(2, fruitId);
         ps.setString(1, fruitName);
 
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     public static int delete(int fruitId) throws SQLException {
@@ -31,8 +29,7 @@ public abstract class testFruitsQuery {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, fruitId);
 
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     public static void select() throws SQLException {
