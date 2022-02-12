@@ -1,23 +1,21 @@
 package com.dbclientapp.model;
 
-public class Contact {
+import com.dbclientapp.util.DataTransferObject;
 
-    private int contactId;
+public class Contact implements DataTransferObject {
+
+    private int id;
     private String contactName;
     private String email;
 
-    public Contact(int contactId, String contactName, String email) {
-        this.contactId = contactId;
-        this.contactName = contactName;
-        this.email = email;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public int getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getContactName() {

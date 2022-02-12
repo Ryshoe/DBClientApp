@@ -1,23 +1,21 @@
 package com.dbclientapp.model;
 
-public class User {
+import com.dbclientapp.util.DataTransferObject;
 
-    private int userId;
+public class User implements DataTransferObject {
+
+    private int id;
     private String username;
     private String password;
 
-    public User(int userId, String username, String password) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {

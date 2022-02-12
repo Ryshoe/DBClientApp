@@ -1,21 +1,20 @@
 package com.dbclientapp.model;
 
-public class Country {
+import com.dbclientapp.util.DataTransferObject;
 
-    private int countryId;
+public class Country implements DataTransferObject {
+
+    private int id;
     private String countryName;
 
-    public Country(int countryId, String countryName) {
-        this.countryId = countryId;
-        this.countryName = countryName;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public int getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCountryName() {

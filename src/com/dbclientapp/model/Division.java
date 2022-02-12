@@ -1,23 +1,21 @@
 package com.dbclientapp.model;
 
-public class Division {
+import com.dbclientapp.util.DataTransferObject;
 
-    private int divisionId;
+public class Division implements DataTransferObject {
+
+    private int id;
     private String divisionName;
     private Country country;
 
-    public Division(int divisionId, String divisionName, Country country) {
-        this.divisionId = divisionId;
-        this.divisionName = divisionName;
-        this.country = country;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public int getDivisionId() {
-        return divisionId;
-    }
-
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDivisionName() {

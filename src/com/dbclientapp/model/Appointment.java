@@ -1,41 +1,31 @@
 package com.dbclientapp.model;
 
+import com.dbclientapp.util.DataTransferObject;
+
 import java.sql.Timestamp;
 
-public class Appointment {
+public class Appointment implements DataTransferObject {
 
-    private int apptId;
+    private int id;
     private String title;
     private String description;
     private String location;
     private String type;
     private Timestamp start;
     private Timestamp end;
-    private Customer customer;
-    private User user;
-    private Contact contact;
+    private int custId;
+    private int userId;
+    private int contactId;
 
-    public Appointment(int apptId, String title, String description, String location,
-                       String type, Timestamp start, Timestamp end, Customer customer,
-                       User user, Contact contact) {
-        this.apptId = apptId;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
-        this.start = start;
-        this.end = end;
-        this.customer = customer;
-        this.user = user;
-        this.contact = contact;
+
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public int getApptId() {
-        return apptId;
-    }
-
-    public void setApptId(int apptId) {
-        this.apptId = apptId;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -86,27 +76,43 @@ public class Appointment {
         this.end = end;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public int getCustId() {
+        return custId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustId(int custId) {
+        this.custId = custId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Contact getContact() {
-        return contact;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", type='" + type + '\'' +
+                ", start=" + start +
+                ", end=" + end +
+                ", custId=" + custId +
+                ", userId=" + userId +
+                ", contactId=" + contactId +
+                '}';
     }
 }

@@ -1,22 +1,55 @@
-package com.dbclientapp.utility;
+package com.dbclientapp.util;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import com.dbclientapp.model.Appointment;
 
-public class AppointmentQuery {
+import java.sql.*;
+import java.util.List;
+
+public class AppointmentDAO extends DataAccessObject<Appointment> {
+
+    protected AppointmentDAO(Connection connection) {
+        super(connection);
+    }
+
+    @Override
+    public Appointment findById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Appointment> findAll() {
+        return null;
+    }
+
+    @Override
+    public Appointment update(Appointment dto) {
+        return null;
+    }
+
+    @Override
+    public Appointment create(Appointment dto) {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+}
+/*
+public class AppointmentDAO {
+
 
     public static void select() throws SQLException {
         String sql = "SELECT * FROM appointments";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         //TODO Figure what to do with selection
     }
 
     public static void select(int apptId) throws SQLException {   //overload for primary key
         String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
         ps.setInt(1, apptId);
         ResultSet rs = ps.executeQuery();
         //TODO Figure what to do with selection
@@ -28,7 +61,7 @@ public class AppointmentQuery {
         String sql = "INSERT INTO appointments (Appointment_ID, Title, " +
                 "Description, Location, Type, Start, End, Customer_ID, " +
                 "User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
         ps.setInt(1, apptId);
         ps.setString(2, title);
         ps.setString(3, desc);
@@ -49,7 +82,7 @@ public class AppointmentQuery {
         String sql = "UPDATE appointments SET Title = ?, Description = ?, " +
                 "Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, " +
                 "User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
         ps.setString(1, title);
         ps.setString(2, desc);
         ps.setString(3, location);
@@ -66,9 +99,10 @@ public class AppointmentQuery {
 
     public static int delete(int apptId) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
-        PreparedStatement ps= JDBC.connection.prepareStatement(sql);
+        PreparedStatement ps= DatabaseConnectionManager.connection.prepareStatement(sql);
         ps.setInt(1, apptId);
 
         return ps.executeUpdate();
     }
 }
+*/

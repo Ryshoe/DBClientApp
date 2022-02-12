@@ -1,9 +1,9 @@
-package com.dbclientapp.utility;
+package com.dbclientapp.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public abstract class JDBC {
+public abstract class DatabaseConnectionManager {
     private static final String PROTOCOL = "jdbc";
     private static final String VENDOR = ":mysql:";
     private static final String LOCATION = "//localhost/";
@@ -14,26 +14,24 @@ public abstract class JDBC {
     private static final String PASSWORD = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
-    public static void openConnection()
+    public static Connection openConnection()
     {
         try {
             Class.forName(DRIVER); // Locate Driver
-            connection = DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD); // Reference Connection object
-            System.out.println("Connection successful!");
+            connection = DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD);
+            System.out.println("Connection opened.");
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
             System.out.println("Error:" + e.getMessage());
         }
+        return connection;
     }
 
     public static void closeConnection() {
         try {
             connection.close();
-            System.out.println("Connection closed!");
-        }
-        catch(Exception e)
-        {
+            System.out.println("Connection closed.");
+        } catch(Exception e) {
             System.out.println("Error:" + e.getMessage());
         }
     }

@@ -1,30 +1,24 @@
 package com.dbclientapp.model;
 
-public class Customer {
+import com.dbclientapp.util.DataTransferObject;
 
-    private int custId;
+public class Customer implements DataTransferObject {
+
+    private int id;
     private String custName;
     private String address;
     private String postalCode;
     private String phoneNum;
-    private Division division;
+    private int divisionId;
 
-    public Customer(int custId, String custName, String address,
-                    String postalCode, String phoneNum, Division division) {
-        this.custId = custId;
-        this.custName = custName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phoneNum = phoneNum;
-        this.division = division;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public int getCustId() {
-        return custId;
-    }
-
-    public void setCustId(int custId) {
-        this.custId = custId;
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCustName() {
@@ -59,11 +53,23 @@ public class Customer {
         this.phoneNum = phoneNum;
     }
 
-    public Division getDivision() {
-        return division;
+    public int getDivisionId() {
+        return divisionId;
     }
 
-    public void setDivision(Division division) {
-        this.division = division;
+    public void setDivisionId(int divisionId) {
+        this.divisionId = divisionId;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", custName='" + custName + '\'' +
+                ", address='" + address + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", divisionId=" + divisionId +
+                '}';
     }
 }
