@@ -1,4 +1,4 @@
-package com.dbclientapp.controller;
+package com.dbclientapp.login;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

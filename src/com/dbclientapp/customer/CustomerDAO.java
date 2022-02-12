@@ -1,6 +1,6 @@
-package com.dbclientapp.util;
+package com.dbclientapp.customer;
 
-import com.dbclientapp.model.Customer;
+import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

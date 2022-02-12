@@ -1,4 +1,4 @@
-package com.dbclientapp.model;
+package com.dbclientapp.user;
 
 import com.dbclientapp.util.DataTransferObject;
 

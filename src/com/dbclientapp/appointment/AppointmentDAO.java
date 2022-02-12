@@ -1,6 +1,6 @@
-package com.dbclientapp.util;
+package com.dbclientapp.appointment;
 
-import com.dbclientapp.model.Appointment;
+import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.*;
 import java.util.List;

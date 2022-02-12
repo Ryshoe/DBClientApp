@@ -1,12 +1,8 @@
-package com.dbclientapp.util;
+package com.dbclientapp.division;
 
-import com.dbclientapp.model.Country;
-import com.dbclientapp.model.Division;
+import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 public class DivisionDAO extends DataAccessObject<Division> {

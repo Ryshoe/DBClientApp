@@ -1,36 +1,33 @@
-package com.dbclientapp.util;
+package com.dbclientapp.contact;
 
-import com.dbclientapp.model.User;
+import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-public class UserDAO extends DataAccessObject<User> {
+public class ContactDAO extends DataAccessObject<Contact> {
 
-    protected UserDAO(Connection connection) {
+    protected ContactDAO(Connection connection) {
         super(connection);
     }
 
     @Override
-    public User findById(int id) {
+    public Contact findById(int id) {
         return null;
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Contact> findAll() {
         return null;
     }
 
     @Override
-    public User update(User dto) {
+    public Contact update(Contact dto) {
         return null;
     }
 
     @Override
-    public User create(User dto) {
+    public Contact create(Contact dto) {
         return null;
     }
 
@@ -41,19 +38,19 @@ public class UserDAO extends DataAccessObject<User> {
 }
 
 /*
-public class UserDAO {
+public class ContactDAO {
 
     public static void select() throws SQLException {
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM contacts";
         PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         //TODO Figure what to do with selection
     }
 
-    public static void select(int userId) throws SQLException {   //overload for primary key
-        String sql = "SELECT * FROM users WHERE User_ID = ?";
+    public static void select(int contactId) throws SQLException {   //overload for primary key
+        String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
         PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
-        ps.setInt(1, userId);
+        ps.setInt(1, contactId);
         ResultSet rs = ps.executeQuery();
         //TODO Figure what to do with selection
     }

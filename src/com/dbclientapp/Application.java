@@ -1,10 +1,6 @@
-package com.dbclientapp.main;
+package com.dbclientapp;
 
-import com.dbclientapp.model.Customer;
-import com.dbclientapp.util.CustomerDAO;
-import com.dbclientapp.util.DatabaseConnectionManager;
-
-public class Main {
+public class Application {
 
     public static void main(String[] args) {
         /*

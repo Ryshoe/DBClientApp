@@ -1,4 +1,4 @@
-package com.dbclientapp.model;
+package com.dbclientapp.contact;
 
 import com.dbclientapp.util.DataTransferObject;
 

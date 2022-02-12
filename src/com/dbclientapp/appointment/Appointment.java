@@ -1,4 +1,4 @@
-package com.dbclientapp.model;
+package com.dbclientapp.appointment;
 
 import com.dbclientapp.util.DataTransferObject;
 

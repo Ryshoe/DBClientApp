@@ -1,36 +1,33 @@
-package com.dbclientapp.util;
+package com.dbclientapp.user;
 
-import com.dbclientapp.model.Contact;
+import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-public class ContactDAO extends DataAccessObject<Contact> {
+public class UserDAO extends DataAccessObject<User> {
 
-    protected ContactDAO(Connection connection) {
+    protected UserDAO(Connection connection) {
         super(connection);
     }
 
     @Override
-    public Contact findById(int id) {
+    public User findById(int id) {
         return null;
     }
 
     @Override
-    public List<Contact> findAll() {
+    public List<User> findAll() {
         return null;
     }
 
     @Override
-    public Contact update(Contact dto) {
+    public User update(User dto) {
         return null;
     }
 
     @Override
-    public Contact create(Contact dto) {
+    public User create(User dto) {
         return null;
     }
 
@@ -41,19 +38,19 @@ public class ContactDAO extends DataAccessObject<Contact> {
 }
 
 /*
-public class ContactDAO {
+public class UserDAO {
 
     public static void select() throws SQLException {
-        String sql = "SELECT * FROM contacts";
+        String sql = "SELECT * FROM users";
         PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         //TODO Figure what to do with selection
     }
 
-    public static void select(int contactId) throws SQLException {   //overload for primary key
-        String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
+    public static void select(int userId) throws SQLException {   //overload for primary key
+        String sql = "SELECT * FROM users WHERE User_ID = ?";
         PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
-        ps.setInt(1, contactId);
+        ps.setInt(1, userId);
         ResultSet rs = ps.executeQuery();
         //TODO Figure what to do with selection
     }

@@ -1,5 +1,6 @@
-package com.dbclientapp.model;
+package com.dbclientapp.division;
 
+import com.dbclientapp.country.Country;
 import com.dbclientapp.util.DataTransferObject;
 
 public class Division implements DataTransferObject {
