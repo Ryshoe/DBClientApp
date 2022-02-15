@@ -12,12 +12,12 @@ public abstract class DatabaseConnectionManager {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String USERNAME = "sqlUser"; // Username
     private static final String PASSWORD = "Passw0rd!"; // Password
-    public static Connection connection;  // Connection Interface
+    public static Connection connection;  // Connection interface
 
     public static Connection openConnection()
     {
         try {
-            Class.forName(DRIVER); // Locate Driver
+            Class.forName(DRIVER); // Locate driver
             connection = DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD);
             System.out.println("Connection opened.");
         }
