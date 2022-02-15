@@ -3,22 +3,58 @@ package com.dbclientapp.division;
 import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DivisionDAO extends DataAccessObject<Division> {
 
-    protected DivisionDAO(Connection connection) {
+    private static final String READ_ONE = "SELECT Division_ID, Division, Country_ID " +
+            "FROM first_level_divisions WHERE Division_ID = ?";
+
+    private static final String READ_ALL = "SELECT * FROM first_level_divisions";
+
+    public DivisionDAO(Connection connection) {
         super(connection);
     }
 
     @Override
     public Division findById(int id) {
-        return null;
+        Division division = new Division();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                division.setId(rs.getInt("Division_ID"));
+                division.setDivisionName(rs.getString("Division"));
+                division.setCountryId(rs.getInt("Country_ID"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return division;
     }
 
     @Override
     public List<Division> findAll() {
-        return null;
+        List<Division> divisionList = new ArrayList<>();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Division division = new Division();
+                division.setId(rs.getInt("Division_ID"));
+                division.setDivisionName(rs.getString("Division"));
+                division.setCountryId(rs.getInt("Country_ID"));
+                divisionList.add(division);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return divisionList;
     }
 
     @Override
@@ -36,36 +72,3 @@ public class DivisionDAO extends DataAccessObject<Division> {
 
     }
 }
-
-/*
-public class DivisionDAO {
-
-    private static int qDivisionId;
-    private static String qDivisionName;
-    private static int qCountryId;
-    private static Country qCountry;
-
-    public static Division getAll() throws SQLException {
-        String sql = "SELECT * FROM first_level_divisions";
-        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            qDivisionId = rs.getInt("Division_ID");
-            qDivisionName = rs.getString("Division");
-            qCountryId = rs.getInt("Country_ID");
-            qCountry.setCountryId(qCountryId);
-            return new Division(qDivisionId, qDivisionName, qCountry);
-        }
-
-        return null;
-    }
-
-    public static void getDivision(int divisionId) throws SQLException {
-        String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
-        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
-        ps.setInt(1, divisionId);
-        ResultSet rs = ps.executeQuery();
-    }
-}
-*/

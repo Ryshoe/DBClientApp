@@ -2,19 +2,19 @@ package com.dbclientapp.customer;
 
 import com.dbclientapp.util.DataAccessObject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO extends DataAccessObject<Customer> {
 
-    private static final String INSERT = "INSERT INTO customers (Customer_Name, " +
+    private static final String CREATE = "INSERT INTO customers (Customer_Name, " +
             "Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?) ";
 
-    private static final String GET_ONE = "SELECT Customer_ID, Customer_Name, " +
+    private static final String READ_ONE = "SELECT Customer_ID, Customer_Name, " +
             "Address, Postal_Code, Phone, Division_ID FROM customers WHERE Customer_ID = ?";
+
+    private static final String READ_ALL = "SELECT * FROM customers";
 
     private static final String UPDATE = "UPDATE customers SET Customer_Name = ?, " +
             "Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
@@ -28,7 +28,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     @Override
     public Customer findById(int id) {
         Customer customer = new Customer();
-        try(PreparedStatement ps = this.connection.prepareStatement(GET_ONE)) {
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -36,6 +36,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
                 customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhoneNum(rs.getString("Phone"));
                 customer.setDivisionId(rs.getInt("Division_ID"));
             }
         } catch(SQLException e) {
@@ -47,7 +48,24 @@ public class CustomerDAO extends DataAccessObject<Customer> {
 
     @Override
     public List<Customer> findAll() {
-        return null;
+        List<Customer> customerList = new ArrayList<>();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Customer customer = new Customer();
+                customer.setId(rs.getInt("Customer_ID"));
+                customer.setCustName(rs.getString("Customer_Name"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhoneNum(rs.getString("Phone"));
+                customer.setDivisionId(rs.getInt("Division_ID"));
+                customerList.add(customer);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return customerList;
     }
 
     @Override
@@ -71,14 +89,19 @@ public class CustomerDAO extends DataAccessObject<Customer> {
 
     @Override
     public Customer create(Customer dto) {
-        try(PreparedStatement ps = this.connection.prepareStatement(INSERT)) {
+        try(PreparedStatement ps = this.connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, dto.getCustName());
             ps.setString(2, dto.getAddress());
             ps.setString(3, dto.getPostalCode());
             ps.setString(4, dto.getPhoneNum());
             ps.setInt(5, dto.getDivisionId());
             ps.execute();
-            return null;
+            ResultSet rs = ps.getGeneratedKeys();
+            int id = 0;
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            return this.findById(id);
         } catch(SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

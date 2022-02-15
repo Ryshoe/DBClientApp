@@ -1,24 +1,59 @@
 package com.dbclientapp.country;
 
+import com.dbclientapp.contact.Contact;
 import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDAO extends DataAccessObject<Country> {
 
-    protected CountryDAO(Connection connection) {
+    private static final String READ_ONE = "SELECT Country_ID, Country " +
+            "FROM countries WHERE Country_ID = ?";
+
+    private static final String READ_ALL = "SELECT * FROM countries";
+
+    public CountryDAO(Connection connection) {
         super(connection);
     }
 
     @Override
     public Country findById(int id) {
-        return null;
+        Country country = new Country();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                country.setId(rs.getInt("Country_ID"));
+                country.setCountryName(rs.getString("Country"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return country;
     }
 
     @Override
     public List<Country> findAll() {
-        return null;
+        List<Country> countryList = new ArrayList<>();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Country country = new Country();
+                country.setId(rs.getInt("Country_ID"));
+                country.setCountryName(rs.getString("Country"));
+                countryList.add(country);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return countryList;
     }
 
     @Override
@@ -36,40 +71,3 @@ public class CountryDAO extends DataAccessObject<Country> {
 
     }
 }
-
-/*
-public class CountryDAO {
-
-    private static int qCountryId;
-    private static String qCountryName;
-
-    public static Country getAll() throws SQLException {
-        String sql = "SELECT * FROM countries";
-        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            qCountryId = rs.getInt("Country_ID");
-            qCountryName = rs.getString("Country");
-            return new Country(qCountryId, qCountryName);
-        }
-
-        return null;
-    }
-
-    public static Country getCountry(int countryId) throws SQLException {
-        String sql = "SELECT * FROM countries WHERE Country_ID = ?";
-        PreparedStatement ps = DatabaseConnectionManager.connection.prepareStatement(sql);
-        ps.setInt(1, countryId);
-        ResultSet rs = ps.executeQuery();
-
-        while(rs.next()) {
-            qCountryId = rs.getInt("Country_ID");
-            qCountryName = rs.getString("Country");
-            return new Country(qCountryId, qCountryName);
-        }
-
-        return null;
-    }
-}
-*/
