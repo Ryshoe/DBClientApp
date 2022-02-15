@@ -2,8 +2,16 @@ package com.dbclientapp;
 
 import com.dbclientapp.appointment.Appointment;
 import com.dbclientapp.appointment.AppointmentDAO;
+import com.dbclientapp.contact.Contact;
+import com.dbclientapp.contact.ContactDAO;
+import com.dbclientapp.country.Country;
+import com.dbclientapp.country.CountryDAO;
 import com.dbclientapp.customer.Customer;
 import com.dbclientapp.customer.CustomerDAO;
+import com.dbclientapp.division.Division;
+import com.dbclientapp.division.DivisionDAO;
+import com.dbclientapp.user.User;
+import com.dbclientapp.user.UserDAO;
 import com.dbclientapp.util.DatabaseConnectionManager;
 
 import java.sql.Time;
@@ -14,11 +22,28 @@ public class Application {
 
     public static void main(String[] args) {
 
+        ContactDAO contactDAO = new ContactDAO(DatabaseConnectionManager.openConnection());
+        List<Contact> testList1 = contactDAO.findAll();
+        System.out.println(testList1);
+
+        CountryDAO countryDAO = new CountryDAO(DatabaseConnectionManager.openConnection());
+        List<Country> testList2 = countryDAO.findAll();
+        System.out.println(testList2);
+
+        DivisionDAO divisionDAO = new DivisionDAO(DatabaseConnectionManager.openConnection());
+        List<Division> testList3 = divisionDAO.findAll();
+        System.out.println(testList3);
+
+        UserDAO userDAO = new UserDAO(DatabaseConnectionManager.openConnection());
+        List<User> testList4 = userDAO.findAll();
+        System.out.println(testList4);
+
+        /*
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
 
         // Print original table
-        List<Appointment> testList = appointmentDAO.findAll();
-        System.out.println(testList);
+        List<Appointment> testList3 = appointmentDAO.findAll();
+        System.out.println(testList3);
 
         // Test CREATE statement
         Appointment appointment = new Appointment();
@@ -50,6 +75,7 @@ public class Application {
         // Print updated table
         testList = appointmentDAO.findAll();
         System.out.println(testList);
+         */
 
         DatabaseConnectionManager.closeConnection();
     }
