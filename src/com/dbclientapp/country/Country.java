@@ -24,4 +24,12 @@ public class Country implements DataTransferObject {
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", countryName='" + countryName + '\'' +
+                '}';
+    }
 }

@@ -1,13 +1,12 @@
 package com.dbclientapp.division;
 
-import com.dbclientapp.country.Country;
 import com.dbclientapp.util.DataTransferObject;
 
 public class Division implements DataTransferObject {
 
     private int id;
     private String divisionName;
-    private Country country;
+    private int countryId;
 
     @Override
     public int getId() {
@@ -27,11 +26,20 @@ public class Division implements DataTransferObject {
         this.divisionName = divisionName;
     }
 
-    public Country getCountry() {
-        return country;
+    public int getCountryId() {
+        return countryId;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
+
+    @Override
+    public String toString() {
+        return "Division{" +
+                "id=" + id +
+                ", divisionName='" + divisionName + '\'' +
+                ", country=" + countryId +
+                '}';
     }
 }
