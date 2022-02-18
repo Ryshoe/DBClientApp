@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainScreen {
+public class MainScreenController {
 
     Stage stage;
     Parent scene;

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AppointmentAdd {
+public class AppointmentAddController {
 
     Stage stage;
     Parent scene;

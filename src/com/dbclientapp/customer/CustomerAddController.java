@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CustomerAdd {
+public class CustomerAddController {
 
     Stage stage;
     Parent scene;

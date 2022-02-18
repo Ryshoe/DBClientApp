@@ -1,4 +1,4 @@
-package com.dbclientapp.appointment;
+package com.dbclientapp.customer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,59 +7,43 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AppointmentEdit {
+public class CustomerEditController {
 
     Stage stage;
     Parent scene;
     FXMLLoader loader;
 
     @FXML
-    private TextField appointmentIdField;
+    private TextField addressField;
 
     @FXML
     private Button cancelButton;
 
     @FXML
-    private ComboBox<?> contactBox;
+    private ComboBox<?> countryBox;
 
     @FXML
     private TextField customerIdField;
 
     @FXML
-    private TextField descriptionField;
+    private ComboBox<?> divisionBox;
 
     @FXML
-    private DatePicker endDate;
-
-    @FXML
-    private ComboBox<?> endTime;
-
-    @FXML
-    private TextField locationField;
+    private TextField nameField;
 
     @FXML
     private Button okButton;
 
     @FXML
-    private DatePicker startDate;
+    private TextField phoneField;
 
     @FXML
-    private ComboBox<?> startTime;
-
-    @FXML
-    private TextField titleField;
-
-    @FXML
-    private ComboBox<?> typeBox;
-
-    @FXML
-    private TextField userIdField;
+    private TextField postalField;
 
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
