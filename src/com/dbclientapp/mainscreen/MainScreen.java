@@ -1,23 +1,28 @@
 package com.dbclientapp.mainscreen;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainScreen {
 
-    @FXML
-    private Button appointmentAddButton;
+    Stage stage;
+    Parent scene;
+    FXMLLoader loader;
 
     @FXML
-    private Button appointmentDeleteButton;
-
-    @FXML
-    private Button appointmentEditButton;
+    private Button apptAddButton;
 
     @FXML
     private TableColumn<?, ?> apptContactCol;
@@ -26,7 +31,13 @@ public class MainScreen {
     private TableColumn<?, ?> apptCustIdCol;
 
     @FXML
+    private Button apptDeleteButton;
+
+    @FXML
     private TableColumn<?, ?> apptDescrCol;
+
+    @FXML
+    private Button apptEditButton;
 
     @FXML
     private TableColumn<?, ?> apptEndCol;
@@ -53,13 +64,22 @@ public class MainScreen {
     private TableColumn<?, ?> apptUserIdCol;
 
     @FXML
+    private Button custAddButton;
+
+    @FXML
     private TableColumn<?, ?> custAddressCol;
 
     @FXML
     private TableColumn<?, ?> custCountryCol;
 
     @FXML
+    private Button custDeleteButton;
+
+    @FXML
     private TableColumn<?, ?> custDivisionCol;
+
+    @FXML
+    private Button custEditButton;
 
     @FXML
     private TableColumn<?, ?> custIdCol;
@@ -75,15 +95,6 @@ public class MainScreen {
 
     @FXML
     private TableView<?> custTable;
-
-    @FXML
-    private Button customerAddButton;
-
-    @FXML
-    private Button customerDeleteButton;
-
-    @FXML
-    private Button customerEditButton;
 
     @FXML
     private RadioButton monthRadio;
@@ -162,5 +173,71 @@ public class MainScreen {
 
     @FXML
     private RadioButton weekRadio;
+
+    @FXML
+    void apptAddButtonAction(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("../Appointment/AppointmentAdd.fxml"));
+        scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    @FXML
+    void apptDeleteButtonAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void apptEdit(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("../Appointment/AppointmentEdit.fxml"));
+        scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    @FXML
+    void custAddButtonAction(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("../Customer/CustomerAdd.fxml"));
+        scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    @FXML
+    void custDeleteButtonAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void custEditButtonAction(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("../Customer/CustomerEdit.fxml"));
+        scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    @FXML
+    void monthRadioAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void noneRadioAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void reportRunButtonAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void weekRadioAction(ActionEvent event) {
+
+    }
 
 }

@@ -16,12 +16,12 @@
       </Label>
       <TextField fx:id="usernameField" layoutX="175.0" layoutY="175.0" prefWidth="250.0" promptText="Username" />
       <PasswordField fx:id="passwordField" layoutX="175.0" layoutY="220.0" prefWidth="250.0" promptText="Password" />
-      <Button fx:id="okButton" layoutX="319.0" layoutY="255.0" mnemonicParsing="false" prefWidth="44.0" text="OK">
+      <Button fx:id="okButton" layoutX="319.0" layoutY="255.0" mnemonicParsing="false" onAction="#okButtonAction" prefWidth="44.0" text="OK">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="cancelButton" layoutX="371.0" layoutY="255.0" mnemonicParsing="false" text="Cancel">
+      <Button fx:id="cancelButton" layoutX="371.0" layoutY="255.0" mnemonicParsing="false" onAction="#cancelButtonAction" text="Cancel">
          <font>
             <Font size="10.0" />
          </font>

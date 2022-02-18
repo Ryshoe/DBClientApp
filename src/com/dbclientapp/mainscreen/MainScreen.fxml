@@ -38,10 +38,10 @@
                               </TableView>
                               <HBox spacing="3.0">
                                  <children>
-                                    <Button fx:id="customerAddButton" mnemonicParsing="false" prefWidth="52.0" text="Add" />
-                                    <Button fx:id="customerEditButton" mnemonicParsing="false" prefWidth="52.0" text="Edit" />
-                                    <Button fx:id="customerDeleteButton" mnemonicParsing="false" prefWidth="52.0" text="Delete" />
-                                    <Button fx:id="appointmentAddButton" mnemonicParsing="false" text="Create Appointment">
+                                    <Button fx:id="custAddButton" mnemonicParsing="false" onAction="#custAddButtonAction" prefWidth="52.0" text="Add" />
+                                    <Button fx:id="custEditButton" mnemonicParsing="false" onAction="#custEditButtonAction" prefWidth="52.0" text="Edit" />
+                                    <Button fx:id="custDeleteButton" mnemonicParsing="false" onAction="#custDeleteButtonAction" prefWidth="52.0" text="Delete" />
+                                    <Button fx:id="apptAddButton" mnemonicParsing="false" onAction="#apptAddButtonAction" text="Create Appointment">
                                        <HBox.margin>
                                           <Insets left="20.0" />
                                        </HBox.margin>
@@ -82,14 +82,14 @@
                               </TableView>
                               <HBox spacing="3.0">
                                  <children>
-                                    <Button fx:id="appointmentEditButton" mnemonicParsing="false" prefWidth="52.0" text="Edit" />
-                                    <Button fx:id="appointmentDeleteButton" mnemonicParsing="false" prefWidth="52.0" text="Delete" />
+                                    <Button fx:id="apptEditButton" mnemonicParsing="false" onAction="#apptEdit" prefWidth="52.0" text="Edit" />
+                                    <Button fx:id="apptDeleteButton" mnemonicParsing="false" onAction="#apptDeleteButtonAction" prefWidth="52.0" text="Delete" />
                                     <Label text="Filter by:">
                                        <padding>
                                           <Insets left="250.0" right="2.0" top="4.0" />
                                        </padding>
                                     </Label>
-                                    <RadioButton fx:id="noneRadio" mnemonicParsing="false" selected="true" text="None">
+                                    <RadioButton fx:id="noneRadio" mnemonicParsing="false" onAction="#noneRadioAction" selected="true" text="None">
                                        <padding>
                                           <Insets left="3.0" top="4.0" />
                                        </padding>
@@ -97,12 +97,12 @@
                                           <ToggleGroup fx:id="toggleGroup" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="monthRadio" mnemonicParsing="false" text="Month" toggleGroup="$toggleGroup">
+                                    <RadioButton fx:id="monthRadio" mnemonicParsing="false" onAction="#monthRadioAction" text="Month" toggleGroup="$toggleGroup">
                                        <padding>
                                           <Insets left="3.0" top="4.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton fx:id="weekRadio" mnemonicParsing="false" text="Week" toggleGroup="$toggleGroup">
+                                    <RadioButton fx:id="weekRadio" mnemonicParsing="false" onAction="#weekRadioAction" text="Week" toggleGroup="$toggleGroup">
                                        <padding>
                                           <Insets left="3.0" top="4.0" />
                                        </padding>
@@ -133,7 +133,7 @@
                               <ToolBar prefHeight="40.0" prefWidth="200.0">
                                 <items>
                                     <ComboBox fx:id="reportBox" prefWidth="150.0" />
-                                  <Button fx:id="reportRunButton" mnemonicParsing="false" prefWidth="50.0" text="Run" />
+                                  <Button fx:id="reportRunButton" mnemonicParsing="false" onAction="#reportRunButtonAction" prefWidth="50.0" text="Run" />
                                 </items>
                               </ToolBar>
                               <AnchorPane prefHeight="357.0" prefWidth="600.0">

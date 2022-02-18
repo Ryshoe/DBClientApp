@@ -1,12 +1,23 @@
 package com.dbclientapp.appointment;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class AppointmentEdit {
+
+    Stage stage;
+    Parent scene;
+    FXMLLoader loader;
 
     @FXML
     private TextField appointmentIdField;
@@ -49,5 +60,19 @@ public class AppointmentEdit {
 
     @FXML
     private TextField userIdField;
+
+    @FXML
+    void cancelButtonAction(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    @FXML
+    void okButtonAction(ActionEvent event) {
+
+    }
 
 }
