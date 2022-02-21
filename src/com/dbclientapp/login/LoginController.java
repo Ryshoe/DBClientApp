@@ -71,4 +71,8 @@ public class LoginController implements Initializable {
         ZoneId zone = ZoneId.systemDefault();
         zoneIdLabel.setText(String.valueOf(zone));
     }
+
+    //TODO Integrate resource bundles that allows the login screen to be
+    // translated to French
+    //TODO Record login activity and write to a .txt file
 }

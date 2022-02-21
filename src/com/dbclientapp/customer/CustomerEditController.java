@@ -56,7 +56,10 @@ public class CustomerEditController {
 
     @FXML
     void okButtonAction(ActionEvent event) {
-
+        //TODO Parse inputs from form and add to database
     }
 
+    //TODO Pre-populate form with selected customer from MainScreen
+    //TODO Create method that populates country ComboBox
+    //TODO Create method that populates division ComboBox
 }

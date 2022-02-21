@@ -56,7 +56,9 @@ public class CustomerAddController {
 
     @FXML
     void okButtonAction(ActionEvent event) {
-
+        //TODO Parse inputs from form and add to database
     }
 
+    //TODO Create method that populates country ComboBox
+    //TODO Create method that populates division ComboBox
 }

@@ -75,7 +75,15 @@ public class AppointmentEditController {
 
     @FXML
     void okButtonAction(ActionEvent event) {
-
+        //TODO Parse inputs from form and add to database
+        /*
+        MainScreenController mainScreenController = loader.getController();
+        mainScreenController.selectTabPane(1);
+         */
     }
 
+    //TODO Pre-populate form with selected appointment from MainScreen
+    //TODO Create method that populates contact ComboBox
+    //TODO Create method that populates type ComboBox
+    //TODO Create method that populates start/end time ComboBoxes
 }

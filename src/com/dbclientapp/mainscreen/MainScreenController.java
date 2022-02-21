@@ -192,7 +192,7 @@ public class MainScreenController {
 
     @FXML
     void apptDeleteButtonAction(ActionEvent event) {
-
+        //TODO Delete selected appointment
     }
 
     @FXML
@@ -215,7 +215,7 @@ public class MainScreenController {
 
     @FXML
     void custDeleteButtonAction(ActionEvent event) {
-
+        //TODO Delete selected customer
     }
 
     @FXML
@@ -228,27 +228,31 @@ public class MainScreenController {
     }
 
     @FXML
-    void monthRadioAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void noneRadioAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void reportRunButtonAction(ActionEvent event) {
-
+        //TODO Remove filter and show all appointments
     }
 
     @FXML
     void weekRadioAction(ActionEvent event) {
+        //TODO Filter appointments by week
+    }
 
+    @FXML
+    void monthRadioAction(ActionEvent event) {
+        //TODO Filter appointments by month
+    }
+
+    @FXML
+    void reportRunButtonAction(ActionEvent event) {
+        //TODO Run selected report
     }
 
     public void selectTabPane(int tabIndex) {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         selectionModel.select(tabIndex);
     }
+
+    //TODO Create method that populates customer TableView
+    //TODO Create method that populates appointment TableView
+    //TODO Create method that populates report ComboBox
 }
