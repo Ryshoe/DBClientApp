@@ -173,6 +173,9 @@ public class MainScreenController {
     private Tab reportTab;
 
     @FXML
+    private TabPane tabPane;
+
+    @FXML
     private ToggleGroup toggleGroup;
 
     @FXML
@@ -244,4 +247,8 @@ public class MainScreenController {
 
     }
 
+    public void selectTabPane(int tabIndex) {
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        selectionModel.select(tabIndex);
+    }
 }
