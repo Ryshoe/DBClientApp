@@ -14,8 +14,7 @@ public abstract class DatabaseConnectionManager {
     private static final String PASSWORD = "Passw0rd!"; // Password
     public static Connection connection;  // Connection interface
 
-    public static Connection openConnection()
-    {
+    public static Connection openConnection() {
         try {
             Class.forName(DRIVER); // Locate driver
             connection = DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD);
