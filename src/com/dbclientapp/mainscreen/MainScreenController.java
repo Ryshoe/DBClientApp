@@ -5,12 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,6 +45,9 @@ public class MainScreenController {
 
     @FXML
     private TableColumn<?, ?> apptStartCol;
+
+    @FXML
+    private Tab apptTab;
 
     @FXML
     private TableView<?> apptTable;
@@ -92,6 +90,9 @@ public class MainScreenController {
 
     @FXML
     private TableColumn<?, ?> custPostalCol;
+
+    @FXML
+    private Tab custTab;
 
     @FXML
     private TableView<?> custTable;
@@ -167,6 +168,9 @@ public class MainScreenController {
 
     @FXML
     private Button reportRunButton;
+
+    @FXML
+    private Tab reportTab;
 
     @FXML
     private ToggleGroup toggleGroup;
