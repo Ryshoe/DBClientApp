@@ -14,6 +14,9 @@ public class UserDAO extends DataAccessObject<User> {
     private static final String READ_ONE = "SELECT User_ID, User_Name, Password " +
             "FROM users WHERE User_ID = ?";
 
+    private static final String READ_USER = "SELECT User_ID, User_Name, Password " +
+            "FROM users WHERE User_Name = ?";
+
     private static final String READ_ALL = "SELECT * FROM users";
 
     public UserDAO(Connection connection) {
@@ -25,6 +28,23 @@ public class UserDAO extends DataAccessObject<User> {
         User user = new User();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                user.setId(rs.getInt("User_ID"));
+                user.setUsername(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
+    public User findByUser(String username) {
+        User user = new User();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_USER)) {
+            ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 user.setId(rs.getInt("User_ID"));
