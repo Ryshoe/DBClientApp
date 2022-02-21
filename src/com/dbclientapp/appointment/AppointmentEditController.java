@@ -1,5 +1,6 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.mainscreen.MainScreenController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +67,8 @@ public class AppointmentEditController {
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
         scene = loader.load();
+        MainScreenController mainScreenController = loader.getController();
+        mainScreenController.selectTabPane(1);
         stage.setScene(new Scene(scene));
         stage.show();
     }

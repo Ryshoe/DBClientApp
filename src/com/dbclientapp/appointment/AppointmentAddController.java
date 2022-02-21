@@ -1,5 +1,6 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.mainscreen.MainScreenController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,7 +73,10 @@ public class AppointmentAddController {
 
     @FXML
     void okButtonAction(ActionEvent event) {
-
+        /*
+        MainScreenController mainScreenController = loader.getController();
+        mainScreenController.selectTabPane(1);
+         */
     }
 
 }
