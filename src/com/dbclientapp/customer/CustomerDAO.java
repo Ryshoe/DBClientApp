@@ -1,5 +1,6 @@
 package com.dbclientapp.customer;
 
+import com.dbclientapp.country.Country;
 import com.dbclientapp.division.Division;
 import com.dbclientapp.util.DataAccessObject;
 import javafx.collections.FXCollections;
@@ -17,7 +18,9 @@ public class CustomerDAO extends DataAccessObject<Customer> {
 
     private static final String READ_ALL = "SELECT * FROM customers " +
             "INNER JOIN first_level_divisions " +
-            "ON customers.Division_ID = first_level_divisions.Division_ID";
+            "ON customers.Division_ID = first_level_divisions.Division_ID " +
+            "INNER JOIN countries " +
+            "ON first_level_divisions.Country_ID = countries.Country_ID";
 
     private static final String UPDATE = "UPDATE customers SET Customer_Name = ?, " +
             "Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
@@ -35,7 +38,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Division division = new Division(0, null, 0);
+                Division division = new Division(0, null, null);
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
@@ -58,7 +61,8 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Customer customer = new Customer(0, null, null, null, null, null);
-                Division division = new Division(0, null, 0);
+                Division division = new Division(0, null, null);
+                Country country = new Country(0, null);
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
@@ -66,6 +70,9 @@ public class CustomerDAO extends DataAccessObject<Customer> {
                 customer.setPhoneNum(rs.getString("Phone"));
                 division.setId(rs.getInt("Division_ID"));
                 division.setDivisionName(rs.getString("Division"));
+                country.setId(rs.getInt("Country_ID"));
+                country.setCountryName(rs.getString("Country"));
+                division.setCountry(country);
                 customer.setDivision(division);
                 customerList.add(customer);
             }
