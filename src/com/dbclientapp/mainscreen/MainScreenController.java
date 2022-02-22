@@ -3,9 +3,7 @@ package com.dbclientapp.mainscreen;
 import com.dbclientapp.appointment.Appointment;
 import com.dbclientapp.customer.Customer;
 import com.dbclientapp.customer.CustomerDAO;
-import com.dbclientapp.division.Division;
 import com.dbclientapp.util.DatabaseConnectionManager;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,7 +61,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> custAddressCol;
     @FXML
-    private TableColumn<?, ?> custCountryCol;
+    private TableColumn<Customer, String> custCountryCol;
     @FXML
     private Button custDeleteButton;
     @FXML
@@ -221,15 +219,16 @@ public class MainScreenController implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         custPostalCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
-        custDivisionCol.setCellValueFactory(cdf -> cdf.getValue().getDivision().divisionNameProperty());
-        custCountryCol.setCellValueFactory(new PropertyValueFactory<>(""));
+        custDivisionCol.setCellValueFactory(cdf -> cdf.getValue().getDivision().
+                divisionNameProperty());
+        custCountryCol.setCellValueFactory(cdf -> cdf.getValue().getDivision().
+                getCountry().countryNameProperty());
 
         // Populate customer list from SQL database
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
         custList.setAll(customerDAO.findAll());
         custTable.setItems(custList);
         custTable.refresh();
-
 
         // Assign column values for appointment list
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
@@ -242,7 +241,6 @@ public class MainScreenController implements Initializable {
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("End"));
     }
 
-    //TODO Create method that populates customer TableView
     //TODO Create method that populates appointment TableView
     //TODO Create method that populates report ComboBox
 }
