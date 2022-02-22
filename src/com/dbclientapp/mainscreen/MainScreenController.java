@@ -3,7 +3,9 @@ package com.dbclientapp.mainscreen;
 import com.dbclientapp.appointment.Appointment;
 import com.dbclientapp.customer.Customer;
 import com.dbclientapp.customer.CustomerDAO;
+import com.dbclientapp.division.Division;
 import com.dbclientapp.util.DatabaseConnectionManager;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,7 +67,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button custDeleteButton;
     @FXML
-    private TableColumn<?, ?> custDivisionCol;
+    private TableColumn<Customer, String> custDivisionCol;
     @FXML
     private Button custEditButton;
     @FXML
@@ -137,8 +139,8 @@ public class MainScreenController implements Initializable {
     @FXML
     private RadioButton weekRadio;
 
-    private ObservableList<Customer> custList = FXCollections.observableArrayList();
-    private ObservableList<Appointment> apptList = FXCollections.observableArrayList();
+    private final ObservableList<Customer> custList = FXCollections.observableArrayList();
+    private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
 
     @FXML
     void apptAddButtonAction(ActionEvent event) throws IOException {
@@ -219,7 +221,7 @@ public class MainScreenController implements Initializable {
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         custPostalCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phoneNum"));
-        custDivisionCol.setCellValueFactory(new PropertyValueFactory<>(""));
+        custDivisionCol.setCellValueFactory(cdf -> cdf.getValue().getDivision().divisionNameProperty());
         custCountryCol.setCellValueFactory(new PropertyValueFactory<>(""));
 
         // Populate customer list from SQL database
