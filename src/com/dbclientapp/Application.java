@@ -1,5 +1,9 @@
 package com.dbclientapp;
 
+import com.dbclientapp.customer.Customer;
+import com.dbclientapp.customer.CustomerDAO;
+import com.dbclientapp.util.DatabaseConnectionManager;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,25 +28,13 @@ public class Application extends javafx.application.Application {
 }
 
 /*
-ContactDAO contactDAO = new ContactDAO(DatabaseConnectionManager.openConnection());
-List<Contact> testList1 = contactDAO.findAll();
-System.out.println(testList1);
-
-CountryDAO countryDAO = new CountryDAO(DatabaseConnectionManager.openConnection());
-List<Country> testList2 = countryDAO.findAll();
-System.out.println(testList2);
-
-DivisionDAO divisionDAO = new DivisionDAO(DatabaseConnectionManager.openConnection());
-List<Division> testList3 = divisionDAO.findAll();
-System.out.println(testList3);
-
-UserDAO userDAO = new UserDAO(DatabaseConnectionManager.openConnection());
-List<User> testList4 = userDAO.findAll();
-System.out.println(testList4);
-
 AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
 List<Appointment> testList5 = appointmentDAO.findAll();
 System.out.println(testList5);
+
+CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
+ObservableList<Customer> testList6 = customerDAO.findAll();
+System.out.println(testList6);
 
 // Test CREATE statement
 Appointment appointment = new Appointment();
