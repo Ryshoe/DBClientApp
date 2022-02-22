@@ -20,6 +20,16 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Scheduling App");
         stage.setResizable(false);
         stage.show();
+
+        /* // Test customer CREATE statement
+        CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
+        Customer customer = new Customer();
+        customer.setCustName("Bruh");
+        customer.setAddress("123 My Way");
+        customer.setPostalCode("98765");
+        customer.setPhoneNum("555-123-4567");
+        customer.setDivision(17);
+        customerDAO.create(customer); */
     }
 
     public static void main(String[] args) {
