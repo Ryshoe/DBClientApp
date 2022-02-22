@@ -1,6 +1,8 @@
 package com.dbclientapp.appointment;
 
 import com.dbclientapp.util.DataAccessObject;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,8 +56,8 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
     }
 
     @Override
-    public List<Appointment> findAll() {
-        List<Appointment> appointmentList = new ArrayList<>();
+    public ObservableList<Appointment> findAll() {
+        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {

@@ -1,6 +1,8 @@
 package com.dbclientapp.customer;
 
 import com.dbclientapp.util.DataAccessObject;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -47,8 +49,8 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     }
 
     @Override
-    public List<Customer> findAll() {
-        List<Customer> customerList = new ArrayList<>();
+    public ObservableList<Customer> findAll() {
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
