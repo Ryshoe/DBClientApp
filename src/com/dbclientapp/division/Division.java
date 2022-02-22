@@ -1,6 +1,9 @@
 package com.dbclientapp.division;
 
+import com.dbclientapp.country.Country;
 import com.dbclientapp.util.DataTransferObject;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -8,12 +11,12 @@ public class Division implements DataTransferObject {
 
     private int id;
     private final StringProperty divisionName = new SimpleStringProperty();
-    private int countryId;
+    private final ObjectProperty<Country> country = new SimpleObjectProperty<>();
 
-    public Division(int id, String divisionName, int countryId) {
+    public Division(int id, String divisionName, Country country) {
         this.id = id;
         this.divisionName.set(divisionName);
-        this.countryId = countryId;
+        this.country.set(country);
     }
 
     @Override
@@ -38,12 +41,16 @@ public class Division implements DataTransferObject {
         return divisionName;
     }
 
-    public int getCountryId() {
-        return countryId;
+    public Country getCountry() {
+        return country.get();
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setCountry(Country country) {
+        this.country.set(country);
+    }
+
+    public ObjectProperty<Country> countryProperty() {
+        return country;
     }
 
     @Override
@@ -51,7 +58,7 @@ public class Division implements DataTransferObject {
         return "Division{" +
                 "id=" + id +
                 ", divisionName='" + divisionName + '\'' +
-                ", country=" + countryId +
+                ", country=" + country +
                 '}';
     }
 }
