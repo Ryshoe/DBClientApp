@@ -1,11 +1,18 @@
 package com.dbclientapp.country;
 
 import com.dbclientapp.util.DataTransferObject;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Country implements DataTransferObject {
 
     private int id;
-    private String countryName;
+    private final StringProperty countryName = new SimpleStringProperty();
+
+    public Country(int id, String countryName) {
+        this.id = id;
+        this.countryName.set(countryName);
+    }
 
     @Override
     public int getId() {
@@ -18,11 +25,11 @@ public class Country implements DataTransferObject {
     }
 
     public String getCountryName() {
-        return countryName;
+        return countryName.get();
     }
 
     public void setCountryName(String countryName) {
-        this.countryName = countryName;
+        this.countryName.set(countryName);
     }
 
     @Override

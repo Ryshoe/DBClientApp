@@ -23,7 +23,7 @@ public class CountryDAO extends DataAccessObject<Country> {
 
     @Override
     public Country findById(int id) {
-        Country country = new Country();
+        Country country = new Country(0, null);
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -44,7 +44,7 @@ public class CountryDAO extends DataAccessObject<Country> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Country country = new Country();
+                Country country = new Country(0, null);
                 country.setId(rs.getInt("Country_ID"));
                 country.setCountryName(rs.getString("Country"));
                 countryList.add(country);
