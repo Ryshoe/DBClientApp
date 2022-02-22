@@ -32,6 +32,10 @@ public class Country implements DataTransferObject {
         this.countryName.set(countryName);
     }
 
+    public StringProperty countryNameProperty() {
+        return countryName;
+    }
+
     @Override
     public String toString() {
         return "Country{" +
