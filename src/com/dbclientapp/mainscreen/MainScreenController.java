@@ -1,6 +1,7 @@
 package com.dbclientapp.mainscreen;
 
 import com.dbclientapp.appointment.Appointment;
+import com.dbclientapp.appointment.AppointmentDAO;
 import com.dbclientapp.customer.Customer;
 import com.dbclientapp.customer.CustomerDAO;
 import com.dbclientapp.util.DatabaseConnectionManager;
@@ -29,9 +30,9 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button apptAddButton;
     @FXML
-    private TableColumn<?, ?> apptContactCol;
+    private TableColumn<Appointment, String> apptContactCol;
     @FXML
-    private TableColumn<?, ?> apptCustIdCol;
+    private TableColumn<Appointment, Number> apptCustIdCol;
     @FXML
     private Button apptDeleteButton;
     @FXML
@@ -55,7 +56,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> apptTypeCol;
     @FXML
-    private TableColumn<?, ?> apptUserIdCol;
+    private TableColumn<Appointment, Number> apptUserIdCol;
     @FXML
     private Button custAddButton;
     @FXML
@@ -229,16 +230,26 @@ public class MainScreenController implements Initializable {
         custList.setAll(customerDAO.findAll());
         custTable.setItems(custList);
         custTable.refresh();
+        DatabaseConnectionManager.closeConnection();
 
         // Assign column values for appointment list
-        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
-        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        apptDescrCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("Location"));
-        apptContactCol.setCellValueFactory(new PropertyValueFactory<>("Contact_Name"));
-        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
-        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("End"));
+        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        apptDescrCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        apptContactCol.setCellValueFactory(cdf -> cdf.getValue().getContact().contactNameProperty());
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptCustIdCol.setCellValueFactory(cdf -> cdf.getValue().getCustomer().idProperty());
+        apptUserIdCol.setCellValueFactory(cdf -> cdf.getValue().getUser().idProperty());
+
+        // Populate appointment list from SQL database
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        apptList.setAll(appointmentDAO.findAll());
+        apptTable.setItems(apptList);
+        apptTable.refresh();
+        DatabaseConnectionManager.closeConnection();
     }
 
     //TODO Create method that populates appointment TableView
