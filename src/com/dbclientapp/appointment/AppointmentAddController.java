@@ -1,9 +1,9 @@
 package com.dbclientapp.appointment;
 
-import com.dbclientapp.mainscreen.MainScreenController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,8 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AppointmentAddController {
+public class AppointmentAddController implements Initializable {
 
     Stage stage;
     Parent scene;
@@ -22,43 +24,30 @@ public class AppointmentAddController {
 
     @FXML
     private TextField appointmentIdField;
-
     @FXML
     private Button cancelButton;
-
     @FXML
     private ComboBox<?> contactBox;
-
     @FXML
     private TextField customerIdField;
-
     @FXML
     private TextField descriptionField;
-
     @FXML
     private DatePicker endDate;
-
     @FXML
     private ComboBox<?> endTime;
-
     @FXML
     private TextField locationField;
-
     @FXML
     private Button okButton;
-
     @FXML
     private DatePicker startDate;
-
     @FXML
     private ComboBox<?> startTime;
-
     @FXML
     private TextField titleField;
-
     @FXML
     private ComboBox<?> typeBox;
-
     @FXML
     private TextField userIdField;
 
@@ -78,6 +67,11 @@ public class AppointmentAddController {
         MainScreenController mainScreenController = loader.getController();
         mainScreenController.selectTabPane(1);
          */
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
     }
 
     //TODO Pre-populate form with selected customer/user ID from MainScreen

@@ -3,6 +3,7 @@ package com.dbclientapp.customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,8 +12,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CustomerEditController {
+public class CustomerEditController implements Initializable {
 
     Stage stage;
     Parent scene;
@@ -57,6 +60,11 @@ public class CustomerEditController {
     @FXML
     void okButtonAction(ActionEvent event) {
         //TODO Parse inputs from form and add to database
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 
     //TODO Pre-populate form with selected customer from MainScreen

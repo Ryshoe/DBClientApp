@@ -213,7 +213,7 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Assign columns for customer list
+        // Assign columns for customer data
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("custName"));
         custAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -224,14 +224,14 @@ public class MainScreenController implements Initializable {
         custCountryCol.setCellValueFactory(cdf -> cdf.getValue().getDivision().
                 getCountry().countryNameProperty());
 
-        // Populate customer list from SQL database
+        // Populate customer TableView using SQL database
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
         custList.setAll(customerDAO.findAll());
         custTable.setItems(custList);
         custTable.refresh();
         DatabaseConnectionManager.closeConnection();
 
-        // Assign column values for appointment list
+        // Assign column values for appointment data
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptDescrCol.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -243,7 +243,7 @@ public class MainScreenController implements Initializable {
         apptCustIdCol.setCellValueFactory(cdf -> cdf.getValue().getCustomer().idProperty());
         apptUserIdCol.setCellValueFactory(cdf -> cdf.getValue().getUser().idProperty());
 
-        // Populate appointment list from SQL database
+        // Populate appointment TableView using SQL database
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         apptList.setAll(appointmentDAO.findAll());
         apptTable.setItems(apptList);
