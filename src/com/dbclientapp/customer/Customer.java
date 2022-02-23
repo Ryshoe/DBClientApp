@@ -4,13 +4,11 @@ import com.dbclientapp.division.Division;
 import com.dbclientapp.util.DataTransferObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class Customer implements DataTransferObject {
 
     private int id;
-    private final StringProperty custName = new SimpleStringProperty();
+    private String custName;
     private String address;
     private String postalCode;
     private String phoneNum;
@@ -18,7 +16,7 @@ public class Customer implements DataTransferObject {
 
     public Customer(int id, String custName, String address, String postalCode, String phoneNum, Division division) {
         this.id = id;
-        this.custName.set(custName);
+        this.custName = custName;
         this.address = address;
         this.postalCode = postalCode;
         this.phoneNum = phoneNum;
@@ -36,15 +34,11 @@ public class Customer implements DataTransferObject {
     }
 
     public String getCustName() {
-        return custName.get();
+        return custName;
     }
 
     public void setCustName(String custName) {
-        this.custName.set(custName);
-    }
-
-    public StringProperty custNameProperty() {
-        return custName;
+        this.custName = custName;
     }
 
     public String getAddress() {
