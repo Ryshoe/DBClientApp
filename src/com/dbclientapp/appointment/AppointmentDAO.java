@@ -1,12 +1,13 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.contact.Contact;
+import com.dbclientapp.customer.Customer;
+import com.dbclientapp.user.User;
 import com.dbclientapp.util.DataAccessObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AppointmentDAO extends DataAccessObject<Appointment> {
 
@@ -18,7 +19,13 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             "Location, Type, Start, End, Customer_ID, User_ID, Contact_ID " +
             "FROM appointments WHERE Appointment_ID = ?";
 
-    private static final String READ_ALL = "SELECT * FROM appointments";
+    private static final String READ_ALL = "SELECT * FROM appointments " +
+            "INNER JOIN customers " +
+            "ON appointments.Customer_ID = customers.Customer_ID " +
+            "INNER JOIN users " +
+            "ON appointments.User_ID = users.User_ID " +
+            "INNER JOIN contacts " +
+            "ON appointments.Contact_ID = contacts.Contact_ID";
 
     private static final String UPDATE = "UPDATE appointments SET Title = ?, " +
             "Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
@@ -32,11 +39,15 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
 
     @Override
     public Appointment findById(int id) {
-        Appointment appointment = new Appointment();
+        Appointment appointment = new Appointment(0, null, null, null, null, null,
+                null, null, null, null);
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
+                Customer customer = new Customer(0, null, null, null, null, null);
+                User user = new User(0, null, null);
+                Contact contact = new Contact(0, null, null);
                 appointment.setId(rs.getInt("Appointment_ID"));
                 appointment.setTitle(rs.getString("Title"));
                 appointment.setDescription(rs.getString("Description"));
@@ -44,9 +55,20 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
                 appointment.setType(rs.getString("Type"));
                 appointment.setStart(rs.getTimestamp("Start"));
                 appointment.setEnd(rs.getTimestamp("End"));
-                appointment.setCustId(rs.getInt("Customer_ID"));
-                appointment.setUserId(rs.getInt("User_ID"));
-                appointment.setContactId(rs.getInt("Contact_ID"));
+                customer.setId(rs.getInt("Customer_ID"));
+                customer.setCustName(rs.getString("Customer_Name"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhoneNum(rs.getString("Phone"));
+                user.setId(rs.getInt("User_ID"));
+                user.setUsername(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                contact.setId(rs.getInt("Contact_ID"));
+                contact.setContactName(rs.getString("Contact_Name"));
+                contact.setEmail(rs.getString("Email"));
+                appointment.setCustomer(customer);
+                appointment.setUser(user);
+                appointment.setContact(contact);
             }
         } catch(SQLException e) {
             e.printStackTrace();
@@ -61,7 +83,11 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Appointment appointment = new Appointment();
+                Appointment appointment = new Appointment(0, null, null, null, null, null,
+                        null, null, null, null);
+                Customer customer = new Customer(0, null, null, null, null, null);
+                User user = new User(0, null, null);
+                Contact contact = new Contact(0, null, null);
                 appointment.setId(rs.getInt("Appointment_ID"));
                 appointment.setTitle(rs.getString("Title"));
                 appointment.setDescription(rs.getString("Description"));
@@ -69,9 +95,20 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
                 appointment.setType(rs.getString("Type"));
                 appointment.setStart(rs.getTimestamp("Start"));
                 appointment.setEnd(rs.getTimestamp("End"));
-                appointment.setCustId(rs.getInt("Customer_ID"));
-                appointment.setUserId(rs.getInt("User_ID"));
-                appointment.setContactId(rs.getInt("Contact_ID"));
+                customer.setId(rs.getInt("Customer_ID"));
+                customer.setCustName(rs.getString("Customer_Name"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhoneNum(rs.getString("Phone"));
+                user.setId(rs.getInt("User_ID"));
+                user.setUsername(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                contact.setId(rs.getInt("Contact_ID"));
+                contact.setContactName(rs.getString("Contact_Name"));
+                contact.setEmail(rs.getString("Email"));
+                appointment.setCustomer(customer);
+                appointment.setUser(user);
+                appointment.setContact(contact);
                 appointmentList.add(appointment);
             }
         } catch(SQLException e) {
@@ -91,9 +128,9 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             ps.setString(4, dto.getType());
             ps.setTimestamp(5, dto.getStart());
             ps.setTimestamp(6, dto.getEnd());
-            ps.setInt(7, dto.getCustId());
-            ps.setInt(8, dto.getUserId());
-            ps.setInt(9, dto.getContactId());
+            ps.setInt(7, dto.getCustomer().getId());
+            ps.setInt(8, dto.getUser().getId());
+            ps.setInt(9, dto.getContact().getId());
             ps.setInt(10, dto.getId());
             ps.execute();
             appointment = this.findById(dto.getId());
@@ -113,9 +150,9 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             ps.setString(4, dto.getType());
             ps.setTimestamp(5, dto.getStart());
             ps.setTimestamp(6, dto.getEnd());
-            ps.setInt(7, dto.getCustId());
-            ps.setInt(8, dto.getUserId());
-            ps.setInt(9, dto.getContactId());
+            ps.setInt(7, dto.getCustomer().getId());
+            ps.setInt(8, dto.getUser().getId());
+            ps.setInt(9, dto.getContact().getId());
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();
             int id = 0;
