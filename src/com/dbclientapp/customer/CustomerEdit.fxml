@@ -33,7 +33,7 @@
                         <TextField fx:id="addressField" />
                         <TextField fx:id="postalField" />
                         <TextField fx:id="phoneField" />
-                        <ComboBox fx:id="countryBox" prefWidth="150.0" />
+                        <ComboBox fx:id="countryBox" onAction="#countryBoxAction" prefWidth="150.0" />
                         <ComboBox fx:id="divisionBox" prefWidth="150.0" />
                      </children>
                   </VBox>
