@@ -252,6 +252,5 @@ public class MainScreenController implements Initializable {
         DatabaseConnectionManager.closeConnection();
     }
 
-    //TODO Create method that populates appointment TableView
     //TODO Create method that populates report ComboBox
 }
