@@ -1,5 +1,7 @@
 package com.dbclientapp.appointment;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,13 +23,33 @@ public class AppointmentAddController implements Initializable {
     Stage stage;
     Parent scene;
     FXMLLoader loader;
+    private final ObservableList<String> contactList = FXCollections.observableArrayList(
+            "Anika Costa",
+            "Daniel Garcia",
+            "Li Lee");
+    private final ObservableList<String> typeList = FXCollections.observableArrayList(
+            "De-Briefing",
+            "Planning Session",
+            "Team-Building",
+            "Feedback");
+    private final ObservableList<String> timeList = FXCollections.observableArrayList(
+            "08:00:00",
+            "09:00:00",
+            "10:00:00",
+            "11:00:00",
+            "12:00:00",
+            "13:00:00",
+            "14:00:00",
+            "15:00:00",
+            "16:00:00",
+            "17:00:00");
 
     @FXML
     private TextField appointmentIdField;
     @FXML
     private Button cancelButton;
     @FXML
-    private ComboBox<?> contactBox;
+    private ComboBox<String> contactBox;
     @FXML
     private TextField customerIdField;
     @FXML
@@ -35,7 +57,7 @@ public class AppointmentAddController implements Initializable {
     @FXML
     private DatePicker endDate;
     @FXML
-    private ComboBox<?> endTime;
+    private ComboBox<String> endTime;
     @FXML
     private TextField locationField;
     @FXML
@@ -43,11 +65,11 @@ public class AppointmentAddController implements Initializable {
     @FXML
     private DatePicker startDate;
     @FXML
-    private ComboBox<?> startTime;
+    private ComboBox<String> startTime;
     @FXML
     private TextField titleField;
     @FXML
-    private ComboBox<?> typeBox;
+    private ComboBox<String> typeBox;
     @FXML
     private TextField userIdField;
 
@@ -71,11 +93,13 @@ public class AppointmentAddController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        // Populate ComboBoxes
+        contactBox.setItems(contactList);
+        typeBox.setItems(typeList);
+        startTime.setItems(timeList);
+        endTime.setItems(timeList);
     }
 
     //TODO Pre-populate form with selected customer/user ID from MainScreen
-    //TODO Create method that populates contact ComboBox
-    //TODO Create method that populates type ComboBox
-    //TODO Create method that populates start/end time ComboBoxes
+    //TODO Error check bounds for start/end date and time
 }
