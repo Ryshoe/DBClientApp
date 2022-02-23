@@ -26,6 +26,8 @@ public class MainScreenController implements Initializable {
     Stage stage;
     Parent scene;
     FXMLLoader loader;
+    private final ObservableList<Customer> custList = FXCollections.observableArrayList();
+    private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
 
     @FXML
     private Button apptAddButton;
@@ -137,9 +139,6 @@ public class MainScreenController implements Initializable {
     private ToggleGroup toggleGroup;
     @FXML
     private RadioButton weekRadio;
-
-    private final ObservableList<Customer> custList = FXCollections.observableArrayList();
-    private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
 
     @FXML
     void apptAddButtonAction(ActionEvent event) throws IOException {
