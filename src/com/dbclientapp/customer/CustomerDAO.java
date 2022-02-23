@@ -39,12 +39,17 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Division division = new Division(0, null, null);
+                Country country = new Country(0, null);
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
                 customer.setPostalCode(rs.getString("Postal_Code"));
                 customer.setPhoneNum(rs.getString("Phone"));
                 division.setId(rs.getInt("Division_ID"));
+                division.setDivisionName(rs.getString("Division"));
+                country.setId(rs.getInt("Country_ID"));
+                country.setCountryName(rs.getString("Country"));
+                division.setCountry(country);
                 customer.setDivision(division);
             }
         } catch(SQLException e) {
