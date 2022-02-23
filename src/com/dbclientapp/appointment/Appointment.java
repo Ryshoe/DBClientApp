@@ -1,6 +1,11 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.contact.Contact;
+import com.dbclientapp.customer.Customer;
+import com.dbclientapp.user.User;
 import com.dbclientapp.util.DataTransferObject;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.sql.Timestamp;
 
@@ -13,10 +18,24 @@ public class Appointment implements DataTransferObject {
     private String type;
     private Timestamp start;
     private Timestamp end;
-    private int custId;
-    private int userId;
-    private int contactId;
+    private final ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
+    private final ObjectProperty<User> user = new SimpleObjectProperty<>();
+    private final ObjectProperty<Contact> contact = new SimpleObjectProperty<>();
 
+    public Appointment(int id, String title, String description, String location,
+                       String type, Timestamp start, Timestamp end, Customer customer,
+                       User user, Contact contact) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        this.customer.set(customer);
+        this.user.set(user);
+        this.contact.set(contact);
+    }
 
     @Override
     public int getId() {
@@ -76,28 +95,40 @@ public class Appointment implements DataTransferObject {
         this.end = end;
     }
 
-    public int getCustId() {
-        return custId;
+    public Customer getCustomer() {
+        return customer.get();
     }
 
-    public void setCustId(int custId) {
-        this.custId = custId;
+    public void setCustomer(Customer customer) {
+        this.customer.set(customer);
     }
 
-    public int getUserId() {
-        return userId;
+    public ObjectProperty<Customer> customerProperty() {
+        return customer;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public User getUser() {
+        return user.get();
     }
 
-    public int getContactId() {
-        return contactId;
+    public void setUser(User user) {
+        this.user.set(user);
     }
 
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    public ObjectProperty<User> userProperty() {
+        return user;
+    }
+
+    public Contact getContact() {
+        return contact.get();
+    }
+
+    public void setContact(Contact contact) {
+        this.contact.set(contact);
+    }
+
+    public ObjectProperty<Contact> contactProperty() {
+        return contact;
     }
 
     @Override
@@ -110,9 +141,9 @@ public class Appointment implements DataTransferObject {
                 ", type='" + type + '\'' +
                 ", start=" + start +
                 ", end=" + end +
-                ", custId=" + custId +
-                ", userId=" + userId +
-                ", contactId=" + contactId +
+                ", customer=" + customer +
+                ", user=" + user +
+                ", contact=" + contact +
                 '}';
     }
 }

@@ -2,12 +2,14 @@ package com.dbclientapp.customer;
 
 import com.dbclientapp.division.Division;
 import com.dbclientapp.util.DataTransferObject;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class Customer implements DataTransferObject {
 
-    private int id;
+    private final IntegerProperty id = new SimpleIntegerProperty();
     private String custName;
     private String address;
     private String postalCode;
@@ -15,7 +17,7 @@ public class Customer implements DataTransferObject {
     private final ObjectProperty<Division> division = new SimpleObjectProperty<>();
 
     public Customer(int id, String custName, String address, String postalCode, String phoneNum, Division division) {
-        this.id = id;
+        this.id.set(id);
         this.custName = custName;
         this.address = address;
         this.postalCode = postalCode;
@@ -25,12 +27,16 @@ public class Customer implements DataTransferObject {
 
     @Override
     public int getId() {
-        return id;
+        return id.get();
     }
 
     @Override
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public String getCustName() {

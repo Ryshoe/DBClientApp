@@ -1,21 +1,33 @@
 package com.dbclientapp.user;
 
 import com.dbclientapp.util.DataTransferObject;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class User implements DataTransferObject {
 
-    private int id;
+    private final IntegerProperty id = new SimpleIntegerProperty();
     private String username;
     private String password;
 
+    public User(int id, String username, String password) {
+        this.id.set(id);
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public int getId() {
-        return id;
+        return id.get();
     }
 
     @Override
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public String getUsername() {
