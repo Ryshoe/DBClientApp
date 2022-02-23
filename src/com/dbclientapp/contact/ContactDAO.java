@@ -22,7 +22,7 @@ public class ContactDAO extends DataAccessObject<Contact> {
 
     @Override
     public Contact findById(int id) {
-        Contact contact = new Contact();
+        Contact contact = new Contact(0, null, null);
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -44,7 +44,7 @@ public class ContactDAO extends DataAccessObject<Contact> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Contact contact = new Contact();
+                Contact contact = new Contact(0, null, null);
                 contact.setId(rs.getInt("Contact_ID"));
                 contact.setContactName(rs.getString("Contact_Name"));
                 contact.setEmail(rs.getString("Email"));
