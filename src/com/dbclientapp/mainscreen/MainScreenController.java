@@ -151,6 +151,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void apptEdit(ActionEvent event) throws IOException {
+        //TODO Grab current selection and pass to Edit screen
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         loader = new FXMLLoader(getClass().getResource("../Appointment/AppointmentEdit.fxml"));
         scene = loader.load();
@@ -174,6 +175,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void custEditButtonAction(ActionEvent event) throws IOException {
+        //TODO Grab current selection and pass to Edit screen
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         loader = new FXMLLoader(getClass().getResource("../Customer/CustomerEdit.fxml"));
         scene = loader.load();
