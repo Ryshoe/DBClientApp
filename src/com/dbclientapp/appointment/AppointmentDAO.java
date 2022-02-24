@@ -15,9 +15,14 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             "Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
-    private static final String READ_ONE = "SELECT Appointment_ID, Title, Description, " +
-            "Location, Type, Start, End, Customer_ID, User_ID, Contact_ID " +
-            "FROM appointments WHERE Appointment_ID = ?";
+    private static final String READ_ONE = "SELECT * FROM appointments " +
+            "INNER JOIN customers " +
+            "ON appointments.Customer_ID = customers.Customer_ID " +
+            "INNER JOIN users " +
+            "ON appointments.User_ID = users.User_ID " +
+            "INNER JOIN contacts " +
+            "ON appointments.Contact_ID = contacts.Contact_ID " +
+            "WHERE Appointment_ID = ?";
 
     private static final String READ_ALL = "SELECT * FROM appointments " +
             "INNER JOIN customers " +

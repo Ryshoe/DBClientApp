@@ -13,8 +13,12 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     private static final String CREATE = "INSERT INTO customers (Customer_Name, " +
             "Address, Postal_Code, Phone, Division_ID) VALUES (?, ?, ?, ?, ?) ";
 
-    private static final String READ_ONE = "SELECT Customer_ID, Customer_Name, " +
-            "Address, Postal_Code, Phone, Division_ID FROM customers WHERE Customer_ID = ?";
+    private static final String READ_ONE = "SELECT * FROM customers " +
+            "INNER JOIN first_level_divisions " +
+            "ON customers.Division_ID = first_level_divisions.Division_ID " +
+            "INNER JOIN countries " +
+            "ON first_level_divisions.Country_ID = countries.Country_ID " +
+            "WHERE Customer_ID = ?";
 
     private static final String READ_ALL = "SELECT * FROM customers " +
             "INNER JOIN first_level_divisions " +
