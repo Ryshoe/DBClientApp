@@ -132,7 +132,7 @@
                            <children>
                               <ToolBar prefHeight="40.0" prefWidth="200.0">
                                 <items>
-                                    <ComboBox fx:id="reportBox" prefWidth="150.0" />
+                                    <ComboBox fx:id="reportBox" onAction="#reportBoxAction" prefWidth="150.0" />
                                   <Button fx:id="reportRunButton" mnemonicParsing="false" onAction="#reportRunButtonAction" prefWidth="50.0" text="Run" />
                                 </items>
                               </ToolBar>
