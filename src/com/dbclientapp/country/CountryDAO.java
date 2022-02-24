@@ -1,6 +1,5 @@
 package com.dbclientapp.country;
 
-import com.dbclientapp.contact.Contact;
 import com.dbclientapp.util.DataAccessObject;
 
 import java.sql.Connection;
@@ -12,8 +11,11 @@ import java.util.List;
 
 public class CountryDAO extends DataAccessObject<Country> {
 
-    private static final String READ_ONE = "SELECT Country_ID, Country " +
+    private static final String READ_ONE_BY_ID = "SELECT Country_ID, Country " +
             "FROM countries WHERE Country_ID = ?";
+
+    private static final String READ_ONE_BY_NAME = "SELECT Country_ID, Country " +
+            "FROM countries WHERE Country = ?";
 
     private static final String READ_ALL = "SELECT * FROM countries";
 
@@ -24,8 +26,24 @@ public class CountryDAO extends DataAccessObject<Country> {
     @Override
     public Country findById(int id) {
         Country country = new Country();
-        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_ID)) {
             ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                country.setId(rs.getInt("Country_ID"));
+                country.setCountryName(rs.getString("Country"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return country;
+    }
+
+    public Country findByName(String name) {
+        Country country = new Country();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_NAME)) {
+            ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 country.setId(rs.getInt("Country_ID"));

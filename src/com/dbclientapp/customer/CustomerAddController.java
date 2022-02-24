@@ -1,5 +1,10 @@
 package com.dbclientapp.customer;
 
+import com.dbclientapp.country.Country;
+import com.dbclientapp.country.CountryDAO;
+import com.dbclientapp.division.Division;
+import com.dbclientapp.division.DivisionDAO;
+import com.dbclientapp.util.DatabaseConnectionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +18,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -127,8 +133,39 @@ public class CustomerAddController implements Initializable {
     }
 
     @FXML
-    void okButtonAction(ActionEvent event) {
-        //TODO Parse inputs from form and add to database
+    void okButtonAction(ActionEvent event) throws IOException {
+        // TODO Error checking / input validation
+
+        // Parse input from TextFields
+        Customer customerInput = new Customer();
+        customerInput.setCustName(nameField.getText());
+        customerInput.setAddress(addressField.getText());
+        customerInput.setPostalCode(postalField.getText());
+        customerInput.setPhoneNum(phoneField.getText());
+
+        // Parse ComboBox selections
+        CountryDAO countryDAO = new CountryDAO(DatabaseConnectionManager.openConnection());
+        Country countryInput = countryDAO.findByName(countryBox.getValue());
+        DatabaseConnectionManager.closeConnection();
+        DivisionDAO divisionDAO = new DivisionDAO(DatabaseConnectionManager.openConnection());
+        Division divisionInput = divisionDAO.findByName(divisionBox.getValue());
+        DatabaseConnectionManager.closeConnection();
+
+        // Add country and division details to customer
+        divisionInput.setCountry(countryInput);
+        customerInput.setDivision(divisionInput);
+
+        // Create new record in database
+        CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
+        customerDAO.create(customerInput);
+        DatabaseConnectionManager.closeConnection();
+
+        // Return to MainScreen
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
