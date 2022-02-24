@@ -143,7 +143,7 @@ public class CustomerEditController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle rb) {
         // Populate country ComboBox
         countryBox.setItems(countryList);
     }

@@ -97,7 +97,7 @@ public class AppointmentEditController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle rb) {
         // Populate ComboBoxes
         contactBox.setItems(contactList);
         typeBox.setItems(typeList);
