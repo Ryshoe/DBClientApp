@@ -27,7 +27,7 @@
                            <children>
                               <TableView fx:id="custTable">
                                 <columns>
-                                  <TableColumn fx:id="custIdCol" prefWidth="75.0" text="Customer ID" />
+                                  <TableColumn fx:id="custIdCol" prefWidth="75.0" text="ID" />
                                   <TableColumn fx:id="custNameCol" prefWidth="75.0" text="Name" />
                                     <TableColumn fx:id="custAddressCol" prefWidth="75.0" text="Address" />
                                     <TableColumn fx:id="custPostalCol" prefWidth="75.0" text="Postal Code" />
@@ -68,7 +68,7 @@
                            <children>
                               <TableView fx:id="apptTable">
                                  <columns>
-                                    <TableColumn fx:id="apptIdCol" prefWidth="75.0" text="Appointment ID" />
+                                    <TableColumn fx:id="apptIdCol" prefWidth="75.0" text="ID" />
                                     <TableColumn fx:id="apptTitleCol" prefWidth="75.0" text="Title" />
                                     <TableColumn fx:id="apptDescrCol" prefWidth="75.0" text="Description" />
                                     <TableColumn fx:id="apptLocationCol" prefWidth="75.0" text="Location" />
