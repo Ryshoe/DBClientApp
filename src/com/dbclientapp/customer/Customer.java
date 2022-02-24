@@ -16,15 +16,6 @@ public class Customer implements DataTransferObject {
     private String phoneNum;
     private final ObjectProperty<Division> division = new SimpleObjectProperty<>();
 
-    public Customer(int id, String custName, String address, String postalCode, String phoneNum, Division division) {
-        this.id.set(id);
-        this.custName = custName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phoneNum = phoneNum;
-        this.division.set(division);
-    }
-
     @Override
     public int getId() {
         return id.get();

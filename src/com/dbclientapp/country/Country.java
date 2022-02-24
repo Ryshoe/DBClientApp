@@ -9,11 +9,6 @@ public class Country implements DataTransferObject {
     private int id;
     private final StringProperty countryName = new SimpleStringProperty();
 
-    public Country(int id, String countryName) {
-        this.id = id;
-        this.countryName.set(countryName);
-    }
-
     @Override
     public int getId() {
         return id;

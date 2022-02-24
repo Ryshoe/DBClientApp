@@ -33,13 +33,13 @@ public class CustomerDAO extends DataAccessObject<Customer> {
 
     @Override
     public Customer findById(int id) {
-        Customer customer = new Customer(0, null, null, null, null, null);
+        Customer customer = new Customer();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Division division = new Division(0, null, null);
-                Country country = new Country(0, null);
+                Division division = new Division();
+                Country country = new Country();
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
@@ -65,9 +65,9 @@ public class CustomerDAO extends DataAccessObject<Customer> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Customer customer = new Customer(0, null, null, null, null, null);
-                Division division = new Division(0, null, null);
-                Country country = new Country(0, null);
+                Customer customer = new Customer();
+                Division division = new Division();
+                Country country = new Country();
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));

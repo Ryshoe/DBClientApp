@@ -10,13 +10,7 @@ public class User implements DataTransferObject {
     private String username;
     private String password;
 
-    public User(int id, String username, String password) {
-        this.id.set(id);
-        this.username = username;
-        this.password = password;
-    }
-
-    @Override
+   @Override
     public int getId() {
         return id.get();
     }

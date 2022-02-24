@@ -25,7 +25,7 @@ public class UserDAO extends DataAccessObject<User> {
 
     @Override
     public User findById(int id) {
-        User user = new User(0, null, null);
+        User user = new User();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -42,7 +42,7 @@ public class UserDAO extends DataAccessObject<User> {
     }
 
     public User findByUser(String username) {
-        User user = new User(0, null, null);
+        User user = new User();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_USER)) {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -64,7 +64,7 @@ public class UserDAO extends DataAccessObject<User> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                User user = new User(0, null, null);
+                User user = new User();
                 user.setId(rs.getInt("User_ID"));
                 user.setUsername(rs.getString("User_Name"));
                 user.setPassword(rs.getString("Password"));

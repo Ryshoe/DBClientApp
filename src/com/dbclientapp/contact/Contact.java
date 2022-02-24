@@ -10,12 +10,6 @@ public class Contact implements DataTransferObject {
     private final StringProperty contactName = new SimpleStringProperty();
     private String email;
 
-    public Contact(int id, String contactName, String email) {
-        this.id = id;
-        this.contactName.set(contactName);
-        this.email = email;
-    }
-
     @Override
     public int getId() {
         return id;

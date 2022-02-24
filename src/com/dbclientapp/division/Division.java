@@ -13,12 +13,6 @@ public class Division implements DataTransferObject {
     private final StringProperty divisionName = new SimpleStringProperty();
     private final ObjectProperty<Country> country = new SimpleObjectProperty<>();
 
-    public Division(int id, String divisionName, Country country) {
-        this.id = id;
-        this.divisionName.set(divisionName);
-        this.country.set(country);
-    }
-
     @Override
     public int getId() {
         return id;

@@ -22,21 +22,6 @@ public class Appointment implements DataTransferObject {
     private final ObjectProperty<User> user = new SimpleObjectProperty<>();
     private final ObjectProperty<Contact> contact = new SimpleObjectProperty<>();
 
-    public Appointment(int id, String title, String description, String location,
-                       String type, Timestamp start, Timestamp end, Customer customer,
-                       User user, Contact contact) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this.type = type;
-        this.start = start;
-        this.end = end;
-        this.customer.set(customer);
-        this.user.set(user);
-        this.contact.set(contact);
-    }
-
     @Override
     public int getId() {
         return id;

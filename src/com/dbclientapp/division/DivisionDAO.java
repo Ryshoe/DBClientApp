@@ -22,7 +22,7 @@ public class DivisionDAO extends DataAccessObject<Division> {
 
     @Override
     public Division findById(int id) {
-        Division division = new Division(0, null, null);
+        Division division = new Division();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -43,7 +43,7 @@ public class DivisionDAO extends DataAccessObject<Division> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Division division = new Division(0, null, null);
+                Division division = new Division();
                 division.setId(rs.getInt("Division_ID"));
                 division.setDivisionName(rs.getString("Division"));
                 divisionList.add(division);

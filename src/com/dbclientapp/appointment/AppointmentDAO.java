@@ -39,15 +39,14 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
 
     @Override
     public Appointment findById(int id) {
-        Appointment appointment = new Appointment(0, null, null, null, null, null,
-                null, null, null, null);
+        Appointment appointment = new Appointment();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Customer customer = new Customer(0, null, null, null, null, null);
-                User user = new User(0, null, null);
-                Contact contact = new Contact(0, null, null);
+                Customer customer = new Customer();
+                User user = new User();
+                Contact contact = new Contact();
                 appointment.setId(rs.getInt("Appointment_ID"));
                 appointment.setTitle(rs.getString("Title"));
                 appointment.setDescription(rs.getString("Description"));
@@ -83,11 +82,10 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ALL)) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Appointment appointment = new Appointment(0, null, null, null, null, null,
-                        null, null, null, null);
-                Customer customer = new Customer(0, null, null, null, null, null);
-                User user = new User(0, null, null);
-                Contact contact = new Contact(0, null, null);
+                Appointment appointment = new Appointment();
+                Customer customer = new Customer();
+                User user = new User();
+                Contact contact = new Contact();
                 appointment.setId(rs.getInt("Appointment_ID"));
                 appointment.setTitle(rs.getString("Title"));
                 appointment.setDescription(rs.getString("Description"));
