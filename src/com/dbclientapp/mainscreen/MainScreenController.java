@@ -28,6 +28,14 @@ public class MainScreenController implements Initializable {
     FXMLLoader loader;
     private final ObservableList<Customer> custList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
+    private final ObservableList<String> reportList = FXCollections.observableArrayList(
+            "Report #1",
+            "Report #2",
+            "Report #3");
+    private final ObservableList<String> contactList = FXCollections.observableArrayList(
+            "Anika Costa",
+            "Daniel Garcia",
+            "Li Lee");
 
     @FXML
     private Button apptAddButton;
@@ -102,7 +110,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> report2ApptIdCol;
     @FXML
-    private ComboBox<?> report2Box;
+    private ComboBox<String> report2Box;
     @FXML
     private TableColumn<?, ?> report2CustIdCol;
     @FXML
@@ -128,7 +136,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableView<?> report3Table;
     @FXML
-    private ComboBox<?> reportBox;
+    private ComboBox<String> reportBox;
     @FXML
     private Button reportRunButton;
     @FXML
@@ -204,8 +212,17 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
+    void reportBoxAction(ActionEvent event) {
+        //TODO Add listener for report selection
+    }
+
+    @FXML
     void reportRunButtonAction(ActionEvent event) {
         //TODO Run selected report
+        // If report #1 selected, populate report1Table
+        // If report #2 selected, display report2Box and populate report2Table (default to first contact)
+
+        //TODO Determine a 3rd report type
     }
 
     public void selectTabPane(int tabIndex) {
@@ -251,7 +268,9 @@ public class MainScreenController implements Initializable {
         apptTable.setItems(apptList);
         apptTable.refresh();
         DatabaseConnectionManager.closeConnection();
-    }
 
-    //TODO Create method that populates report ComboBox
+        // Populate report ComboBoxes
+        reportBox.setItems(reportList);
+        report2Box.setItems(contactList);
+    }
 }
