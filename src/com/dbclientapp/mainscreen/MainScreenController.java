@@ -36,6 +36,8 @@ public class MainScreenController implements Initializable {
             "Anika Costa",
             "Daniel Garcia",
             "Li Lee");
+    public static Customer selectedCustomer = new Customer();
+    public static Appointment selectedAppointment = new Appointment();
 
     @FXML
     private Button apptAddButton;
@@ -182,13 +184,19 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void custEditButtonAction(ActionEvent event) throws IOException {
-        //TODO Grab current selection and pass to Edit screen
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../Customer/CustomerEdit.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
+    void custEditButtonAction(ActionEvent event) {
+        try {
+            setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            loader = new FXMLLoader(getClass().getResource("../Customer/CustomerEdit.fxml"));
+            scene = loader.load();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please select a customer to edit.");
+            alert.show();
+        }
     }
 
     @FXML
@@ -223,11 +231,6 @@ public class MainScreenController implements Initializable {
         // If report #2 selected, display report2Box and populate report2Table (default to first contact)
 
         //TODO Determine a 3rd report type
-    }
-
-    public void selectTabPane(int tabIndex) {
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        selectionModel.select(tabIndex);
     }
 
     @Override
@@ -272,5 +275,26 @@ public class MainScreenController implements Initializable {
         // Populate report ComboBoxes
         reportBox.setItems(reportList);
         report2Box.setItems(contactList);
+    }
+
+    public void selectTabPane(int tabIndex) {
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        selectionModel.select(tabIndex);
+    }
+
+    public static Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    public void setSelectedCustomer(Customer customer) {
+        MainScreenController.selectedCustomer = customer;
+    }
+
+    public static Appointment getSelectedAppointment() {
+        return selectedAppointment;
+    }
+
+    public void setSelectedAppointment(Appointment selectedAppointment) {
+        MainScreenController.selectedAppointment = selectedAppointment;
     }
 }
