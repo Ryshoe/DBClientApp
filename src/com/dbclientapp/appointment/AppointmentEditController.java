@@ -1,5 +1,6 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.Application;
 import com.dbclientapp.contact.Contact;
 import com.dbclientapp.contact.ContactDAO;
 import com.dbclientapp.customer.Customer;
@@ -25,10 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.ResourceBundle;
 
 public class AppointmentEditController implements Initializable {
@@ -68,7 +66,7 @@ public class AppointmentEditController implements Initializable {
             "21:00:00",
             "22:00:00",
             "23:00:00");
-    private final SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
     @FXML
     private TextField appointmentIdField;
@@ -106,8 +104,8 @@ public class AppointmentEditController implements Initializable {
 
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
-        parseData();
-        returnToMainScreen(event);
+        if(parseData())
+            returnToMainScreen(event);
     }
 
     @Override
@@ -150,9 +148,8 @@ public class AppointmentEditController implements Initializable {
         endTime.setItems(timeList);
     }
 
-    private void parseData() {
+    private boolean parseData() {
         //TODO Error checking / input validation
-        // Check bounds for start/end date and time
 
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
@@ -170,13 +167,38 @@ public class AppointmentEditController implements Initializable {
         appointmentInput.setContact(contactInput);
         appointmentInput.setType(typeBox.getValue());
 
-        // Parse dates from DatePickers and times from ComboBoxes
+        // Parse times from ComboBoxes
         int startTimeInput = Integer.parseInt(startTime.getValue().replaceAll(":", "")) / 10000;
         int endTimeInput = Integer.parseInt(endTime.getValue().replaceAll(":", "")) / 10000;
+        if(endTimeInput <= startTimeInput) {
+            Application.showError("End time must be after start time.");
+            return false;
+        }
+
+        // Parse dates from DatePickers
         LocalDate startDateInput = startDate.getValue();
         LocalDate endDateInput = endDate.getValue();
+        if(endDateInput.isBefore(startDateInput)) {
+            Application.showError("End date cannot be before start date.");
+            return false;
+        }
+
+        //TODO Check if appointment falls outside of business hours (8:00 AM to 10:00 PM EST)
+        //TODO Check for appointment overlaps
         LocalDateTime startDateTimeInput = startDateInput.atTime(LocalTime.of(startTimeInput, 0));
         LocalDateTime endDateTimeInput = endDateInput.atTime(LocalTime.of(endTimeInput, 0));
+
+        ZonedDateTime startDateTimeInputEST = startDateTimeInput.atZone(ZoneId.of("America/New_York"));
+        ZonedDateTime endDateTimeInputEST = endDateTimeInput.atZone(ZoneId.of("America/New_York"));
+        if(startDateTimeInputEST.getHour() < 8 || startDateTimeInputEST.getHour() > 22) {
+            Application.showError("Start time falls outside of business hours (8:00 AM to 10:00 PM EST.)");
+            return false;
+        }
+        if(endDateTimeInputEST.getHour() < 8 || endDateTimeInputEST.getHour() > 22) {
+            Application.showError("End time falls outside of business hours (8:00 AM to 10:00 PM EST.)");
+            return false;
+        }
+
         appointmentInput.setStart(Timestamp.valueOf(startDateTimeInput));
         appointmentInput.setEnd(Timestamp.valueOf(endDateTimeInput));
 
@@ -184,5 +206,7 @@ public class AppointmentEditController implements Initializable {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         appointmentDAO.update(appointmentInput);
         DatabaseConnectionManager.closeConnection();
+
+        return true;
     }
 }

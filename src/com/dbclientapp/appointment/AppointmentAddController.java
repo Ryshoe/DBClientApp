@@ -1,5 +1,6 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.Application;
 import com.dbclientapp.contact.Contact;
 import com.dbclientapp.contact.ContactDAO;
 import com.dbclientapp.customer.Customer;
@@ -105,8 +106,8 @@ public class AppointmentAddController implements Initializable {
 
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
-        parseData();
-        returnToMainScreen(event, true);
+        if(parseData())
+            returnToMainScreen(event, true);
     }
 
     @Override
@@ -141,9 +142,8 @@ public class AppointmentAddController implements Initializable {
         endTime.setItems(timeList);
     }
 
-    private void parseData() {
+    private boolean parseData() {
         //TODO Error checking / input validation
-        // Check bounds for start/end date and time
 
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
@@ -160,13 +160,27 @@ public class AppointmentAddController implements Initializable {
         appointmentInput.setContact(contactInput);
         appointmentInput.setType(typeBox.getValue());
 
-        // Parse dates from DatePickers and times from ComboBoxes
+        // Parse times from ComboBoxes
         int startTimeInput = Integer.parseInt(startTime.getValue().replaceAll(":", "")) / 10000;
         int endTimeInput = Integer.parseInt(endTime.getValue().replaceAll(":", "")) / 10000;
+        if(endTimeInput <= startTimeInput) {
+            Application.showError("End time must be after start time.");
+            return false;
+        }
+
+        // Parse dates from DatePickers
         LocalDate startDateInput = startDate.getValue();
         LocalDate endDateInput = endDate.getValue();
+        if(endDateInput.isBefore(startDateInput)) {
+            Application.showError("End date cannot be before start date.");
+            return false;
+        }
+
+        //TODO Check if appointment falls outside of business hours (8:00 AM to 10:00 PM EST)
+        //TODO Check for appointment overlaps
         LocalDateTime startDateTimeInput = startDateInput.atTime(LocalTime.of(startTimeInput, 0));
         LocalDateTime endDateTimeInput = endDateInput.atTime(LocalTime.of(endTimeInput, 0));
+
         appointmentInput.setStart(Timestamp.valueOf(startDateTimeInput));
         appointmentInput.setEnd(Timestamp.valueOf(endDateTimeInput));
 
@@ -174,5 +188,7 @@ public class AppointmentAddController implements Initializable {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         appointmentDAO.create(appointmentInput);
         DatabaseConnectionManager.closeConnection();
+
+        return true;
     }
 }
