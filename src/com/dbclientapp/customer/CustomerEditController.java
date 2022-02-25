@@ -137,7 +137,7 @@ public class CustomerEditController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        populateTextField();
+        populateSelected();
         populateComboBox();
     }
 
@@ -149,8 +149,8 @@ public class CustomerEditController implements Initializable {
         stage.show();
     }
 
-    private void populateTextField() {
-        // Retrieve selected customer from MainScreen and populate TextFields
+    private void populateSelected() {
+        // Retrieve selected customer from MainScreen and populate form
         Customer customer = MainScreenController.getSelectedCustomer();
         customerIdField.setText(String.valueOf(customer.getId()));
         nameField.setText(String.valueOf(customer.getCustName()));
@@ -162,7 +162,7 @@ public class CustomerEditController implements Initializable {
     }
 
     private void populateComboBox() {
-        // Populate country ComboBox
+        // Populate country ComboBox from static list
         countryBox.setItems(countryList);
         String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
 
