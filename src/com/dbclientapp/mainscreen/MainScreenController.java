@@ -176,6 +176,7 @@ public class MainScreenController implements Initializable {
         } catch (Exception e) {
             Application.showError("Please select an appointment to delete.");
         }
+        populateTableView();
     }
 
     @FXML
