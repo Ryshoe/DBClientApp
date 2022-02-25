@@ -33,8 +33,8 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             "ON appointments.Contact_ID = contacts.Contact_ID";
 
     private static final String UPDATE = "UPDATE appointments SET Title = ?, " +
-            "Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
-            "Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+            "Description = ?, Location = ?, Type = ?, Start = ?, End = ? " +
+            "WHERE Appointment_ID = ?";
 
     private static final String DELETE = "DELETE FROM appointments WHERE Appointment_ID = ?";
 
@@ -131,10 +131,7 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             ps.setString(4, dto.getType());
             ps.setTimestamp(5, dto.getStart());
             ps.setTimestamp(6, dto.getEnd());
-            ps.setInt(7, dto.getCustomer().getId());
-            ps.setInt(8, dto.getUser().getId());
-            ps.setInt(9, dto.getContact().getId());
-            ps.setInt(10, dto.getId());
+            ps.setInt(7, dto.getId());
             ps.execute();
             appointment = this.findById(dto.getId());
         } catch(SQLException e) {
