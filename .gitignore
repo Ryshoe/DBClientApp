@@ -30,5 +30,6 @@ out/
 *.ipr
 *.iws
 
-# README.txt
+# Meant for evaluation team
 README.txt
+login_activity.txt
