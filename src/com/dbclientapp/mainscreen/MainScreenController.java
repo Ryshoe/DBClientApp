@@ -149,19 +149,33 @@ public class MainScreenController implements Initializable {
     private RadioButton weekRadio;
 
     @FXML
-    void apptAddButtonAction(ActionEvent event) throws IOException {
-        goToScreen(event, "../Appointment/AppointmentAdd.fxml");
+    void apptAddButtonAction(ActionEvent event) {
+        try {
+            setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
+            goToScreen(event, "../Appointment/AppointmentAdd.fxml");
+        } catch (Exception e) {
+            Application.showError("Please select a customer to create an appointment.");
+        }
     }
 
     @FXML
-    void apptEdit(ActionEvent event) throws IOException {
-        //TODO Grab current selection and pass to Edit screen
-        goToScreen(event, "../Appointment/AppointmentEdit.fxml");
+    void apptEdit(ActionEvent event) {
+        try {
+            setSelectedAppointment(apptTable.getSelectionModel().getSelectedItem());
+            goToScreen(event, "../Appointment/AppointmentEdit.fxml");
+        } catch (Exception e) {
+            Application.showError("Please select an appointment to edit.");
+        }
     }
 
     @FXML
     void apptDeleteButtonAction(ActionEvent event) {
-        //TODO Delete selected appointment
+        try {
+            setSelectedAppointment(apptTable.getSelectionModel().getSelectedItem());
+            deleteAppointment(selectedAppointment);
+        } catch (Exception e) {
+            Application.showError("Please select an appointment to delete.");
+        }
     }
 
     @FXML
@@ -181,7 +195,6 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void custDeleteButtonAction(ActionEvent event) {
-        //TODO Delete selected customer
         try {
             setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
             deleteCustomer(selectedCustomer);
@@ -308,5 +321,11 @@ public class MainScreenController implements Initializable {
 
     public void setSelectedAppointment(Appointment selectedAppointment) {
         MainScreenController.selectedAppointment = selectedAppointment;
+    }
+
+    private void deleteAppointment(Appointment appointment) {
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        appointmentDAO.delete(appointment.getId());
+        DatabaseConnectionManager.closeConnection();
     }
 }
