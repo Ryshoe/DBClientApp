@@ -6,7 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class Application extends javafx.application.Application {
+
+    public static ResourceBundle rb = ResourceBundle.getBundle("com/dbclientapp/util/Locale",
+            Locale.getDefault());
 
     @Override
     public void start(Stage stage) throws Exception {

@@ -52,12 +52,20 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourcebundle) {
-        populateLabel();
+        populateText();
     }
 
-    public void populateLabel() {
+    public void populateText() {
+        // Set ZoneID label
         ZoneId zone = ZoneId.systemDefault();
         zoneIdLabel.setText(String.valueOf(zone));
+
+        // Set prompt text
+        usernameField.setPromptText(Application.rb.getString("Username"));
+        passwordField.setPromptText(Application.rb.getString("Password"));
+
+        // Set button text
+        cancelButton.setText(Application.rb.getString("Cancel"));
     }
 
     private void verifyLogin(ActionEvent event) throws IOException {
@@ -70,7 +78,7 @@ public class LoginController implements Initializable {
         if(passInput.equals(loggedInUser.getPassword())) {
             goToMainScreen(event);
         } else {
-            Application.showError("Invalid username / password.");
+            Application.showError(Application.rb.getString("Error"));
         }
     }
 
@@ -95,7 +103,5 @@ public class LoginController implements Initializable {
         LoginController.loggedInUser = loggedInUser;
     }
 
-    //TODO Integrate resource bundles that allows the login screen to be
-    // translated to French
     //TODO Record login activity and write to a .txt file
 }
