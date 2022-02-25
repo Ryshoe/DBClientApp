@@ -11,8 +11,11 @@ import java.util.List;
 
 public class ContactDAO extends DataAccessObject<Contact> {
 
-    private static final String READ_ONE = "SELECT Contact_ID, Contact_Name, Email " +
+    private static final String READ_ONE_BY_ID = "SELECT Contact_ID, Contact_Name, Email " +
             "FROM contacts WHERE Contact_ID = ?";
+
+    private static final String READ_ONE_BY_NAME = "SELECT Contact_ID, Contact_Name, Email " +
+            "FROM contacts WHERE Contact_Name = ?";
 
     private static final String READ_ALL = "SELECT * FROM contacts";
 
@@ -23,8 +26,25 @@ public class ContactDAO extends DataAccessObject<Contact> {
     @Override
     public Contact findById(int id) {
         Contact contact = new Contact();
-        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE)) {
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_ID)) {
             ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                contact.setId(rs.getInt("Contact_ID"));
+                contact.setContactName(rs.getString("Contact_Name"));
+                contact.setEmail(rs.getString("Email"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return contact;
+    }
+
+    public Contact findByName(String name) {
+        Contact contact = new Contact();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_NAME)) {
+            ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 contact.setId(rs.getInt("Contact_ID"));
