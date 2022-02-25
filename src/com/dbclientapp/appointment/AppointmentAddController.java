@@ -24,6 +24,10 @@ import javafx.stage.Stage;
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AppointmentAddController implements Initializable {
@@ -142,8 +146,15 @@ public class AppointmentAddController implements Initializable {
         appointmentInput.setContact(contactInput);
         appointmentInput.setType(typeBox.getValue());
 
-        //TODO Parse date from DatePicker and time from ComboBox
-        // also convert to UTC
+        // Parse dates from DatePickers and times from ComboBoxes
+        int startTimeInput = Integer.parseInt(startTime.getValue().replaceAll(":", "")) / 10000;
+        int endTimeInput = Integer.parseInt(endTime.getValue().replaceAll(":", "")) / 10000;
+        LocalDate startDateInput = startDate.getValue();
+        LocalDate endDateInput = endDate.getValue();
+        LocalDateTime startDateTimeInput = startDateInput.atTime(LocalTime.of(startTimeInput, 0));
+        LocalDateTime endDateTimeInput = endDateInput.atTime(LocalTime.of(endTimeInput, 0));
+        appointmentInput.setStart(Timestamp.valueOf(startDateTimeInput));
+        appointmentInput.setEnd(Timestamp.valueOf(endDateTimeInput));
 
         // Create new record in database
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
