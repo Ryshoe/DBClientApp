@@ -1,5 +1,11 @@
 package com.dbclientapp.customer;
 
+import com.dbclientapp.country.Country;
+import com.dbclientapp.country.CountryDAO;
+import com.dbclientapp.division.Division;
+import com.dbclientapp.division.DivisionDAO;
+import com.dbclientapp.mainscreen.MainScreenController;
+import com.dbclientapp.util.DatabaseConnectionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -116,8 +122,41 @@ public class CustomerEditController implements Initializable {
     private TextField phoneField;
     @FXML
     private TextField postalField;
+
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
+        returnToMainScreen(event);
+    }
+
+    @FXML
+    void okButtonAction(ActionEvent event) throws IOException {
+         parseData();
+         returnToMainScreen(event);
+    }
+
+    @FXML
+    void countryBoxAction(ActionEvent event) {
+        populateCountryBox();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // Populate country ComboBox
+        countryBox.setItems(countryList);
+
+        // Retrieve selected customer from MainScreen and populate form
+        Customer customer = MainScreenController.getSelectedCustomer();
+        customerIdField.setText(String.valueOf(customer.getId()));
+        nameField.setText(String.valueOf(customer.getCustName()));
+        addressField.setText(String.valueOf(customer.getAddress()));
+        postalField.setText(String.valueOf(customer.getPostalCode()));
+        phoneField.setText(String.valueOf(customer.getPhoneNum()));
+        countryBox.setValue(String.valueOf(customer.getDivision().getCountry().getCountryName()));
+        divisionBox.setValue(String.valueOf(customer.getDivision().getDivisionName()));
+        populateCountryBox();
+    }
+
+    private void returnToMainScreen(ActionEvent event) throws IOException {
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
         scene = loader.load();
@@ -125,13 +164,7 @@ public class CustomerEditController implements Initializable {
         stage.show();
     }
 
-    @FXML
-    void okButtonAction(ActionEvent event) {
-        //TODO Parse inputs from form and add to database
-    }
-
-    @FXML
-    void countryBoxAction(ActionEvent event) {
+    private void populateCountryBox() {
         String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
 
         // Populate division ComboBox depending on country selection
@@ -142,11 +175,32 @@ public class CustomerEditController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Populate country ComboBox
-        countryBox.setItems(countryList);
-    }
+    private void parseData() {
+        // TODO Error checking / input validation
 
-    //TODO Pre-populate form with selected customer from MainScreen
+        // Parse input from TextFields
+        Customer customerInput = new Customer();
+        customerInput.setId(Integer.parseInt(customerIdField.getText()));
+        customerInput.setCustName(nameField.getText());
+        customerInput.setAddress(addressField.getText());
+        customerInput.setPostalCode(postalField.getText());
+        customerInput.setPhoneNum(phoneField.getText());
+
+        // Parse ComboBox selections
+        CountryDAO countryDAO = new CountryDAO(DatabaseConnectionManager.openConnection());
+        Country countryInput = countryDAO.findByName(countryBox.getValue());
+        DatabaseConnectionManager.closeConnection();
+        DivisionDAO divisionDAO = new DivisionDAO(DatabaseConnectionManager.openConnection());
+        Division divisionInput = divisionDAO.findByName(divisionBox.getValue());
+        DatabaseConnectionManager.closeConnection();
+
+        // Add country and division details to customer
+        divisionInput.setCountry(countryInput);
+        customerInput.setDivision(divisionInput);
+
+        // Update record in database
+        CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
+        customerDAO.update(customerInput);
+        DatabaseConnectionManager.closeConnection();
+    }
 }
