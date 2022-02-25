@@ -23,9 +23,6 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
 
-    private static Stage stage;
-    private static Parent scene;
-    private static FXMLLoader loader;
     private final ObservableList<Customer> custList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
     private final ObservableList<String> reportList = FXCollections.observableArrayList(
@@ -152,21 +149,13 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void apptAddButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../Appointment/AppointmentAdd.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        goToScreen(event, "../Appointment/AppointmentAdd.fxml");
     }
 
     @FXML
     void apptEdit(ActionEvent event) throws IOException {
         //TODO Grab current selection and pass to Edit screen
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../Appointment/AppointmentEdit.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        goToScreen(event, "../Appointment/AppointmentEdit.fxml");
     }
 
     @FXML
@@ -176,22 +165,14 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void custAddButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../Customer/CustomerAdd.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        goToScreen(event, "../Customer/CustomerAdd.fxml");
     }
 
     @FXML
     void custEditButtonAction(ActionEvent event) {
         try {
             setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            loader = new FXMLLoader(getClass().getResource("../Customer/CustomerEdit.fxml"));
-            scene = loader.load();
-            stage.setScene(new Scene(scene));
-            stage.show();
+            goToScreen(event, "../Customer/CustomerEdit.fxml");
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Please select a customer to edit.");
@@ -202,6 +183,15 @@ public class MainScreenController implements Initializable {
     @FXML
     void custDeleteButtonAction(ActionEvent event) {
         //TODO Delete selected customer
+        try {
+            setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
+            deleteCustomer(selectedCustomer);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please select a customer to delete.");
+            alert.show();
+        }
+        populateTableView();
     }
 
     @FXML
@@ -239,8 +229,16 @@ public class MainScreenController implements Initializable {
         populateComboBox();
     }
 
+    private void goToScreen(ActionEvent event, String location) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
+        Parent scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
     public void selectTabPane(int tabIndex) {
-        // Saves tab selection
+        // Change tabs depending on selection
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         selectionModel.select(tabIndex);
     }
@@ -299,6 +297,12 @@ public class MainScreenController implements Initializable {
 
     public void setSelectedCustomer(Customer customer) {
         MainScreenController.selectedCustomer = customer;
+    }
+
+    private void deleteCustomer(Customer customer) {
+        CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
+        customerDAO.delete(customer.getId());
+        DatabaseConnectionManager.closeConnection();
     }
 
     public static Appointment getSelectedAppointment() {
