@@ -312,8 +312,14 @@ public class MainScreenController implements Initializable {
 
     private void deleteCustomer(Customer customer) {
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
-        customerDAO.delete(customer.getId());
+        int deletedId = customer.getId();
+        if(customerDAO.delete(customer.getId())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Deleted customer with an ID of " + deletedId);
+            alert.show();
+        }
         DatabaseConnectionManager.closeConnection();
+
     }
 
     public static Appointment getSelectedAppointment() {
@@ -326,7 +332,13 @@ public class MainScreenController implements Initializable {
 
     private void deleteAppointment(Appointment appointment) {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
-        appointmentDAO.delete(appointment.getId());
+        int deletedId = appointment.getId();
+        String deletedType = appointment.getType();
+        if(appointmentDAO.delete(appointment.getId())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Deleted " + deletedType + " appointment type with an ID of: " + deletedId);
+            alert.show();
+        }
         DatabaseConnectionManager.closeConnection();
     }
 }
