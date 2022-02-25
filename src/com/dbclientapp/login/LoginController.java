@@ -22,6 +22,7 @@ public class LoginController implements Initializable {
 
     private String userInput;
     private String passInput;
+    public static User loggedInUser;
 
     @FXML
     private Button cancelButton;
@@ -62,11 +63,11 @@ public class LoginController implements Initializable {
     private void verifyLogin(ActionEvent event) throws IOException {
         // Access database and search
         UserDAO userDAO = new UserDAO(DatabaseConnectionManager.openConnection());
-        User userSearch = userDAO.findByUser(userInput);
+        setLoggedInUser(userDAO.findByUser(userInput));
         DatabaseConnectionManager.closeConnection();
 
         // Validate username and password combination
-        if(passInput.equals(userSearch.getPassword())) {
+        if(passInput.equals(loggedInUser.getPassword())) {
             goToMainScreen(event);
         } else {
             Application.showError("Invalid username / password.");
@@ -84,6 +85,14 @@ public class LoginController implements Initializable {
         Parent scene = loader.load();
         stage.setScene(new Scene(scene));
         stage.show();
+    }
+
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public static void setLoggedInUser(User loggedInUser) {
+        LoginController.loggedInUser = loggedInUser;
     }
 
     //TODO Integrate resource bundles that allows the login screen to be
