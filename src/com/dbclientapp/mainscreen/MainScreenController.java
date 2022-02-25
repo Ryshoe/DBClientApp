@@ -54,7 +54,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> apptEndCol;
     @FXML
-    private TableColumn<?, ?> apptIdCol;
+    private TableColumn<Appointment, ?> apptIdCol;
     @FXML
     private TableColumn<?, ?> apptLocationCol;
     @FXML
@@ -82,7 +82,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button custEditButton;
     @FXML
-    private TableColumn<?, ?> custIdCol;
+    private TableColumn<Customer, ?> custIdCol;
     @FXML
     private TableColumn<?, ?> custNameCol;
     @FXML
@@ -266,9 +266,11 @@ public class MainScreenController implements Initializable {
         // Populate customer TableView using SQL database
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
         custList.setAll(customerDAO.findAll());
-        custTable.setItems(custList);
-        custTable.refresh();
         DatabaseConnectionManager.closeConnection();
+        custTable.setItems(custList);
+        custTable.getSortOrder().add(custIdCol);
+        custTable.refresh();
+
 
         // Assign column values for appointment data
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -285,9 +287,10 @@ public class MainScreenController implements Initializable {
         // Populate appointment TableView using SQL database
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         apptList.setAll(appointmentDAO.findAll());
-        apptTable.setItems(apptList);
-        apptTable.refresh();
         DatabaseConnectionManager.closeConnection();
+        apptTable.setItems(apptList);
+        apptTable.getSortOrder().add(apptIdCol);
+        apptTable.refresh();
     }
 
     public static Customer getSelectedCustomer() {
