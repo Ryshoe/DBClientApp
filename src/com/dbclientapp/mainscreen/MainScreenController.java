@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
 
+    public static Customer selectedCustomer = new Customer();
+    public static Appointment selectedAppointment = new Appointment();
     private final ObservableList<Customer> custList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
     private final ObservableList<String> reportList = FXCollections.observableArrayList(
@@ -34,8 +36,6 @@ public class MainScreenController implements Initializable {
             "Anika Costa",
             "Daniel Garcia",
             "Li Lee");
-    public static Customer selectedCustomer = new Customer();
-    public static Appointment selectedAppointment = new Appointment();
 
     @FXML
     private Button apptAddButton;
@@ -280,7 +280,6 @@ public class MainScreenController implements Initializable {
         custTable.getSortOrder().add(custIdCol);
         custTable.refresh();
 
-
         // Assign column values for appointment data
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -319,7 +318,6 @@ public class MainScreenController implements Initializable {
             alert.show();
         }
         DatabaseConnectionManager.closeConnection();
-
     }
 
     public static Appointment getSelectedAppointment() {
