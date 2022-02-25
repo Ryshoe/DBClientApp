@@ -1,5 +1,6 @@
 package com.dbclientapp.login;
 
+import com.dbclientapp.Application;
 import com.dbclientapp.user.User;
 import com.dbclientapp.user.UserDAO;
 import com.dbclientapp.util.DatabaseConnectionManager;
@@ -68,9 +69,7 @@ public class LoginController implements Initializable {
         if(passInput.equals(userSearch.getPassword())) {
             goToMainScreen(event);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Invalid username / password.");
-            alert.show();
+            Application.showError("Invalid username / password.");
         }
     }
 

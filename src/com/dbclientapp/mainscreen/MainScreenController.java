@@ -1,5 +1,6 @@
 package com.dbclientapp.mainscreen;
 
+import com.dbclientapp.Application;
 import com.dbclientapp.appointment.Appointment;
 import com.dbclientapp.appointment.AppointmentDAO;
 import com.dbclientapp.customer.Customer;
@@ -174,9 +175,7 @@ public class MainScreenController implements Initializable {
             setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
             goToScreen(event, "../Customer/CustomerEdit.fxml");
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Please select a customer to edit.");
-            alert.show();
+            Application.showError("Please select a customer to edit.");
         }
     }
 
@@ -187,9 +186,7 @@ public class MainScreenController implements Initializable {
             setSelectedCustomer(custTable.getSelectionModel().getSelectedItem());
             deleteCustomer(selectedCustomer);
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Please select a customer to delete.");
-            alert.show();
+            Application.showError("Please select a customer to delete.");
         }
         populateTableView();
     }
