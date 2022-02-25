@@ -85,7 +85,8 @@ public class CountryDAO extends DataAccessObject<Country> {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
 
+        return false;
     }
 }

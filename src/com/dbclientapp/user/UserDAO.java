@@ -88,7 +88,8 @@ public class UserDAO extends DataAccessObject<User> {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
 
+        return false;
     }
 }

@@ -18,5 +18,5 @@ public abstract class DataAccessObject <T extends DataTransferObject> {
     public abstract List<T> findAll();
     public abstract T update(T dto);
     public abstract T create(T dto);
-    public abstract void delete(int id);
+    public abstract boolean delete(int id);
 }

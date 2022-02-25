@@ -133,7 +133,7 @@ public class CustomerDAO extends DataAccessObject<Customer> {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
         try(PreparedStatement ps = this.connection.prepareStatement(DELETE)) {
             ps.setInt(1, id);
             ps.execute();
@@ -141,5 +141,6 @@ public class CustomerDAO extends DataAccessObject<Customer> {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return true;
     }
 }

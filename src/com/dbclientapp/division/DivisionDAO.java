@@ -85,7 +85,8 @@ public class DivisionDAO extends DataAccessObject<Division> {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
 
+        return false;
     }
 }
