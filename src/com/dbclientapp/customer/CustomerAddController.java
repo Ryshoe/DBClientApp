@@ -17,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -132,12 +131,18 @@ public class CustomerAddController implements Initializable {
 
     @FXML
     void countryBoxAction(ActionEvent event) {
-        populateComboBox();
+        // Populate division ComboBox depending on country selection
+        String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
+        switch (selectedCountry) {
+            case "U.S" -> divisionBox.setItems(divisionListUS);
+            case "UK" -> divisionBox.setItems(divisionListUK);
+            case "Canada" -> divisionBox.setItems(divisionListCA);
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        populateComboBox();
+        populateCountryComboBox();
     }
 
     private void returnToMainScreen(ActionEvent event) throws IOException {
@@ -148,17 +153,9 @@ public class CustomerAddController implements Initializable {
         stage.show();
     }
 
-    private void populateComboBox() {
-        // Populate country ComboBox
+    private void populateCountryComboBox() {
+        // Populate country ComboBox from static list
         countryBox.setItems(countryList);
-        String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
-
-        // Populate division ComboBox depending on country selection
-        switch (selectedCountry) {
-            case "U.S" -> divisionBox.setItems(divisionListUS);
-            case "UK" -> divisionBox.setItems(divisionListUK);
-            case "Canada" -> divisionBox.setItems(divisionListCA);
-        }
     }
 
     private void parseData() {
