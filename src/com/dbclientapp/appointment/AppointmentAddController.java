@@ -1,5 +1,6 @@
 package com.dbclientapp.appointment;
 
+import com.dbclientapp.mainscreen.MainScreenController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,9 +21,6 @@ import java.util.ResourceBundle;
 
 public class AppointmentAddController implements Initializable {
 
-    Stage stage;
-    Parent scene;
-    FXMLLoader loader;
     private final ObservableList<String> contactList = FXCollections.observableArrayList(
             "Anika Costa",
             "Daniel Garcia",
@@ -75,25 +73,36 @@ public class AppointmentAddController implements Initializable {
 
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        returnToMainScreen(event, false);
     }
 
     @FXML
-    void okButtonAction(ActionEvent event) {
+    void okButtonAction(ActionEvent event) throws IOException {
         //TODO Parse inputs from form and add to database
-        /*
-        MainScreenController mainScreenController = loader.getController();
-        mainScreenController.selectTabPane(1);
-         */
+        returnToMainScreen(event, true);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Populate ComboBoxes
+        populateComboBox();
+    }
+
+    private void returnToMainScreen(ActionEvent event, boolean check) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        Parent scene = loader.load();
+
+        if(check) {
+            MainScreenController mainScreenController = loader.getController();
+            mainScreenController.selectTabPane(1);
+        }
+
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    private void populateComboBox() {
+        // Populate ComboBoxes from static lists
         contactBox.setItems(contactList);
         typeBox.setItems(typeList);
         startTime.setItems(timeList);

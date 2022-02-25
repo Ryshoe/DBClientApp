@@ -25,9 +25,6 @@ import java.util.ResourceBundle;
 
 public class CustomerEditController implements Initializable {
 
-    Stage stage;
-    Parent scene;
-    FXMLLoader loader;
     private final ObservableList<String> countryList = FXCollections.observableArrayList(
             "U.S",
             "UK",
@@ -136,15 +133,25 @@ public class CustomerEditController implements Initializable {
 
     @FXML
     void countryBoxAction(ActionEvent event) {
-        populateCountryBox();
+        populateComboBox();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Populate country ComboBox
-        countryBox.setItems(countryList);
+        populateTextField();
+        populateComboBox();
+    }
 
-        // Retrieve selected customer from MainScreen and populate form
+    private void returnToMainScreen(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        Parent scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    private void populateTextField() {
+        // Retrieve selected customer from MainScreen and populate TextFields
         Customer customer = MainScreenController.getSelectedCustomer();
         customerIdField.setText(String.valueOf(customer.getId()));
         nameField.setText(String.valueOf(customer.getCustName()));
@@ -153,18 +160,11 @@ public class CustomerEditController implements Initializable {
         phoneField.setText(String.valueOf(customer.getPhoneNum()));
         countryBox.setValue(String.valueOf(customer.getDivision().getCountry().getCountryName()));
         divisionBox.setValue(String.valueOf(customer.getDivision().getDivisionName()));
-        populateCountryBox();
     }
 
-    private void returnToMainScreen(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
-    }
-
-    private void populateCountryBox() {
+    private void populateComboBox() {
+        // Populate country ComboBox
+        countryBox.setItems(countryList);
         String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
 
         // Populate division ComboBox depending on country selection

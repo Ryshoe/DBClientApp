@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
@@ -20,9 +19,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    Stage stage;
-    Parent scene;
-    FXMLLoader loader;
+    private String userInput;
+    private String passInput;
 
     @FXML
     private Button cancelButton;
@@ -46,19 +44,29 @@ public class LoginController implements Initializable {
 
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
-        String userInput = usernameField.getText();
-        String passInput = passwordField.getText();
+        parseData();
+        verifyLogin(event);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourcebundle) {
+        populateLabel();
+    }
+
+    public void populateLabel() {
+        ZoneId zone = ZoneId.systemDefault();
+        zoneIdLabel.setText(String.valueOf(zone));
+    }
+
+    private void verifyLogin(ActionEvent event) throws IOException {
+        // Access database and search
         UserDAO userDAO = new UserDAO(DatabaseConnectionManager.openConnection());
         User userSearch = userDAO.findByUser(userInput);
         DatabaseConnectionManager.closeConnection();
 
-        //Validate username and password combination
+        // Validate username and password combination
         if(passInput.equals(userSearch.getPassword())) {
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-            scene = loader.load();
-            stage.setScene(new Scene(scene));
-            stage.show();
+            goToMainScreen(event);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Invalid username / password.");
@@ -66,10 +74,17 @@ public class LoginController implements Initializable {
         }
     }
 
-    @Override   // Initialize screen with ZoneId label
-    public void initialize(URL url, ResourceBundle resourcebundle) {
-        ZoneId zone = ZoneId.systemDefault();
-        zoneIdLabel.setText(String.valueOf(zone));
+    private void parseData() {
+        userInput = usernameField.getText();
+        passInput = passwordField.getText();
+    }
+
+    private void goToMainScreen(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        Parent scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     //TODO Integrate resource bundles that allows the login screen to be

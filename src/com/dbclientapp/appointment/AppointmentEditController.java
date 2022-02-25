@@ -21,18 +21,16 @@ import java.util.ResourceBundle;
 
 public class AppointmentEditController implements Initializable {
 
-    Stage stage;
-    Parent scene;
-    FXMLLoader loader;    private final ObservableList<String> contactList = FXCollections.observableArrayList(
+    private static final ObservableList<String> contactList = FXCollections.observableArrayList(
             "Anika Costa",
             "Daniel Garcia",
             "Li Lee");
-    private final ObservableList<String> typeList = FXCollections.observableArrayList(
+    private static final ObservableList<String> typeList = FXCollections.observableArrayList(
             "De-Briefing",
             "Planning Session",
             "Team-Building",
             "Feedback");
-    private final ObservableList<String> timeList = FXCollections.observableArrayList(
+    private static final ObservableList<String> timeList = FXCollections.observableArrayList(
             "08:00:00",
             "09:00:00",
             "10:00:00",
@@ -75,30 +73,32 @@ public class AppointmentEditController implements Initializable {
 
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-        scene = loader.load();
-        MainScreenController mainScreenController = loader.getController();
-        mainScreenController.selectTabPane(1);
-        stage.setScene(new Scene(scene));
-        stage.show();
+        returnToMainScreen(event);
     }
 
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
         //TODO Parse inputs from form and add to database
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-        scene = loader.load();
+        returnToMainScreen(event);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        populateComboBox();
+    }
+
+    private void returnToMainScreen(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        Parent scene = loader.load();
         MainScreenController mainScreenController = loader.getController();
         mainScreenController.selectTabPane(1);
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Populate ComboBoxes
+    private void populateComboBox() {
+        // Populate ComboBoxes from static lists
         contactBox.setItems(contactList);
         typeBox.setItems(typeList);
         startTime.setItems(timeList);

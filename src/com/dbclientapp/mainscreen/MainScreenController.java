@@ -23,9 +23,9 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
 
-    Stage stage;
-    Parent scene;
-    FXMLLoader loader;
+    private static Stage stage;
+    private static Parent scene;
+    private static FXMLLoader loader;
     private final ObservableList<Customer> custList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
     private final ObservableList<String> reportList = FXCollections.observableArrayList(
@@ -235,6 +235,23 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        populateTableView();
+        populateComboBox();
+    }
+
+    public void selectTabPane(int tabIndex) {
+        // Saves tab selection
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        selectionModel.select(tabIndex);
+    }
+
+    private void populateComboBox() {
+        // Populate report ComboBoxes
+        reportBox.setItems(reportList);
+        report2Box.setItems(contactList);
+    }
+
+    private void populateTableView() {
         // Assign columns for customer data
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         custNameCol.setCellValueFactory(new PropertyValueFactory<>("custName"));
@@ -271,15 +288,6 @@ public class MainScreenController implements Initializable {
         apptTable.setItems(apptList);
         apptTable.refresh();
         DatabaseConnectionManager.closeConnection();
-
-        // Populate report ComboBoxes
-        reportBox.setItems(reportList);
-        report2Box.setItems(contactList);
-    }
-
-    public void selectTabPane(int tabIndex) {
-        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-        selectionModel.select(tabIndex);
     }
 
     public static Customer getSelectedCustomer() {

@@ -18,16 +18,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerAddController implements Initializable {
 
-    Stage stage;
-    Parent scene;
-    FXMLLoader loader;
     private final ObservableList<String> countryList = FXCollections.observableArrayList(
             "U.S",
             "UK",
@@ -125,15 +121,47 @@ public class CustomerAddController implements Initializable {
 
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        returnToMainScreen(event);
     }
 
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
+        parseData();
+        returnToMainScreen(event);
+    }
+
+    @FXML
+    void countryBoxAction(ActionEvent event) {
+        populateComboBox();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        populateComboBox();
+    }
+
+    private void returnToMainScreen(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
+        Parent scene = loader.load();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    private void populateComboBox() {
+        // Populate country ComboBox
+        countryBox.setItems(countryList);
+        String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
+
+        // Populate division ComboBox depending on country selection
+        switch (selectedCountry) {
+            case "U.S" -> divisionBox.setItems(divisionListUS);
+            case "UK" -> divisionBox.setItems(divisionListUK);
+            case "Canada" -> divisionBox.setItems(divisionListCA);
+        }
+    }
+
+    private void parseData() {
         // TODO Error checking / input validation
 
         // Parse input from TextFields
@@ -159,30 +187,5 @@ public class CustomerAddController implements Initializable {
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
         customerDAO.create(customerInput);
         DatabaseConnectionManager.closeConnection();
-
-        // Return to MainScreen
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
-        scene = loader.load();
-        stage.setScene(new Scene(scene));
-        stage.show();
-    }
-
-    @FXML
-    void countryBoxAction(ActionEvent event) {
-        String selectedCountry = countryBox.getSelectionModel().getSelectedItem();
-
-        // Populate division ComboBox depending on country selection
-        switch (selectedCountry) {
-            case "U.S" -> divisionBox.setItems(divisionListUS);
-            case "UK" -> divisionBox.setItems(divisionListUK);
-            case "Canada" -> divisionBox.setItems(divisionListCA);
-        }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Populate country ComboBox
-        countryBox.setItems(countryList);
     }
 }
