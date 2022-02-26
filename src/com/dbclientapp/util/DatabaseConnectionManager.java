@@ -18,7 +18,6 @@ public abstract class DatabaseConnectionManager {
         try {
             Class.forName(DRIVER); // Locate driver
             connection = DriverManager.getConnection(JDBCURL, USERNAME, PASSWORD);
-            System.out.println("Connection opened.");
         }
         catch(Exception e) {
             System.out.println("Error:" + e.getMessage());
@@ -29,7 +28,6 @@ public abstract class DatabaseConnectionManager {
     public static void closeConnection() {
         try {
             connection.close();
-            System.out.println("Connection closed.");
         } catch(Exception e) {
             System.out.println("Error:" + e.getMessage());
         }
