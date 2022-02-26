@@ -27,11 +27,11 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AppointmentEditController implements Initializable {
 
-    private final Appointment appointment = MainScreenController.getSelectedAppointment();
     private static final ObservableList<String> contactList = FXCollections.observableArrayList(
             "Anika Costa",
             "Daniel Garcia",
@@ -66,7 +66,7 @@ public class AppointmentEditController implements Initializable {
             "21:00:00",
             "22:00:00",
             "23:00:00");
-    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @FXML
     private TextField appointmentIdField;
@@ -126,16 +126,17 @@ public class AppointmentEditController implements Initializable {
 
     private void populateSelected() {
         // Retrieve selected appointment from MainScreen and populate form
+        Appointment appointment = MainScreenController.getSelectedAppointment();
         appointmentIdField.setText(String.valueOf(appointment.getId()));
         titleField.setText(appointment.getTitle());
         descriptionField.setText(appointment.getDescription());
         locationField.setText(appointment.getLocation());
         contactBox.setValue(appointment.getCustomer().getCustName());
         typeBox.setValue(appointment.getType());
-        startDate.setValue(appointment.getStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        endDate.setValue(appointment.getEnd().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        startTime.setValue(sdf.format(appointment.getStart()));
-        endTime.setValue(sdf.format(appointment.getEnd()));
+        startDate.setValue(appointment.getStart().toLocalDate());
+        endDate.setValue(appointment.getEnd().toLocalDate());
+        startTime.setValue(appointment.getStart().format(dtf));
+        endTime.setValue(appointment.getEnd().format(dtf));
         customerIdField.setText(String.valueOf(appointment.getCustomer().getId()));
         userIdField.setText(String.valueOf(appointment.getUser().getId()));
     }
@@ -153,6 +154,7 @@ public class AppointmentEditController implements Initializable {
 
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
+        Appointment appointment = MainScreenController.getSelectedAppointment();
         appointmentInput.setId(Integer.parseInt(appointmentIdField.getText()));
         appointmentInput.setTitle(titleField.getText());
         appointmentInput.setDescription(descriptionField.getText());
@@ -183,13 +185,13 @@ public class AppointmentEditController implements Initializable {
             return false;
         }
 
-        //TODO Check if appointment falls outside of business hours (8:00 AM to 10:00 PM EST)
-        //TODO Check for appointment overlaps
+        // Combine date and time into LocalDateTime
         LocalDateTime startDateTimeInput = startDateInput.atTime(LocalTime.of(startTimeInput, 0));
         LocalDateTime endDateTimeInput = endDateInput.atTime(LocalTime.of(endTimeInput, 0));
 
-        ZonedDateTime startDateTimeInputEST = startDateTimeInput.atZone(ZoneId.of("America/New_York"));
-        ZonedDateTime endDateTimeInputEST = endDateTimeInput.atZone(ZoneId.of("America/New_York"));
+        // Check if appointment falls outside business hours
+        ZonedDateTime startDateTimeInputEST = startDateTimeInput.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("America/New_York"));
+        ZonedDateTime endDateTimeInputEST = endDateTimeInput.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("America/New_York"));
         if(startDateTimeInputEST.getHour() < 8 || startDateTimeInputEST.getHour() > 22) {
             Application.showError("Start time falls outside of business hours (8:00 AM to 10:00 PM EST.)");
             return false;
@@ -199,8 +201,10 @@ public class AppointmentEditController implements Initializable {
             return false;
         }
 
-        appointmentInput.setStart(Timestamp.valueOf(startDateTimeInput));
-        appointmentInput.setEnd(Timestamp.valueOf(endDateTimeInput));
+        //TODO Check for appointment overlaps
+
+        appointmentInput.setStart(startDateTimeInput);
+        appointmentInput.setEnd(endDateTimeInput);
 
         // Update record in database
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());

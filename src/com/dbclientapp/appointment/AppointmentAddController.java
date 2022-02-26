@@ -22,13 +22,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ResourceBundle;
 
 public class AppointmentAddController implements Initializable {
@@ -176,13 +172,26 @@ public class AppointmentAddController implements Initializable {
             return false;
         }
 
-        //TODO Check if appointment falls outside of business hours (8:00 AM to 10:00 PM EST)
-        //TODO Check for appointment overlaps
+        // Combine date and time into LocalDateTime
         LocalDateTime startDateTimeInput = startDateInput.atTime(LocalTime.of(startTimeInput, 0));
         LocalDateTime endDateTimeInput = endDateInput.atTime(LocalTime.of(endTimeInput, 0));
 
-        appointmentInput.setStart(Timestamp.valueOf(startDateTimeInput));
-        appointmentInput.setEnd(Timestamp.valueOf(endDateTimeInput));
+        // Check if appointment falls outside business hours
+        ZonedDateTime startDateTimeInputEST = startDateTimeInput.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("America/New_York"));
+        ZonedDateTime endDateTimeInputEST = endDateTimeInput.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("America/New_York"));
+        if(startDateTimeInputEST.getHour() < 8 || startDateTimeInputEST.getHour() > 22) {
+            Application.showError("Start time falls outside of business hours (8:00 AM to 10:00 PM EST.)");
+            return false;
+        }
+        if(endDateTimeInputEST.getHour() < 8 || endDateTimeInputEST.getHour() > 22) {
+            Application.showError("End time falls outside of business hours (8:00 AM to 10:00 PM EST.)");
+            return false;
+        }
+
+        //TODO Check for appointment overlaps
+
+        appointmentInput.setStart(startDateTimeInput);
+        appointmentInput.setEnd(endDateTimeInput);
 
         // Create new record in database
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
