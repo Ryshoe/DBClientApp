@@ -13,7 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
@@ -48,6 +51,7 @@ public class LoginController implements Initializable {
     void okButtonAction(ActionEvent event) throws IOException {
         parseData();
         verifyLogin(event);
+        recordLogin();
     }
 
     @Override
@@ -95,6 +99,15 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    private void recordLogin() throws IOException {
+        // Record login activity and write to login_activity.txt
+
+        FileWriter fileWriter = new FileWriter("src/com/dbclientapp/login_activity.txt", true);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(userInput + "/" + passInput);
+        printWriter.close();
+    }
+
     public static User getLoggedInUser() {
         return loggedInUser;
     }
@@ -102,6 +115,4 @@ public class LoginController implements Initializable {
     public static void setLoggedInUser(User loggedInUser) {
         LoginController.loggedInUser = loggedInUser;
     }
-
-    //TODO Record login activity and write to a .txt file
 }
