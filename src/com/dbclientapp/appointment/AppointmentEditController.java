@@ -201,13 +201,28 @@ public class AppointmentEditController implements Initializable {
             return false;
         }
 
-        //TODO Check for appointment overlaps
+        // Check for appointment overlaps
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        ObservableList<Appointment> apptList = appointmentDAO.findAll();
+        DatabaseConnectionManager.closeConnection();
+        for(Appointment i : apptList) {
+            if(startDateTimeInput.isAfter(i.getStart()) && startDateTimeInput.isBefore(i.getEnd()) ||
+            startDateTimeInput.isEqual(i.getStart()) || startDateTimeInput.isEqual(i.getEnd())) {
+                Application.showError("Start conflicts with Appointment ID: " + i.getId());
+                return false;
+            }
+            if(endDateTimeInput.isAfter(i.getStart()) && endDateTimeInput.isBefore(i.getEnd()) ||
+            endDateTimeInput.isEqual(i.getStart()) || endDateTimeInput.isEqual(i.getEnd())) {
+                Application.showError("End conflicts with Appointment ID: " + i.getId());
+                return false;
+            }
+        }
 
         appointmentInput.setStart(startDateTimeInput);
         appointmentInput.setEnd(endDateTimeInput);
 
         // Update record in database
-        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         appointmentDAO.update(appointmentInput);
         DatabaseConnectionManager.closeConnection();
 
