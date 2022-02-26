@@ -100,27 +100,29 @@ public class MainScreenController implements Initializable {
     @FXML
     private ListView<String> report1ListView;
     @FXML
-    private TableColumn<?, ?> report2ApptIdCol;
+    private TableColumn<Appointment, ?> report2ApptIdCol;
     @FXML
     private ComboBox<String> report2Box;
     @FXML
-    private TableColumn<?, ?> report2CustIdCol;
+    private TableColumn<Appointment, Number> report2CustIdCol;
     @FXML
     private TableColumn<?, ?> report2DescrCol;
     @FXML
     private TableColumn<?, ?> report2EndCol;
     @FXML
-    private ListView<?> report3ListView;
+    private TableColumn<?, ?> report2LocationCol;
     @FXML
     private TableColumn<?, ?> report2StartCol;
     @FXML
-    private TableView<?> report2Table;
+    private TableView<Appointment> report2Table;
     @FXML
     private TableColumn<?, ?> report2TitleCol;
     @FXML
     private ToolBar report2ToolBar;
     @FXML
     private TableColumn<?, ?> report2TypeCol;
+    @FXML
+    private ListView<?> report3ListView;
     @FXML
     private ComboBox<String> reportBox;
     @FXML
@@ -216,27 +218,27 @@ public class MainScreenController implements Initializable {
             report2ToolBar.setVisible(false);
             report2Table.setVisible(false);
             report3ListView.setVisible(false);
-            populateListView();
+            populateReport1ListView();
         }
         else if(reportBox.getSelectionModel().isSelected(1)) {
             report1ListView.setVisible(false);
             report2ToolBar.setVisible(true);
             report2Table.setVisible(true);
             report3ListView.setVisible(false);
-            //TODO Populate TableView with appointments by contact
         }
         else if(reportBox.getSelectionModel().isSelected(2)) {
             report1ListView.setVisible(false);
             report2ToolBar.setVisible(false);
             report2Table.setVisible(false);
             report3ListView.setVisible(true);
-            //TODO Populate ListView with current username and total appointments
+            populateReport3ListView();
         }
     }
 
     @FXML
     void report2BoxAction(ActionEvent event) {
-
+        String selectedContact = report2Box.getSelectionModel().getSelectedItem();
+        populateReport2TableView(selectedContact);
     }
 
     @Override
@@ -265,14 +267,15 @@ public class MainScreenController implements Initializable {
         report2Box.setItems(contactList);
     }
 
-    private void populateListView() {
+    private void populateReport1ListView() {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
-        apptList.setAll(appointmentDAO.findAll());
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        appointments.setAll(appointmentDAO.findAll());
         DatabaseConnectionManager.closeConnection();
         int janCount = 0, febCount = 0, marCount = 0, aprCount = 0, mayCount = 0, junCount = 0;
         int julCount = 0, augCount = 0, sepCount = 0, octCount = 0, novCount = 0, decCount = 0;
         int debriefCount = 0, planningCount = 0, teambuildCount = 0, feedbackCount = 0;
-        for(Appointment i : apptList) {
+        for(Appointment i : appointments) {
             switch (i.getStart().getMonthValue()) {
                 case 1 -> janCount++;
                 case 2 -> febCount++;
@@ -316,6 +319,38 @@ public class MainScreenController implements Initializable {
         report1ListView.refresh();
     }
 
+    private void populateReport2TableView(String selectedContact) {
+        // Assign columns for report
+        report2ApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        report2TitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        report2DescrCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        report2LocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        report2TypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        report2StartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        report2EndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        report2CustIdCol.setCellValueFactory(cdf -> cdf.getValue().getCustomer().idProperty());
+
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        ObservableList<Appointment> apptListUnfiltered = FXCollections.observableArrayList();
+        ObservableList<Appointment> apptListFiltered = FXCollections.observableArrayList();
+        apptListUnfiltered.setAll(appointmentDAO.findAll());
+        DatabaseConnectionManager.closeConnection();
+
+        // Filter appointments by selected contact
+        for(Appointment i : apptList) {
+            if(i.getContact().getContactName().equals(selectedContact))
+                apptListFiltered.add(i);
+        }
+
+        report2Table.setItems(apptListFiltered);
+        report2Table.getSortOrder().add(report2ApptIdCol);
+        report2Table.refresh();
+    }
+
+    private void populateReport3ListView() {
+        //TODO Populate ListView with current username and total appointments
+    }
+
     private void populateTableView() {
         // Assign columns for customer data
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -336,7 +371,7 @@ public class MainScreenController implements Initializable {
         custTable.getSortOrder().add(custIdCol);
         custTable.refresh();
 
-        // Assign column values for appointment data
+        // Assign columns for appointment data
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptDescrCol.setCellValueFactory(new PropertyValueFactory<>("description"));

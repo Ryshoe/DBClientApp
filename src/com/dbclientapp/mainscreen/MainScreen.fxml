@@ -152,10 +152,11 @@
                                              <children>
                                                 <TableView fx:id="report2Table" prefHeight="295.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
-                                                    <TableColumn fx:id="report2ApptIdCol" prefWidth="75.0" text="Appointment ID" />
+                                                    <TableColumn fx:id="report2ApptIdCol" prefWidth="75.0" text="ID" />
                                                     <TableColumn fx:id="report2TitleCol" prefWidth="75.0" text="Title" />
                                                       <TableColumn fx:id="report2TypeCol" prefWidth="75.0" text="Type" />
                                                       <TableColumn fx:id="report2DescrCol" prefWidth="75.0" text="Description" />
+                                                      <TableColumn fx:id="report2LocationCol" prefWidth="75.0" text="Location" />
                                                       <TableColumn fx:id="report2StartCol" prefWidth="75.0" text="Start" />
                                                       <TableColumn fx:id="report2EndCol" prefWidth="75.0" text="End" />
                                                       <TableColumn fx:id="report2CustIdCol" prefWidth="75.0" text="Customer ID" />
