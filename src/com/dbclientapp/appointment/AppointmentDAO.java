@@ -39,6 +39,24 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
 
     private static final String DELETE = "DELETE FROM appointments WHERE Appointment_ID = ?";
 
+    private static final String READ_BY_WEEK = "SELECT * FROM appointments " +
+            "INNER JOIN customers " +
+            "ON appointments.Customer_ID = customers.Customer_ID " +
+            "INNER JOIN users " +
+            "ON appointments.User_ID = users.User_ID " +
+            "INNER JOIN contacts " +
+            "ON appointments.Contact_ID = contacts.Contact_ID " +
+            "WHERE Start BETWEEN NOW() and NOW() + INTERVAL 7 DAY";
+
+    private static final String READ_BY_MONTH = "SELECT * FROM appointments " +
+            "INNER JOIN customers " +
+            "ON appointments.Customer_ID = customers.Customer_ID " +
+            "INNER JOIN users " +
+            "ON appointments.User_ID = users.User_ID " +
+            "INNER JOIN contacts " +
+            "ON appointments.Contact_ID = contacts.Contact_ID " +
+            "WHERE Start BETWEEN NOW() and NOW() + INTERVAL 30 DAY";
+
     public AppointmentDAO(Connection connection) {
         super(connection);
     }
@@ -177,5 +195,83 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public ObservableList<Appointment> findAllByWeek() {
+        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+        try (PreparedStatement ps = this.connection.prepareStatement(READ_BY_WEEK)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Appointment appointment = new Appointment();
+                Customer customer = new Customer();
+                User user = new User();
+                Contact contact = new Contact();
+                appointment.setId(rs.getInt("Appointment_ID"));
+                appointment.setTitle(rs.getString("Title"));
+                appointment.setDescription(rs.getString("Description"));
+                appointment.setLocation(rs.getString("Location"));
+                appointment.setType(rs.getString("Type"));
+                appointment.setStart(rs.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+                appointment.setEnd(rs.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+                customer.setId(rs.getInt("Customer_ID"));
+                customer.setCustName(rs.getString("Customer_Name"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhoneNum(rs.getString("Phone"));
+                user.setId(rs.getInt("User_ID"));
+                user.setUsername(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                contact.setId(rs.getInt("Contact_ID"));
+                contact.setContactName(rs.getString("Contact_Name"));
+                contact.setEmail(rs.getString("Email"));
+                appointment.setCustomer(customer);
+                appointment.setUser(user);
+                appointment.setContact(contact);
+                appointmentList.add(appointment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return appointmentList;
+    }
+
+    public ObservableList<Appointment> findAllByMonth() {
+        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+        try(PreparedStatement ps = this.connection.prepareStatement(READ_BY_MONTH)) {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Appointment appointment = new Appointment();
+                Customer customer = new Customer();
+                User user = new User();
+                Contact contact = new Contact();
+                appointment.setId(rs.getInt("Appointment_ID"));
+                appointment.setTitle(rs.getString("Title"));
+                appointment.setDescription(rs.getString("Description"));
+                appointment.setLocation(rs.getString("Location"));
+                appointment.setType(rs.getString("Type"));
+                appointment.setStart(rs.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+                appointment.setEnd(rs.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+                customer.setId(rs.getInt("Customer_ID"));
+                customer.setCustName(rs.getString("Customer_Name"));
+                customer.setAddress(rs.getString("Address"));
+                customer.setPostalCode(rs.getString("Postal_Code"));
+                customer.setPhoneNum(rs.getString("Phone"));
+                user.setId(rs.getInt("User_ID"));
+                user.setUsername(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                contact.setId(rs.getInt("Contact_ID"));
+                contact.setContactName(rs.getString("Contact_Name"));
+                contact.setEmail(rs.getString("Email"));
+                appointment.setCustomer(customer);
+                appointment.setUser(user);
+                appointment.setContact(contact);
+                appointmentList.add(appointment);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return appointmentList;
     }
 }

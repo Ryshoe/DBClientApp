@@ -207,17 +207,20 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void noneRadioAction(ActionEvent event) {
-        //TODO Remove filter and show all appointments
+        if(noneRadio.isSelected())
+            apptFilterNone();
     }
 
     @FXML
     void weekRadioAction(ActionEvent event) {
-        //TODO Filter appointments by week
+        if(weekRadio.isSelected())
+            apptFilterWeek();
     }
 
     @FXML
     void monthRadioAction(ActionEvent event) {
-        //TODO Filter appointments by month
+        if(monthRadio.isSelected())
+            apptFilterMonth();
     }
 
     @FXML
@@ -338,5 +341,32 @@ public class MainScreenController implements Initializable {
             alert.show();
         }
         DatabaseConnectionManager.closeConnection();
+    }
+
+    private void apptFilterNone() {
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        apptList.setAll(appointmentDAO.findAll());
+        DatabaseConnectionManager.closeConnection();
+        apptTable.setItems(apptList);
+        apptTable.getSortOrder().add(apptIdCol);
+        apptTable.refresh();
+    }
+
+    private void apptFilterWeek() {
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        apptList.setAll(appointmentDAO.findAllByWeek());
+        DatabaseConnectionManager.closeConnection();
+        apptTable.setItems(apptList);
+        apptTable.getSortOrder().add(apptIdCol);
+        apptTable.refresh();
+    }
+
+    private void apptFilterMonth() {
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        apptList.setAll(appointmentDAO.findAllByMonth());
+        DatabaseConnectionManager.closeConnection();
+        apptTable.setItems(apptList);
+        apptTable.getSortOrder().add(apptIdCol);
+        apptTable.refresh();
     }
 }
