@@ -82,7 +82,7 @@
                               </TableView>
                               <HBox spacing="3.0">
                                  <children>
-                                    <Button fx:id="apptEditButton" mnemonicParsing="false" onAction="#apptEdit" prefWidth="52.0" text="Edit" />
+                                    <Button fx:id="apptEditButton" mnemonicParsing="false" onAction="#apptEditButtonAction" prefWidth="52.0" text="Edit" />
                                     <Button fx:id="apptDeleteButton" mnemonicParsing="false" onAction="#apptDeleteButtonAction" prefWidth="52.0" text="Delete" />
                                     <Label text="Filter by:">
                                        <padding>

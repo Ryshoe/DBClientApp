@@ -159,7 +159,7 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void apptEdit(ActionEvent event) {
+    void apptEditButtonAction(ActionEvent event) {
         try {
             setSelectedAppointment(apptTable.getSelectionModel().getSelectedItem());
             goToScreen(event, "../Appointment/AppointmentEdit.fxml");
@@ -324,8 +324,8 @@ public class MainScreenController implements Initializable {
         return selectedAppointment;
     }
 
-    public void setSelectedAppointment(Appointment selectedAppointment) {
-        MainScreenController.selectedAppointment = selectedAppointment;
+    public void setSelectedAppointment(Appointment appointment) {
+        MainScreenController.selectedAppointment = appointment;
     }
 
     private void deleteAppointment(Appointment appointment) {
@@ -334,7 +334,7 @@ public class MainScreenController implements Initializable {
         String deletedType = appointment.getType();
         if(appointmentDAO.delete(appointment.getId())) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Deleted " + deletedType + " appointment type with an ID of: " + deletedId);
+            alert.setContentText("Deleted " + deletedType + " appointment with an ID of: " + deletedId);
             alert.show();
         }
         DatabaseConnectionManager.closeConnection();
