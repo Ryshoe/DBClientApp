@@ -28,6 +28,8 @@ public class MainScreenController implements Initializable {
     public static Appointment selectedAppointment = new Appointment();
     private final ObservableList<Customer> custList = FXCollections.observableArrayList();
     private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
+    private final ObservableList<String> report1List = FXCollections.observableArrayList();
+    private final ObservableList<String> report3List = FXCollections.observableArrayList();
     private final ObservableList<String> reportList = FXCollections.observableArrayList(
             "Report #1",
             "Report #2",
@@ -96,17 +98,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private RadioButton noneRadio;
     @FXML
-    private TableColumn<?, ?> report1MonthColumn;
-    @FXML
-    private TableView<?> report1Table;
-    @FXML
-    private TableColumn<?, ?> report1TypeColumn1;
-    @FXML
-    private TableColumn<?, ?> report1TypeColumn2;
-    @FXML
-    private TableColumn<?, ?> report1TypeColumn3;
-    @FXML
-    private TableColumn<?, ?> report1TypeColumn4;
+    private ListView<String> report1ListView;
     @FXML
     private TableColumn<?, ?> report2ApptIdCol;
     @FXML
@@ -118,7 +110,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> report2EndCol;
     @FXML
-    private Button report2OkButton;
+    private ListView<?> report3ListView;
     @FXML
     private TableColumn<?, ?> report2StartCol;
     @FXML
@@ -126,15 +118,9 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> report2TitleCol;
     @FXML
+    private ToolBar report2ToolBar;
+    @FXML
     private TableColumn<?, ?> report2TypeCol;
-    @FXML
-    private TableColumn<?, ?> report3CustIdCol;
-    @FXML
-    private TableColumn<?, ?> report3CustNameCol;
-    @FXML
-    private TableColumn<?, ?> report3LastUpdtByCol;
-    @FXML
-    private TableView<?> report3Table;
     @FXML
     private ComboBox<String> reportBox;
     @FXML
@@ -224,17 +210,33 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void reportBoxAction(ActionEvent event) {
-        //TODO Add listener for report selection
+    void reportRunButtonAction(ActionEvent event) {
+        if(reportBox.getSelectionModel().isSelected(0)) {
+            report1ListView.setVisible(true);
+            report2ToolBar.setVisible(false);
+            report2Table.setVisible(false);
+            report3ListView.setVisible(false);
+            populateListView();
+        }
+        else if(reportBox.getSelectionModel().isSelected(1)) {
+            report1ListView.setVisible(false);
+            report2ToolBar.setVisible(true);
+            report2Table.setVisible(true);
+            report3ListView.setVisible(false);
+            //TODO Populate TableView with appointments by contact
+        }
+        else if(reportBox.getSelectionModel().isSelected(2)) {
+            report1ListView.setVisible(false);
+            report2ToolBar.setVisible(false);
+            report2Table.setVisible(false);
+            report3ListView.setVisible(true);
+            //TODO Populate ListView with current username and total appointments
+        }
     }
 
     @FXML
-    void reportRunButtonAction(ActionEvent event) {
-        //TODO Run selected report
-        // If report #1 selected, populate report1Table
-        // If report #2 selected, display report2Box and populate report2Table (default to first contact)
+    void report2BoxAction(ActionEvent event) {
 
-        //TODO Determine a 3rd report type
     }
 
     @Override
@@ -261,6 +263,57 @@ public class MainScreenController implements Initializable {
         // Populate report ComboBoxes
         reportBox.setItems(reportList);
         report2Box.setItems(contactList);
+    }
+
+    private void populateListView() {
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        apptList.setAll(appointmentDAO.findAll());
+        DatabaseConnectionManager.closeConnection();
+        int janCount = 0, febCount = 0, marCount = 0, aprCount = 0, mayCount = 0, junCount = 0;
+        int julCount = 0, augCount = 0, sepCount = 0, octCount = 0, novCount = 0, decCount = 0;
+        int debriefCount = 0, planningCount = 0, teambuildCount = 0, feedbackCount = 0;
+        for(Appointment i : apptList) {
+            switch (i.getStart().getMonthValue()) {
+                case 1 -> janCount++;
+                case 2 -> febCount++;
+                case 3 -> marCount++;
+                case 4 -> aprCount++;
+                case 5 -> mayCount++;
+                case 6 -> junCount++;
+                case 7 -> julCount++;
+                case 8 -> augCount++;
+                case 9 -> sepCount++;
+                case 10 -> octCount++;
+                case 11 -> novCount++;
+                case 12 -> decCount++;
+            }
+
+            switch (i.getType()) {
+                case "De-Briefing" -> debriefCount++;
+                case "Planning Session" -> planningCount++;
+                case "Team-Building" -> teambuildCount++;
+                case "Feedback" -> feedbackCount++;
+            }
+        }
+
+        report1List.add("JAN: " + janCount);
+        report1List.add("FEB: " + febCount);
+        report1List.add("MAR: " + marCount);
+        report1List.add("APR: " + aprCount);
+        report1List.add("MAY: " + mayCount);
+        report1List.add("JUN: " + junCount);
+        report1List.add("JUL: " + julCount);
+        report1List.add("AUG: " + augCount);
+        report1List.add("SEP: " + sepCount);
+        report1List.add("OCT: " + octCount);
+        report1List.add("NOV: " + novCount);
+        report1List.add("DEC: " + decCount);
+        report1List.add("De-Briefing: " + debriefCount);
+        report1List.add("Planning Session: " + planningCount);
+        report1List.add("Team-Building: " + teambuildCount);
+        report1List.add("Feedback: " + feedbackCount);
+        report1ListView.setItems(report1List);
+        report1ListView.refresh();
     }
 
     private void populateTableView() {
