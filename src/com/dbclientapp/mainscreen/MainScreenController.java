@@ -22,6 +22,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
@@ -247,6 +250,7 @@ public class MainScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         populateTableView();
         populateComboBox();
+        timeAlert();
     }
 
     private void goToScreen(ActionEvent event, String location) throws IOException {
@@ -475,5 +479,28 @@ public class MainScreenController implements Initializable {
         apptTable.setItems(apptList);
         apptTable.getSortOrder().add(apptIdCol);
         apptTable.refresh();
+    }
+
+    private void timeAlert() {
+        // Alert user upon login if there is an appointment within 15 minutes
+
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        apptList.setAll(appointmentDAO.findAllByMonth());
+        DatabaseConnectionManager.closeConnection();
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        for(Appointment i : apptList) {
+            long timeDiff = ChronoUnit.MINUTES.between(currentTime, i.getStart());
+            if(timeDiff > 0 && timeDiff <= 15) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("You have an appointment in approx " + timeDiff + " minutes.\n" +
+                        "Appointment ID: " + i.getId() + " at " + i.getStart());
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("There are no upcoming appointments.");
+                alert.show();
+            }
+        }
     }
 }
