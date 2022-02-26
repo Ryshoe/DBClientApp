@@ -150,8 +150,6 @@ public class AppointmentEditController implements Initializable {
     }
 
     private boolean parseData() {
-        //TODO Error checking / input validation
-
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
         Appointment appointment = MainScreenController.getSelectedAppointment();

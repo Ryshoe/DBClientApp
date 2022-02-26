@@ -139,8 +139,6 @@ public class AppointmentAddController implements Initializable {
     }
 
     private boolean parseData() {
-        //TODO Error checking / input validation
-
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
         appointmentInput.setTitle(titleField.getText());

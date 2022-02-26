@@ -175,8 +175,6 @@ public class CustomerEditController implements Initializable {
     }
 
     private void parseData() {
-        // TODO Error checking / input validation
-
         // Parse input from TextFields
         Customer customerInput = new Customer();
         customerInput.setId(Integer.parseInt(customerIdField.getText()));
