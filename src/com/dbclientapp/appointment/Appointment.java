@@ -7,7 +7,7 @@ import com.dbclientapp.util.DataTransferObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Appointment implements DataTransferObject {
 
@@ -16,8 +16,8 @@ public class Appointment implements DataTransferObject {
     private String description;
     private String location;
     private String type;
-    private Timestamp start;
-    private Timestamp end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private final ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
     private final ObjectProperty<User> user = new SimpleObjectProperty<>();
     private final ObjectProperty<Contact> contact = new SimpleObjectProperty<>();
@@ -64,19 +64,19 @@ public class Appointment implements DataTransferObject {
         this.type = type;
     }
 
-    public Timestamp getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(Timestamp start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public Timestamp getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(Timestamp end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 

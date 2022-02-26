@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.ZoneId;
 
 public class AppointmentDAO extends DataAccessObject<Appointment> {
 
@@ -57,8 +58,8 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
                 appointment.setDescription(rs.getString("Description"));
                 appointment.setLocation(rs.getString("Location"));
                 appointment.setType(rs.getString("Type"));
-                appointment.setStart(rs.getTimestamp("Start"));
-                appointment.setEnd(rs.getTimestamp("End"));
+                appointment.setStart(rs.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+                appointment.setEnd(rs.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
@@ -96,8 +97,8 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
                 appointment.setDescription(rs.getString("Description"));
                 appointment.setLocation(rs.getString("Location"));
                 appointment.setType(rs.getString("Type"));
-                appointment.setStart(rs.getTimestamp("Start"));
-                appointment.setEnd(rs.getTimestamp("End"));
+                appointment.setStart(rs.getTimestamp("Start").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+                appointment.setEnd(rs.getTimestamp("End").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
                 customer.setId(rs.getInt("Customer_ID"));
                 customer.setCustName(rs.getString("Customer_Name"));
                 customer.setAddress(rs.getString("Address"));
@@ -129,8 +130,8 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             ps.setString(2, dto.getDescription());
             ps.setString(3, dto.getLocation());
             ps.setString(4, dto.getType());
-            ps.setTimestamp(5, dto.getStart());
-            ps.setTimestamp(6, dto.getEnd());
+            ps.setTimestamp(5, Timestamp.valueOf(dto.getStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(dto.getEnd()));
             ps.setInt(7, dto.getId());
             ps.execute();
             appointment = this.findById(dto.getId());
@@ -148,8 +149,8 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
             ps.setString(2, dto.getDescription());
             ps.setString(3, dto.getLocation());
             ps.setString(4, dto.getType());
-            ps.setTimestamp(5, dto.getStart());
-            ps.setTimestamp(6, dto.getEnd());
+            ps.setTimestamp(5, Timestamp.valueOf(dto.getStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(dto.getEnd()));
             ps.setInt(7, dto.getCustomer().getId());
             ps.setInt(8, dto.getUser().getId());
             ps.setInt(9, dto.getContact().getId());
