@@ -5,6 +5,8 @@ import com.dbclientapp.appointment.Appointment;
 import com.dbclientapp.appointment.AppointmentDAO;
 import com.dbclientapp.customer.Customer;
 import com.dbclientapp.customer.CustomerDAO;
+import com.dbclientapp.login.LoginController;
+import com.dbclientapp.user.User;
 import com.dbclientapp.util.DatabaseConnectionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -122,7 +124,7 @@ public class MainScreenController implements Initializable {
     @FXML
     private TableColumn<?, ?> report2TypeCol;
     @FXML
-    private ListView<?> report3ListView;
+    private ListView<String> report3ListView;
     @FXML
     private ComboBox<String> reportBox;
     @FXML
@@ -342,13 +344,30 @@ public class MainScreenController implements Initializable {
                 apptListFiltered.add(i);
         }
 
+        // Populate report TableView with selected contact's appointments
         report2Table.setItems(apptListFiltered);
         report2Table.getSortOrder().add(report2ApptIdCol);
         report2Table.refresh();
     }
 
     private void populateReport3ListView() {
-        //TODO Populate ListView with current username and total appointments
+        // Populate ListView with current logged-in user and total appointments
+        AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        appointments.setAll(appointmentDAO.findAll());
+        DatabaseConnectionManager.closeConnection();
+
+        User user = LoginController.getLoggedInUser();
+        int apptCount = 0;
+        for(Appointment i : appointments) {
+            if(user.getId() == i.getUser().getId())
+                apptCount++;
+        }
+
+        report3List.add("Currently logged in as: " + user.getUsername());
+        report3List.add("Number of appointments: " + apptCount);
+        report3ListView.setItems(report3List);
+        report3ListView.refresh();
     }
 
     private void populateTableView() {
