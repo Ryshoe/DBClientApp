@@ -500,6 +500,7 @@ public class MainScreenController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("There are no upcoming appointments.");
                 alert.show();
+                break;
             }
         }
     }
