@@ -1,6 +1,7 @@
 package com.dbclientapp.login;
 
 import com.dbclientapp.Application;
+import com.dbclientapp.mainscreen.MainScreenController;
 import com.dbclientapp.user.User;
 import com.dbclientapp.user.UserDAO;
 import com.dbclientapp.util.DatabaseConnectionManager;
@@ -97,6 +98,7 @@ public class LoginController implements Initializable {
         Parent scene = loader.load();
         stage.setScene(new Scene(scene));
         stage.show();
+        MainScreenController.timeAlert();
     }
 
     private void recordLogin() throws IOException {
