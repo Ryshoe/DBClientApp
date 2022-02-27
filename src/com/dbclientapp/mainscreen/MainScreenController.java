@@ -19,11 +19,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
@@ -31,11 +29,11 @@ public class MainScreenController implements Initializable {
 
     public static Customer selectedCustomer = new Customer();
     public static Appointment selectedAppointment = new Appointment();
-    private final ObservableList<Customer> custList = FXCollections.observableArrayList();
-    private final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
-    private final ObservableList<String> report1List = FXCollections.observableArrayList();
-    private final ObservableList<String> report3List = FXCollections.observableArrayList();
-    private final ObservableList<String> reportList = FXCollections.observableArrayList(
+    private static final ObservableList<Customer> custList = FXCollections.observableArrayList();
+    private static final ObservableList<Appointment> apptList = FXCollections.observableArrayList();
+    private static final ObservableList<String> report1List = FXCollections.observableArrayList();
+    private static final ObservableList<String> report3List = FXCollections.observableArrayList();
+    private static final ObservableList<String> reportList = FXCollections.observableArrayList(
             "Report #1",
             "Report #2",
             "Report #3");
@@ -200,19 +198,19 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void noneRadioAction(ActionEvent event) {
-        if(noneRadio.isSelected())
+        if(toggleGroup.getSelectedToggle().equals(noneRadio))
             apptFilterNone();
     }
 
     @FXML
     void weekRadioAction(ActionEvent event) {
-        if(weekRadio.isSelected())
+        if(toggleGroup.getSelectedToggle().equals(weekRadio))
             apptFilterWeek();
     }
 
     @FXML
     void monthRadioAction(ActionEvent event) {
-        if(monthRadio.isSelected())
+        if(toggleGroup.getSelectedToggle().equals(monthRadio))
             apptFilterMonth();
     }
 
@@ -244,13 +242,6 @@ public class MainScreenController implements Initializable {
     void report2BoxAction(ActionEvent event) {
         String selectedContact = report2Box.getSelectionModel().getSelectedItem();
         populateReport2TableView(selectedContact);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        populateTableView();
-        populateComboBox();
-        timeAlert();
     }
 
     private void goToScreen(ActionEvent event, String location) throws IOException {
@@ -481,15 +472,16 @@ public class MainScreenController implements Initializable {
         apptTable.refresh();
     }
 
-    private void timeAlert() {
+    public static void timeAlert() {
         // Alert user upon login if there is an appointment within 15 minutes
 
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
-        apptList.setAll(appointmentDAO.findAllByMonth());
+        ObservableList<Appointment> checkAppt = FXCollections.observableArrayList();
+        checkAppt.setAll(appointmentDAO.findAllByMonth());
         DatabaseConnectionManager.closeConnection();
 
         LocalDateTime currentTime = LocalDateTime.now();
-        for(Appointment i : apptList) {
+        for(Appointment i : checkAppt) {
             long timeDiff = ChronoUnit.MINUTES.between(currentTime, i.getStart());
             if(timeDiff > 0 && timeDiff <= 15) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -503,5 +495,11 @@ public class MainScreenController implements Initializable {
                 break;
             }
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        populateTableView();
+        populateComboBox();
     }
 }
