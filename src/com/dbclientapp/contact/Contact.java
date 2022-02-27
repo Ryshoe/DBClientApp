@@ -4,6 +4,9 @@ import com.dbclientapp.util.DataTransferObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Handles contacts as an object.
+ */
 public class Contact implements DataTransferObject {
 
     private int id;

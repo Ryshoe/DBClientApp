@@ -5,9 +5,11 @@ import com.dbclientapp.division.Division;
 import com.dbclientapp.util.DataAccessObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
 
+/**
+ * Handles creation of SQL query statements for customer objects.
+ */
 public class CustomerDAO extends DataAccessObject<Customer> {
 
     private static final String CREATE = "INSERT INTO customers (Customer_Name, " +

@@ -6,9 +6,11 @@ import com.dbclientapp.user.User;
 import com.dbclientapp.util.DataTransferObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
 import java.time.LocalDateTime;
 
+/**
+ * Handles appointments as an object.
+ */
 public class Appointment implements DataTransferObject {
 
     private int id;

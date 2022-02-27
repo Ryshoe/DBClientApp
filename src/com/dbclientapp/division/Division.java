@@ -7,6 +7,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Handles first level divisions as an object.
+ */
 public class Division implements DataTransferObject {
 
     private int id;

@@ -4,6 +4,9 @@ import com.dbclientapp.util.DataTransferObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Handles countries as an object.
+ */
 public class Country implements DataTransferObject {
 
     private int id;

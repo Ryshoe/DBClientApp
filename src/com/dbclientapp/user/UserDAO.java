@@ -1,7 +1,6 @@
 package com.dbclientapp.user;
 
 import com.dbclientapp.util.DataAccessObject;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles creation of SQL query statements for user objects.
+ */
 public class UserDAO extends DataAccessObject<User> {
 
     private static final String READ_ONE = "SELECT User_ID, User_Name, Password " +
@@ -41,10 +43,15 @@ public class UserDAO extends DataAccessObject<User> {
         return user;
     }
 
-    public User findByUser(String username) {
+    /**
+     * Generates READ statement using string as an argument.
+     * @param string username to search
+     * @return user record as object
+     */
+    public User findByUser(String string) {
         User user = new User();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_USER)) {
-            ps.setString(1, username);
+            ps.setString(1, string);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 user.setId(rs.getInt("User_ID"));

@@ -9,52 +9,44 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dbclientapp.customer.CustomerEditController">
-   <children>
-      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox alignment="CENTER" prefHeight="152.0" prefWidth="600.0">
-               <children>
-                  <VBox prefHeight="187.0" prefWidth="80.0" spacing="2.0">
-                     <children>
-                        <Label minHeight="25.0" prefHeight="25.0" text="Customer ID:" />
-                        <Label minHeight="25.0" prefHeight="25.0" text="Name:" />
-                        <Label minHeight="25.0" prefHeight="25.0" text="Address:" />
-                        <Label minHeight="25.0" prefHeight="25.0" text="Postal Code:" />
-                        <Label minHeight="25.0" prefHeight="25.0" text="Phone:" />
-                        <Label minHeight="25.0" prefHeight="25.0" text="Country:" />
-                        <Label minHeight="25.0" prefHeight="25.0" text="Division:" />
-                     </children>
-                  </VBox>
-                  <VBox prefWidth="150.0" spacing="2.0">
-                     <children>
-                        <TextField fx:id="customerIdField" disable="true" />
-                        <TextField fx:id="nameField" />
-                        <TextField fx:id="addressField" />
-                        <TextField fx:id="postalField" />
-                        <TextField fx:id="phoneField" />
-                        <ComboBox fx:id="countryBox" onAction="#countryBoxAction" prefWidth="150.0" />
-                        <ComboBox fx:id="divisionBox" prefWidth="150.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="5.0">
-               <children>
-                  <Button fx:id="okButton" alignment="CENTER" mnemonicParsing="false" onAction="#okButtonAction" pickOnBounds="false" prefWidth="52.0" text="OK" />
-                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonAction" pickOnBounds="false" prefWidth="52.0" text="Cancel" />
-               </children>
-               <padding>
-                  <Insets left="122.0" top="2.0" />
-               </padding>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </HBox>
-         </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbclientapp.customer.CustomerEditController">
+   <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="3.0" AnchorPane.bottomAnchor="0.0"
+         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <padding>
+         <Insets left="3.0"/>
+      </padding>
+      <HBox alignment="CENTER" prefHeight="152.0" prefWidth="600.0">
+         <VBox prefHeight="187.0" prefWidth="80.0" spacing="2.0">
+            <Label minHeight="25.0" prefHeight="25.0" text="Customer ID:"/>
+            <Label minHeight="25.0" prefHeight="25.0" text="Name:"/>
+            <Label minHeight="25.0" prefHeight="25.0" text="Address:"/>
+            <Label minHeight="25.0" prefHeight="25.0" text="Postal Code:"/>
+            <Label minHeight="25.0" prefHeight="25.0" text="Phone:"/>
+            <Label minHeight="25.0" prefHeight="25.0" text="Country:"/>
+            <Label minHeight="25.0" prefHeight="25.0" text="Division:"/>
+         </VBox>
+         <VBox prefWidth="150.0" spacing="2.0">
+            <TextField fx:id="customerIdField" disable="true"/>
+            <TextField fx:id="nameField"/>
+            <TextField fx:id="addressField"/>
+            <TextField fx:id="postalField"/>
+            <TextField fx:id="phoneField"/>
+            <ComboBox fx:id="countryBox" onAction="#countryBoxAction" prefWidth="150.0"/>
+            <ComboBox fx:id="divisionBox" prefWidth="150.0"/>
+         </VBox>
+      </HBox>
+      <HBox alignment="CENTER" spacing="5.0">
          <padding>
-            <Insets left="3.0" />
+            <Insets left="122.0" top="2.0"/>
          </padding>
-      </VBox>
-   </children>
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <Button fx:id="okButton" alignment="CENTER" mnemonicParsing="false" onAction="#okButtonAction"
+                 pickOnBounds="false" prefWidth="52.0" text="OK"/>
+         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonAction" pickOnBounds="false"
+                 prefWidth="52.0" text="Cancel"/>
+      </HBox>
+   </VBox>
 </AnchorPane>

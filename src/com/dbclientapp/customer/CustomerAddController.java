@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that handles customer add screen.
+ */
 public class CustomerAddController implements Initializable {
 
     private final ObservableList<String> countryList = FXCollections.observableArrayList(
@@ -118,17 +121,31 @@ public class CustomerAddController implements Initializable {
     @FXML
     private TextField postalField;
 
+    /**
+     * Handles action for when cancel button is pressed.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
         returnToMainScreen(event);
     }
 
+    /**
+     * Handles action for when OK button is pressed.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
         parseData();
         returnToMainScreen(event);
     }
 
+    /**
+     * Handles action for when a country is selected from the ComboBox.
+     * @param event
+     */
     @FXML
     void countryBoxAction(ActionEvent event) {
         // Populate division ComboBox depending on country selection
@@ -140,11 +157,11 @@ public class CustomerAddController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        populateCountryComboBox();
-    }
-
+    /**
+     * Handles stage for returning to main menu screen
+     * @param event ActionEvent to determine if a button was pressed
+     * @throws IOException
+     */
     private void returnToMainScreen(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
@@ -153,11 +170,17 @@ public class CustomerAddController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Populates ComboBoxes on form using static lists.
+     */
     private void populateCountryComboBox() {
         // Populate country ComboBox from static list
         countryBox.setItems(countryList);
     }
 
+    /**
+     * Parses the data that is entered on the form and updates the selected customer record in the database.
+     */
     private void parseData() {
         // Parse input from TextFields
         Customer customerInput = new Customer();
@@ -182,5 +205,15 @@ public class CustomerAddController implements Initializable {
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
         customerDAO.create(customerInput);
         DatabaseConnectionManager.closeConnection();
+    }
+
+    /**
+     * First method that is called when screen is loaded.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        populateCountryComboBox();
     }
 }

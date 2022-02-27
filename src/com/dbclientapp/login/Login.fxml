@@ -7,25 +7,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dbclientapp.login.LoginController">
-   <children>
-      <Label layoutX="206.0" layoutY="120.0" text="Scheduling App">
-         <font>
-            <Font name="Calibri" size="30.0" />
-         </font>
-      </Label>
-      <TextField fx:id="usernameField" layoutX="175.0" layoutY="175.0" prefWidth="250.0" promptText="Username" />
-      <PasswordField fx:id="passwordField" layoutX="175.0" layoutY="220.0" prefWidth="250.0" promptText="Password" />
-      <Button fx:id="okButton" layoutX="319.0" layoutY="255.0" mnemonicParsing="false" onAction="#okButtonAction" prefWidth="44.0" text="OK">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <Button fx:id="cancelButton" layoutX="371.0" layoutY="255.0" mnemonicParsing="false" onAction="#cancelButtonAction" text="Cancel">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Button>
-      <Label fx:id="zoneIdLabel" layoutX="182.0" layoutY="257.0" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbclientapp.login.LoginController">
+   <Label layoutX="206.0" layoutY="120.0" text="Scheduling App">
+      <font>
+         <Font name="Calibri" size="30.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="usernameField" layoutX="175.0" layoutY="175.0" prefWidth="250.0" promptText="Username"/>
+   <PasswordField fx:id="passwordField" layoutX="175.0" layoutY="220.0" prefWidth="250.0" promptText="Password"/>
+   <Button fx:id="okButton" layoutX="319.0" layoutY="255.0" mnemonicParsing="false" onAction="#okButtonAction"
+           prefWidth="44.0" text="OK">
+      <font>
+         <Font size="10.0"/>
+      </font>
+   </Button>
+   <Button fx:id="cancelButton" layoutX="371.0" layoutY="255.0" mnemonicParsing="false" onAction="#cancelButtonAction"
+           text="Cancel">
+      <font>
+         <Font size="10.0"/>
+      </font>
+   </Button>
+   <Label fx:id="zoneIdLabel" layoutX="182.0" layoutY="257.0"/>
 </AnchorPane>

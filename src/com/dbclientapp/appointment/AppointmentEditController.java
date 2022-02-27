@@ -3,10 +3,7 @@ package com.dbclientapp.appointment;
 import com.dbclientapp.Application;
 import com.dbclientapp.contact.Contact;
 import com.dbclientapp.contact.ContactDAO;
-import com.dbclientapp.customer.Customer;
-import com.dbclientapp.login.LoginController;
 import com.dbclientapp.mainscreen.MainScreenController;
-import com.dbclientapp.user.User;
 import com.dbclientapp.util.DatabaseConnectionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,15 +18,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that handles appointment edit screen.
+ */
 public class AppointmentEditController implements Initializable {
 
     private static final ObservableList<String> contactList = FXCollections.observableArrayList(
@@ -97,23 +94,32 @@ public class AppointmentEditController implements Initializable {
     @FXML
     private TextField userIdField;
 
+    /**
+     * Handles action for when cancel button is pressed.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
         returnToMainScreen(event);
     }
 
+    /**
+     * Handles action for when OK button is pressed.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
         if(parseData())
             returnToMainScreen(event);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        populateComboBox();
-        populateSelected();
-    }
-
+    /**
+     * Handles stage for returning to main menu screen
+     * @param event ActionEvent to determine if a button was pressed
+     * @throws IOException
+     */
     private void returnToMainScreen(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
@@ -124,8 +130,10 @@ public class AppointmentEditController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Populates form using selected appointment from main menu.
+     */
     private void populateSelected() {
-        // Retrieve selected appointment from MainScreen and populate form
         Appointment appointment = MainScreenController.getSelectedAppointment();
         appointmentIdField.setText(String.valueOf(appointment.getId()));
         titleField.setText(appointment.getTitle());
@@ -141,14 +149,19 @@ public class AppointmentEditController implements Initializable {
         userIdField.setText(String.valueOf(appointment.getUser().getId()));
     }
 
+    /**
+     * Populates ComboBoxes on form using static lists.
+     */
     private void populateComboBox() {
-        // Populate ComboBoxes from static lists
         contactBox.setItems(contactList);
         typeBox.setItems(typeList);
         startTime.setItems(timeList);
         endTime.setItems(timeList);
     }
-
+    /**
+     * Parses the data that is entered on the form and updates the selected appointment record in the database.
+     * @return boolean for input validation
+     */
     private boolean parseData() {
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
@@ -225,5 +238,16 @@ public class AppointmentEditController implements Initializable {
         DatabaseConnectionManager.closeConnection();
 
         return true;
+    }
+
+    /**
+     * First method that is called when screen is loaded.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        populateComboBox();
+        populateSelected();
     }
 }

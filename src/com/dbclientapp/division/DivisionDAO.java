@@ -1,7 +1,6 @@
 package com.dbclientapp.division;
 
 import com.dbclientapp.util.DataAccessObject;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles creation of SQL query statements for first level division objects.
+ */
 public class DivisionDAO extends DataAccessObject<Division> {
 
     private static final String READ_ONE_BY_ID = "SELECT Division_ID, Division, Country_ID " +
@@ -40,10 +42,15 @@ public class DivisionDAO extends DataAccessObject<Division> {
         return division;
     }
 
-    public Division findByName(String name) {
+    /**
+     * Generates READ statement using string as an argument.
+     * @param string division name to search
+     * @return division record as an object
+     */
+    public Division findByName(String string) {
         Division division = new Division();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_NAME)) {
-            ps.setString(1, name);
+            ps.setString(1, string);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 division.setId(rs.getInt("Division_ID"));

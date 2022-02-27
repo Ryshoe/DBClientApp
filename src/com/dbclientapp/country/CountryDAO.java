@@ -1,7 +1,6 @@
 package com.dbclientapp.country;
 
 import com.dbclientapp.util.DataAccessObject;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles creation of SQL query statements for country objects.
+ */
 public class CountryDAO extends DataAccessObject<Country> {
 
     private static final String READ_ONE_BY_ID = "SELECT Country_ID, Country " +
@@ -40,10 +42,15 @@ public class CountryDAO extends DataAccessObject<Country> {
         return country;
     }
 
-    public Country findByName(String name) {
+    /**
+     * Generates READ statement using string as an argument.
+     * @param string country name to search
+     * @return country record as an object
+     */
+    public Country findByName(String string) {
         Country country = new Country();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_NAME)) {
-            ps.setString(1, name);
+            ps.setString(1, string);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 country.setId(rs.getInt("Country_ID"));

@@ -25,6 +25,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that handles main menu screen.
+ */
 public class MainScreenController implements Initializable {
 
     public static Customer selectedCustomer = new Customer();
@@ -139,6 +142,10 @@ public class MainScreenController implements Initializable {
     @FXML
     private RadioButton weekRadio;
 
+    /**
+     * Handles action for when add appointment button is pressed.
+     * @param event
+     */
     @FXML
     void apptAddButtonAction(ActionEvent event) {
         try {
@@ -149,6 +156,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Handles action for when edit appointment button is pressed.
+     * @param event
+     */
     @FXML
     void apptEditButtonAction(ActionEvent event) {
         try {
@@ -159,6 +170,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Handles action for when delete appointment button is pressed.
+     * @param event
+     */
     @FXML
     void apptDeleteButtonAction(ActionEvent event) {
         try {
@@ -170,11 +185,19 @@ public class MainScreenController implements Initializable {
         populateTableView();
     }
 
+    /**
+     * Handles action for when add customer button is pressed.
+     * @param event
+     */
     @FXML
     void custAddButtonAction(ActionEvent event) throws IOException {
         goToScreen(event, "../Customer/CustomerAdd.fxml");
     }
 
+    /**
+     * Handles action for when edit customer button is pressed.
+     * @param event
+     */
     @FXML
     void custEditButtonAction(ActionEvent event) {
         try {
@@ -185,6 +208,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Handles action for when delete customer button is pressed.
+     * @param event
+     */
     @FXML
     void custDeleteButtonAction(ActionEvent event) {
         try {
@@ -196,24 +223,40 @@ public class MainScreenController implements Initializable {
         populateTableView();
     }
 
+    /**
+     * Handles action for when "filter by none" radio button is pressed.
+     * @param event
+     */
     @FXML
     void noneRadioAction(ActionEvent event) {
         if(toggleGroup.getSelectedToggle().equals(noneRadio))
             apptFilterNone();
     }
 
+    /**
+     * Handles action for when "filter by week" radio button is pressed.
+     * @param event
+     */
     @FXML
     void weekRadioAction(ActionEvent event) {
         if(toggleGroup.getSelectedToggle().equals(weekRadio))
             apptFilterWeek();
     }
 
+    /**
+     * Handles action for when "filter by month" radio button is pressed.
+     * @param event
+     */
     @FXML
     void monthRadioAction(ActionEvent event) {
         if(toggleGroup.getSelectedToggle().equals(monthRadio))
             apptFilterMonth();
     }
 
+    /**
+     * Handles action for when run report button is pressed.
+     * @param event
+     */
     @FXML
     void reportRunButtonAction(ActionEvent event) {
         if(reportBox.getSelectionModel().isSelected(0)) {
@@ -238,12 +281,22 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Handles action for when an item in the 2nd report ComboBox is selected.
+     * @param event
+     */
     @FXML
     void report2BoxAction(ActionEvent event) {
         String selectedContact = report2Box.getSelectionModel().getSelectedItem();
         populateReport2TableView(selectedContact);
     }
 
+    /**
+     * Handles stage for the next screen.
+     * @param event ActionEvent to determine if a button was pressed
+     * @param location string listing .fxml location
+     * @throws IOException
+     */
     private void goToScreen(ActionEvent event, String location) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
@@ -252,18 +305,30 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Selects customer or appointment tab to display by default.
+     * @param tabIndex int index for tab selection
+     */
     public void selectTabPane(int tabIndex) {
         // Change tabs depending on selection
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         selectionModel.select(tabIndex);
     }
 
+    /**
+     * Populates ComboBoxes on form using static lists.
+     */
     private void populateComboBox() {
         // Populate report ComboBoxes
         reportBox.setItems(reportList);
         report2Box.setItems(contactList);
     }
 
+    /**
+     * Populates the ListView for report #1.
+     * Gets all appointments and loops through each record while counting by month and type
+     * Uses lambda expressions in switch statements to make the code more readable
+     */
     private void populateReport1ListView() {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -316,6 +381,10 @@ public class MainScreenController implements Initializable {
         report1ListView.refresh();
     }
 
+    /**
+     * Populates the TableView for report #2.
+     * @param selectedContact string to search list by contact
+     */
     private void populateReport2TableView(String selectedContact) {
         // Assign columns for report
         report2ApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -345,8 +414,11 @@ public class MainScreenController implements Initializable {
         report2Table.refresh();
     }
 
+    /**
+     * Populates the ListView for report #3.
+     * Gets currently logged-in user and all appointments, then counts each appointment assigned to user
+     */
     private void populateReport3ListView() {
-        // Populate ListView with current logged-in user and total appointments
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
         appointments.setAll(appointmentDAO.findAll());
@@ -365,6 +437,10 @@ public class MainScreenController implements Initializable {
         report3ListView.refresh();
     }
 
+    /**
+     * Populates TableViews for both customers and appointments.
+     * Uses lambda expressions to assign column labels where an object needs to be accessed within another object
+     */
     private void populateTableView() {
         // Assign columns for customer data
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -414,6 +490,10 @@ public class MainScreenController implements Initializable {
         MainScreenController.selectedCustomer = customer;
     }
 
+    /**
+     * Deletes selected customer record and displays alert with customer ID.
+     * @param customer object to delete
+     */
     private void deleteCustomer(Customer customer) {
         CustomerDAO customerDAO = new CustomerDAO(DatabaseConnectionManager.openConnection());
         int deletedId = customer.getId();
@@ -433,6 +513,10 @@ public class MainScreenController implements Initializable {
         MainScreenController.selectedAppointment = appointment;
     }
 
+    /**
+     * Deletes selected appointment record and displays alert with appointment type and ID.
+     * @param appointment
+     */
     private void deleteAppointment(Appointment appointment) {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         int deletedId = appointment.getId();
@@ -445,6 +529,9 @@ public class MainScreenController implements Initializable {
         DatabaseConnectionManager.closeConnection();
     }
 
+    /**
+     * Removes filters from TableView of appointments and displays all records.
+     */
     private void apptFilterNone() {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         apptList.setAll(appointmentDAO.findAll());
@@ -454,6 +541,9 @@ public class MainScreenController implements Initializable {
         apptTable.refresh();
     }
 
+    /**
+     * Filters TableView of appointments by week.
+     */
     private void apptFilterWeek() {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         apptList.setAll(appointmentDAO.findAllByWeek());
@@ -463,6 +553,9 @@ public class MainScreenController implements Initializable {
         apptTable.refresh();
     }
 
+    /**
+     * Filters TableView of appointments by month.
+     */
     private void apptFilterMonth() {
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         apptList.setAll(appointmentDAO.findAllByMonth());
@@ -472,9 +565,10 @@ public class MainScreenController implements Initializable {
         apptTable.refresh();
     }
 
+    /**
+     * Displays alert if there is an appointment starting within 15 minutes of user logging in.
+     */
     public static void timeAlert() {
-        // Alert user upon login if there is an appointment within 15 minutes
-
         AppointmentDAO appointmentDAO = new AppointmentDAO(DatabaseConnectionManager.openConnection());
         ObservableList<Appointment> checkAppt = FXCollections.observableArrayList();
         checkAppt.setAll(appointmentDAO.findAllByMonth());
@@ -497,6 +591,11 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * First method that is called when screen is loaded.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateTableView();

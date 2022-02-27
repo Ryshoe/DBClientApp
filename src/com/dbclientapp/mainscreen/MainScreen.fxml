@@ -16,165 +16,163 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dbclientapp.mainscreen.MainScreenController">
-   <children>
-      <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <tabs>
-          <Tab fx:id="custTab" text="Customers">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0">
-                     <children>
-                        <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <TableView fx:id="custTable">
-                                <columns>
-                                  <TableColumn fx:id="custIdCol" prefWidth="75.0" text="ID" />
-                                  <TableColumn fx:id="custNameCol" prefWidth="75.0" text="Name" />
-                                    <TableColumn fx:id="custAddressCol" prefWidth="75.0" text="Address" />
-                                    <TableColumn fx:id="custPostalCol" prefWidth="75.0" text="Postal Code" />
-                                    <TableColumn fx:id="custPhoneCol" prefWidth="75.0" text="Phone" />
-                                    <TableColumn fx:id="custDivisionCol" prefWidth="75.0" text="Division" />
-                                    <TableColumn fx:id="custCountryCol" prefWidth="75.0" text="Country" />
-                                </columns>
-                              </TableView>
-                              <HBox spacing="3.0">
-                                 <children>
-                                    <Button fx:id="custAddButton" mnemonicParsing="false" onAction="#custAddButtonAction" prefWidth="52.0" text="Add" />
-                                    <Button fx:id="custEditButton" mnemonicParsing="false" onAction="#custEditButtonAction" prefWidth="52.0" text="Edit" />
-                                    <Button fx:id="custDeleteButton" mnemonicParsing="false" onAction="#custDeleteButtonAction" prefWidth="52.0" text="Delete" />
-                                    <Button fx:id="apptAddButton" mnemonicParsing="false" onAction="#apptAddButtonAction" text="Create Appointment">
-                                       <HBox.margin>
-                                          <Insets left="20.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                                 <padding>
-                                    <Insets left="3.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="3.0" />
-                           </padding>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dbclientapp.mainscreen.MainScreenController">
+    <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
+             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="0.0">
+        <Tab fx:id="custTab" text="Customers">
+            <AnchorPane minHeight="0.0" minWidth="0.0">
+                <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets bottom="3.0"/>
+                    </padding>
+                    <TableView fx:id="custTable">
+                        <columns>
+                            <TableColumn fx:id="custIdCol" prefWidth="75.0" text="ID"/>
+                            <TableColumn fx:id="custNameCol" prefWidth="75.0" text="Name"/>
+                            <TableColumn fx:id="custAddressCol" prefWidth="75.0" text="Address"/>
+                            <TableColumn fx:id="custPostalCol" prefWidth="75.0" text="Postal Code"/>
+                            <TableColumn fx:id="custPhoneCol" prefWidth="75.0" text="Phone"/>
+                            <TableColumn fx:id="custDivisionCol" prefWidth="75.0" text="Division"/>
+                            <TableColumn fx:id="custCountryCol" prefWidth="75.0" text="Country"/>
+                        </columns>
+                    </TableView>
+                    <HBox spacing="3.0">
+                        <padding>
+                            <Insets left="3.0"/>
+                        </padding>
+                        <Button fx:id="custAddButton" mnemonicParsing="false" onAction="#custAddButtonAction"
+                                prefWidth="52.0" text="Add"/>
+                        <Button fx:id="custEditButton" mnemonicParsing="false"
+                                onAction="#custEditButtonAction" prefWidth="52.0" text="Edit"/>
+                        <Button fx:id="custDeleteButton" mnemonicParsing="false"
+                                onAction="#custDeleteButtonAction" prefWidth="52.0" text="Delete"/>
+                        <Button fx:id="apptAddButton" mnemonicParsing="false" onAction="#apptAddButtonAction"
+                                text="Create Appointment">
+                            <HBox.margin>
+                                <Insets left="20.0"/>
+                            </HBox.margin>
+                        </Button>
+                    </HBox>
+                </VBox>
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="apptTab" text="Appointments">
+            <AnchorPane minHeight="0.0" minWidth="0.0">
+                <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets bottom="3.0"/>
+                    </padding>
+                    <TableView fx:id="apptTable">
+                        <columns>
+                            <TableColumn fx:id="apptIdCol" prefWidth="75.0" text="ID"/>
+                            <TableColumn fx:id="apptTitleCol" prefWidth="75.0" text="Title"/>
+                            <TableColumn fx:id="apptDescrCol" prefWidth="75.0" text="Description"/>
+                            <TableColumn fx:id="apptLocationCol" prefWidth="75.0" text="Location"/>
+                            <TableColumn fx:id="apptContactCol" prefWidth="75.0" text="Contact"/>
+                            <TableColumn fx:id="apptTypeCol" prefWidth="75.0" text="Type"/>
+                            <TableColumn fx:id="apptStartCol" prefWidth="75.0" text="Start"/>
+                            <TableColumn fx:id="apptEndCol" prefWidth="75.0" text="End"/>
+                            <TableColumn fx:id="apptCustIdCol" prefWidth="75.0" text="Customer ID"/>
+                            <TableColumn fx:id="apptUserIdCol" prefWidth="75.0" text="User ID"/>
+                        </columns>
+                    </TableView>
+                    <HBox spacing="3.0">
+                        <padding>
+                            <Insets left="3.0"/>
+                        </padding>
+                        <Button fx:id="apptEditButton" mnemonicParsing="false"
+                                onAction="#apptEditButtonAction" prefWidth="52.0" text="Edit"/>
+                        <Button fx:id="apptDeleteButton" mnemonicParsing="false"
+                                onAction="#apptDeleteButtonAction" prefWidth="52.0" text="Delete"/>
+                        <Label text="Filter by:">
+                            <padding>
+                                <Insets left="250.0" right="2.0" top="4.0"/>
+                            </padding>
+                        </Label>
+                        <RadioButton fx:id="noneRadio" mnemonicParsing="false" onAction="#noneRadioAction"
+                                     selected="true" text="None">
+                            <padding>
+                                <Insets left="3.0" top="4.0"/>
+                            </padding>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="toggleGroup"/>
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="monthRadio" mnemonicParsing="false" onAction="#monthRadioAction"
+                                     text="Month" toggleGroup="$toggleGroup">
+                            <padding>
+                                <Insets left="3.0" top="4.0"/>
+                            </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="weekRadio" mnemonicParsing="false" onAction="#weekRadioAction"
+                                     text="Week" toggleGroup="$toggleGroup">
+                            <padding>
+                                <Insets left="3.0" top="4.0"/>
+                            </padding>
+                        </RadioButton>
+                    </HBox>
+                </VBox>
+            </AnchorPane>
+        </Tab>
+        <Tab fx:id="reportTab" text="Reports">
+            <AnchorPane minHeight="0.0" minWidth="0.0">
+                <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets bottom="3.0"/>
+                    </padding>
+                    <ToolBar prefHeight="40.0" prefWidth="200.0">
+                        <ComboBox fx:id="reportBox" prefWidth="150.0"/>
+                        <Button fx:id="reportRunButton" mnemonicParsing="false"
+                                onAction="#reportRunButtonAction" prefWidth="50.0" text="Run"/>
+                    </ToolBar>
+                    <AnchorPane prefHeight="357.0" prefWidth="600.0">
+                        <ListView fx:id="report1ListView" prefHeight="330.0" prefWidth="600.0"
+                                  visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <ListView fx:id="report3ListView" layoutX="10.0" layoutY="10.0" prefHeight="340.0"
+                                  prefWidth="610.0" visible="false" AnchorPane.bottomAnchor="0.0"
+                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                  AnchorPane.topAnchor="0.0"/>
+                        <VBox prefHeight="330.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0">
+                            <ToolBar fx:id="report2ToolBar" visible="false">
+                                <ComboBox fx:id="report2Box" onAction="#report2BoxAction"
+                                          prefWidth="150.0"/>
+                            </ToolBar>
+                            <AnchorPane prefHeight="390.0" prefWidth="600.0">
+                                <TableView fx:id="report2Table" prefHeight="295.0" prefWidth="600.0"
+                                           visible="false" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                           AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="report2ApptIdCol" prefWidth="75.0"
+                                                     text="ID"/>
+                                        <TableColumn fx:id="report2TitleCol" prefWidth="75.0"
+                                                     text="Title"/>
+                                        <TableColumn fx:id="report2TypeCol" prefWidth="75.0"
+                                                     text="Type"/>
+                                        <TableColumn fx:id="report2DescrCol" prefWidth="75.0"
+                                                     text="Description"/>
+                                        <TableColumn fx:id="report2LocationCol" prefWidth="75.0"
+                                                     text="Location"/>
+                                        <TableColumn fx:id="report2StartCol" prefWidth="75.0"
+                                                     text="Start"/>
+                                        <TableColumn fx:id="report2EndCol" prefWidth="75.0" text="End"/>
+                                        <TableColumn fx:id="report2CustIdCol" prefWidth="75.0"
+                                                     text="Customer ID"/>
+                                    </columns>
+                                </TableView>
+                            </AnchorPane>
                         </VBox>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="apptTab" text="Appointments">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0">
-                     <children>
-                        <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <TableView fx:id="apptTable">
-                                 <columns>
-                                    <TableColumn fx:id="apptIdCol" prefWidth="75.0" text="ID" />
-                                    <TableColumn fx:id="apptTitleCol" prefWidth="75.0" text="Title" />
-                                    <TableColumn fx:id="apptDescrCol" prefWidth="75.0" text="Description" />
-                                    <TableColumn fx:id="apptLocationCol" prefWidth="75.0" text="Location" />
-                                    <TableColumn fx:id="apptContactCol" prefWidth="75.0" text="Contact" />
-                                    <TableColumn fx:id="apptTypeCol" prefWidth="75.0" text="Type" />
-                                    <TableColumn fx:id="apptStartCol" prefWidth="75.0" text="Start" />
-                                    <TableColumn fx:id="apptEndCol" prefWidth="75.0" text="End" />
-                                    <TableColumn fx:id="apptCustIdCol" prefWidth="75.0" text="Customer ID" />
-                                    <TableColumn fx:id="apptUserIdCol" prefWidth="75.0" text="User ID" />
-                                 </columns>
-                              </TableView>
-                              <HBox spacing="3.0">
-                                 <children>
-                                    <Button fx:id="apptEditButton" mnemonicParsing="false" onAction="#apptEditButtonAction" prefWidth="52.0" text="Edit" />
-                                    <Button fx:id="apptDeleteButton" mnemonicParsing="false" onAction="#apptDeleteButtonAction" prefWidth="52.0" text="Delete" />
-                                    <Label text="Filter by:">
-                                       <padding>
-                                          <Insets left="250.0" right="2.0" top="4.0" />
-                                       </padding>
-                                    </Label>
-                                    <RadioButton fx:id="noneRadio" mnemonicParsing="false" onAction="#noneRadioAction" selected="true" text="None">
-                                       <padding>
-                                          <Insets left="3.0" top="4.0" />
-                                       </padding>
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="toggleGroup" />
-                                       </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton fx:id="monthRadio" mnemonicParsing="false" onAction="#monthRadioAction" text="Month" toggleGroup="$toggleGroup">
-                                       <padding>
-                                          <Insets left="3.0" top="4.0" />
-                                       </padding>
-                                    </RadioButton>
-                                    <RadioButton fx:id="weekRadio" mnemonicParsing="false" onAction="#weekRadioAction" text="Week" toggleGroup="$toggleGroup">
-                                       <padding>
-                                          <Insets left="3.0" top="4.0" />
-                                       </padding>
-                                    </RadioButton>
-                                 </children>
-                                 <padding>
-                                    <Insets left="3.0" />
-                                 </padding>
-                              </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="3.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-            <Tab fx:id="reportTab" text="Reports">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0">
-                     <children>
-                        <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <padding>
-                              <Insets bottom="3.0" />
-                           </padding>
-                           <children>
-                              <ToolBar prefHeight="40.0" prefWidth="200.0">
-                                <items>
-                                    <ComboBox fx:id="reportBox" prefWidth="150.0" />
-                                  <Button fx:id="reportRunButton" mnemonicParsing="false" onAction="#reportRunButtonAction" prefWidth="50.0" text="Run" />
-                                </items>
-                              </ToolBar>
-                              <AnchorPane prefHeight="357.0" prefWidth="600.0">
-                                 <children>
-                                    <ListView fx:id="report1ListView" prefHeight="330.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <ListView fx:id="report3ListView" layoutX="10.0" layoutY="10.0" prefHeight="340.0" prefWidth="610.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <VBox prefHeight="330.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <ToolBar fx:id="report2ToolBar" visible="false">
-                                            <items>
-                                                <ComboBox fx:id="report2Box" onAction="#report2BoxAction" prefWidth="150.0" />
-                                            </items>
-                                          </ToolBar>
-                                          <AnchorPane prefHeight="390.0" prefWidth="600.0">
-                                             <children>
-                                                <TableView fx:id="report2Table" prefHeight="295.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <columns>
-                                                    <TableColumn fx:id="report2ApptIdCol" prefWidth="75.0" text="ID" />
-                                                    <TableColumn fx:id="report2TitleCol" prefWidth="75.0" text="Title" />
-                                                      <TableColumn fx:id="report2TypeCol" prefWidth="75.0" text="Type" />
-                                                      <TableColumn fx:id="report2DescrCol" prefWidth="75.0" text="Description" />
-                                                      <TableColumn fx:id="report2LocationCol" prefWidth="75.0" text="Location" />
-                                                      <TableColumn fx:id="report2StartCol" prefWidth="75.0" text="Start" />
-                                                      <TableColumn fx:id="report2EndCol" prefWidth="75.0" text="End" />
-                                                      <TableColumn fx:id="report2CustIdCol" prefWidth="75.0" text="Customer ID" />
-                                                  </columns>
-                                                </TableView>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+                    </AnchorPane>
+                </VBox>
+            </AnchorPane>
+        </Tab>
+    </TabPane>
 </AnchorPane>

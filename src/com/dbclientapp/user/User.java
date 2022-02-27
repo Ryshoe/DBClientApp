@@ -4,6 +4,9 @@ import com.dbclientapp.util.DataTransferObject;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * Handles users as an object.
+ */
 public class User implements DataTransferObject {
 
     private final IntegerProperty id = new SimpleIntegerProperty();

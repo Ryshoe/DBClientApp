@@ -3,6 +3,9 @@ package com.dbclientapp.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * Handles driver for connecting to provided SQL database.
+ */
 public abstract class DatabaseConnectionManager {
     private static final String PROTOCOL = "jdbc";
     private static final String VENDOR = ":mysql:";
@@ -14,6 +17,10 @@ public abstract class DatabaseConnectionManager {
     private static final String PASSWORD = "Passw0rd!"; // Password
     public static Connection connection;  // Connection interface
 
+    /**
+     * Opens connection to database.
+     * @return connection as object
+     */
     public static Connection openConnection() {
         try {
             Class.forName(DRIVER); // Locate driver
@@ -25,6 +32,9 @@ public abstract class DatabaseConnectionManager {
         return connection;
     }
 
+    /**
+     * Closes connection to database.
+     */
     public static void closeConnection() {
         try {
             connection.close();

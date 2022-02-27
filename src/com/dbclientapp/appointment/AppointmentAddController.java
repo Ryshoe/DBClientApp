@@ -21,12 +21,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
 import java.util.ResourceBundle;
 
+/**
+ * Controller that handles appointment add screen.
+ */
 public class AppointmentAddController implements Initializable {
 
     private final Customer customer = MainScreenController.getSelectedCustomer();
@@ -95,23 +97,34 @@ public class AppointmentAddController implements Initializable {
     @FXML
     private TextField userIdField;
 
+
+    /**
+     * Handles action for when cancel button is pressed.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void cancelButtonAction(ActionEvent event) throws IOException {
         returnToMainScreen(event, false);
     }
 
+    /**
+     * Handles action for when OK button is pressed.
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void okButtonAction(ActionEvent event) throws IOException {
         if(parseData())
             returnToMainScreen(event, true);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        populateComboBox();
-        populateTextField();
-    }
-
+    /**
+     * Handles stage for returning to main menu screen.
+     * @param event ActionEvent to determine if a button was pressed
+     * @param check boolean to select appropriate tab on main menu screen
+     * @throws IOException
+     */
     private void returnToMainScreen(ActionEvent event, boolean check) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../mainscreen/MainScreen.fxml"));
@@ -124,20 +137,28 @@ public class AppointmentAddController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Populates TextFields with selected customer ID and current user ID.
+     */
     private void populateTextField() {
-        // Populate Customer and User ID fields from MainScreen selection
         customerIdField.setText(String.valueOf(customer.getId()));
         userIdField.setText(String.valueOf(user.getId()));
     }
 
+    /**
+     * Populates ComboBoxes on form using static lists.
+     */
     private void populateComboBox() {
-        // Populate ComboBoxes from static lists
         contactBox.setItems(contactList);
         typeBox.setItems(typeList);
         startTime.setItems(timeList);
         endTime.setItems(timeList);
     }
 
+    /**
+     * Parses the data that is entered on the form and creates a new appointment record in the database.
+     * @return boolean for input validation
+     */
     private boolean parseData() {
         // Parse input from TextFields
         Appointment appointmentInput = new Appointment();
@@ -203,6 +224,7 @@ public class AppointmentAddController implements Initializable {
             }
         }
 
+        // Add start/end data to appointment object
         appointmentInput.setStart(startDateTimeInput);
         appointmentInput.setEnd(endDateTimeInput);
 
@@ -212,5 +234,16 @@ public class AppointmentAddController implements Initializable {
         DatabaseConnectionManager.closeConnection();
 
         return true;
+    }
+
+    /**
+     * First method that is called when screen is loaded.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        populateComboBox();
+        populateTextField();
     }
 }

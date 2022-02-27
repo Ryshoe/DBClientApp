@@ -6,10 +6,12 @@ import com.dbclientapp.user.User;
 import com.dbclientapp.util.DataAccessObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
 import java.time.ZoneId;
 
+/**
+ * Handles creation of SQL query statements for appointment objects.
+ */
 public class AppointmentDAO extends DataAccessObject<Appointment> {
 
     private static final String CREATE = "INSERT INTO appointments (Title, Description, " +
@@ -197,6 +199,10 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
         return true;
     }
 
+    /**
+     * Generates READ statement that filters appointments by week.
+     * @return ObservableList of appointments as objects
+     */
     public ObservableList<Appointment> findAllByWeek() {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         try (PreparedStatement ps = this.connection.prepareStatement(READ_BY_WEEK)) {
@@ -236,6 +242,10 @@ public class AppointmentDAO extends DataAccessObject<Appointment> {
         return appointmentList;
     }
 
+    /**
+     * Generates READ statement that filters appointments by month.
+     * @return returns ObservableList of Appointment objects
+     */
     public ObservableList<Appointment> findAllByMonth() {
         ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_BY_MONTH)) {

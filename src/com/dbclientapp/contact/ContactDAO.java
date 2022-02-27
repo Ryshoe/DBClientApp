@@ -1,7 +1,6 @@
 package com.dbclientapp.contact;
 
 import com.dbclientapp.util.DataAccessObject;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles creation of SQL query statements for contact objects.
+ */
 public class ContactDAO extends DataAccessObject<Contact> {
 
     private static final String READ_ONE_BY_ID = "SELECT Contact_ID, Contact_Name, Email " +
@@ -41,10 +43,15 @@ public class ContactDAO extends DataAccessObject<Contact> {
         return contact;
     }
 
-    public Contact findByName(String name) {
+    /**
+     * Generates READ statement using string as an argument.
+     * @param string contact name to search
+     * @return contact record as an object
+     */
+    public Contact findByName(String string) {
         Contact contact = new Contact();
         try(PreparedStatement ps = this.connection.prepareStatement(READ_ONE_BY_NAME)) {
-            ps.setString(1, name);
+            ps.setString(1, string);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 contact.setId(rs.getInt("Contact_ID"));

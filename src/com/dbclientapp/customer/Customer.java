@@ -7,6 +7,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * Handles customers as an object.
+ */
 public class Customer implements DataTransferObject {
 
     private final IntegerProperty id = new SimpleIntegerProperty();
